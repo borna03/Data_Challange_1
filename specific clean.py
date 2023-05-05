@@ -4,7 +4,7 @@ import os
 import time
 
 client = pymongo.MongoClient("mongodb://localhost:27017")
-db = client['DBL_test2']
+db = client['DBL_test']
 collection = db['data']
 directory = 'E:/Uni/DBL Data Challenge/All Data/data2'  # change according to where you stored the data
 
@@ -53,6 +53,35 @@ for file_name in array:
                                     'in_reply_to_screen_name', 'in_reply_to_user_id', 'in_reply_to_status_id',
                                     'truncated', 'media', 'urls', 'bounding_box', 'attributes', 'symbols', 'name',
                                     'screen_name', 'translator_type'])
+                try:
+                    del(data['user']['created_at'])
+                    del(data['retweeted_status']['display_text_range'])
+                    del(data['retweeted_status']['extended_tweet'])
+                    del(data['retweeted_status']['created_at'])
+                    del(data['retweeted_status']['text'])
+                    del(data['retweeted_status']['in_reply_to_status_id_str'])
+                    del(data['retweeted_status']['coordinates'])
+                    del(data['retweeted_status']['place'])
+                    del(data['retweeted_status']['quote_count'])
+                    del(data['retweeted_status']['reply_count'])
+                    del(data['retweeted_status']['retweet_count'])
+                    del(data['retweeted_status']['favorite_count'])
+                    del(data['retweeted_status']['entities'])
+                    del(data['retweeted_status']['filter_level'])
+                    del(data['retweeted_status']['user']['location'])
+                    del(data['retweeted_status']['user']['verified'])
+                    del(data['retweeted_status']['user']['followers_count'])
+                    del(data['retweeted_status']['user']['statuses_count'])
+                    del(data['retweeted_status']['user']['created_at'])
+                    try:
+                        for obj_numb in range(0, 6):
+                            del (data['entities']['user_mentions'][obj_numb]['screen_name'])
+                            del (data['entities']['user_mentions'][obj_numb]['name'])
+                            del (data['entities']['user_mentions'][obj_numb]['id'])
+                    except:
+                        pass
+                except:
+                    pass
                 collection.insert_one(data)
             except json.decoder.JSONDecodeError as err:
                 print("JSONDecodeError:", err)

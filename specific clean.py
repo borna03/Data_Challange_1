@@ -6,7 +6,7 @@ import time
 client = pymongo.MongoClient("mongodb://localhost:27017")
 db = client['DBL_test']
 collection = db['data']
-directory = 'E:/Uni/DBL Data Challenge/All Data/data2'  # change according to where you stored the data
+directory = 'C:/Users/mattl/OneDrive/Desktop/data'  # change according to where you stored the data
 
 array = []
 for filename in os.listdir(directory):
@@ -40,7 +40,7 @@ for file_name in array:
                 data = json.loads(line)
                 remove_nested_keys(data,
                                    ['id', 'source', 'url', 'description', 'protected', 'friends_count', 'listed_count',
-                                    'favourites_count', 'utc_offset', 'time_zone', 'lang', 'contributors_enabled',
+                                    'favourites_count', 'utc_offset', 'time_zone', 'contributors_enabled',
                                     'is_translator', 'profile_background_color', 'profile_background_image_url',
                                     'profile_background_image_url_https', 'profile_background_tile',
                                     'profile_link_color', 'profile_sidebar_border_color', 'profile_sidebar_fill_color',
@@ -55,6 +55,7 @@ for file_name in array:
                                     'screen_name', 'translator_type'])
                 try:
                     del(data['user']['created_at'])
+                    del(data['user']['lang'])
                     del(data['retweeted_status']['display_text_range'])
                     del(data['retweeted_status']['extended_tweet'])
                     del(data['retweeted_status']['created_at'])

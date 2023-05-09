@@ -1,12 +1,4 @@
-import pymongo
-import json
-import os
-import time
-
-client = pymongo.MongoClient("mongodb://localhost:27017")
-db = client['DBL_test']
-collection = db['data']
-directory = 'C:/Users/mattl/OneDrive/Desktop/data'  # change according to where you stored the data
+from config import *
 
 array = []
 for filename in os.listdir(directory):

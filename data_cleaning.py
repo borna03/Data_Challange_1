@@ -1,5 +1,4 @@
-from config import *
-
+from data_load import *
 
 def remove_nested_keys(dictionary, keys_to_remove):
     """

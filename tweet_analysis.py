@@ -23,6 +23,5 @@ def analyze_airline_tweets(chosen_airline_id):
     print(plot_figures.responded_to_lang(airlines['VirginAtlantic']['id_str']))
 
 
-if __name__ == '__main__':
-    chosen_airline_id = "20626359"
-    analyze_airline_tweets(chosen_airline_id)
+chosen_airline_id = "20626359"
+analyze_airline_tweets(chosen_airline_id)

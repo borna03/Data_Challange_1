@@ -28,6 +28,8 @@ def load_csv_line_by_line(file_path):
 
                 dct[counter] = [line[1], tweet, sentiment_label]  # Store relevant data in dictionary
 
+            #if counter== 10:
+                #break
 
     # Print the processed data
     #for key, value in dct.items():

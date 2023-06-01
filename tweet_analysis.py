@@ -1,7 +1,9 @@
 from data_load import *
 import plot_figures
 import data_cleaning
+import topic_classification
 
+chosen_airline_id = "20626359"
 
 # Function to analyze airline tweets
 def analyze_airline_tweets(chosen_airline_id):
@@ -22,6 +24,12 @@ def analyze_airline_tweets(chosen_airline_id):
     print(plot_figures.tweeted_at_lang(airlines['VirginAtlantic']['id_str']))
     print(plot_figures.responded_to_lang(airlines['VirginAtlantic']['id_str']))
 
+# analyze_airline_tweets(chosen_airline_id)
 
-chosen_airline_id = "20626359"
-analyze_airline_tweets(chosen_airline_id)
+def analyze_topics(chosen_airline_id):
+    topic_single_100 = topic_classification.topic_single_stop(chosen_airline_id, 250)
+    topic_multi_100 = topic_classification.topic_multi_stop(chosen_airline_id, 250)
+    print(topic_single_100)
+    print(topic_multi_100)
+
+analyze_topics(chosen_airline_id)

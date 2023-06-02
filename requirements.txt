@@ -5,3 +5,4 @@ torch==2.0.1
 matplotlib
 pandas
 pymongo
+tqdm==4.65.00

@@ -5,7 +5,6 @@ import topic_classification
 
 chosen_airline_id = "20626359"
 
-
 # Function to analyze airline tweets
 def analyze_airline_tweets(chosen_airline_id):
     # Get tweet count per month and reply count per month
@@ -37,7 +36,7 @@ def analyze_topics(chosen_airline_id):
     # print(topic_multi_100)
     # print('\n')
 
-    topic_sentiment_100 = topic_classification.topic_single_sentiment_noRT_stop(chosen_airline_id, 250)
-    print(topic_sentiment_100)
+    topic_sentiment = topic_classification.topic_single_sentiment(chosen_airline_id)
+    print(topic_sentiment)
 
 analyze_topics(chosen_airline_id)

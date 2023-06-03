@@ -5,6 +5,7 @@ from transformers import AutoModelForSequenceClassification
 from transformers import AutoTokenizer, AutoConfig
 import pandas as pd
 from scipy.special import softmax
+from tqdm import tqdm
 
 
 def preprocess(text):
@@ -27,13 +28,13 @@ def cutoff_value(probabilities):
     return topic
 
 
-def topic_single_sentiment_noRT_stop(id_str, stop):
+def topic_single_sentiment(id_str):
     """
     Topic Classification and subsequent sentiment analysis per topic.
     Using TweetNLP single-label model for topic classification (See https://github.com/cardiffnlp/tweetnlp).
     Using roBERTa model for sentiment analysis (see https://huggingface.co/cardiffnlp/twitter-xlm-roberta-base-sentiment).
-    On tweets 'tweeted at' the airline, not including retweets.
-    With stop number, to check only certain x amount of tweets.
+    On tweets 'tweeted at' the airline, not including retweets (OLD: New collection based on conversation already
+    doesn't have retweets anymore).
     :param id_str: id of airline
     :param stop: amount of tweets you want to evaluate
     """
@@ -59,66 +60,63 @@ def topic_single_sentiment_noRT_stop(id_str, stop):
     neg_sent = 0
     unc_sent = 0
 
-    # Find all tweets mentioning the airline, excluding retweets
-    for doc in collection.find({'retweeted_status': {'$exists': False},
-                                'entities.user_mentions': {'$elemMatch': {'id_str': id_str}}
-                                }):
+    # Find all tweets for which the airline is the one tweeting, is mentioned (@) or is replied to:
+    all_tweets = collection.find({'$or': [{'in_reply_to_user_id_str': id_str}, {'user.id_str': id_str},
+                                          {'entities.user_mentions': {'$elemMatch': {'id_str': id_str}}}]})
+    for doc in tqdm(all_tweets):
         # Only evaluate the first x amount of tweets that are evaluated
-        if stop_count >= stop:
-            break
+        stop_count += 1
+        total_count += 1
+        text = doc['text']
+        processed_text = preprocess(text)
+
+        # Predict topic
+        # topic_dict = model.predict(f'{processed_text}', return_probability=True)
+        topic_dict = topic_model.topic(f'{processed_text}', return_probability=True)
+        topic = topic_dict['label']
+
+        # Predict sentiment
+        encoded_input = tokenizer(processed_text, return_tensors='pt')
+        output = sentiment_model(**encoded_input)
+        scores = output[0][0].detach().numpy()
+        scores = softmax(scores)
+        score_pos = scores[2]
+        score_neu = scores[1]
+        score_neg = scores[0]
+        if (score_pos > score_neu) and (score_pos > score_neg) and (score_pos > 0.5):
+            label = 'positive'
+            pos_sent += 1
+        elif (score_neu > score_pos) and (score_neu > score_neg) and (score_neu > 0.5):
+            label = 'neutral'
+            neu_sent += 1
+        elif (score_neg > score_pos) and (score_neg > score_neu) and (score_neg > 0.5):
+            label = 'negative'
+            neg_sent += 1
         else:
-            stop_count += 1
-            total_count += 1
-            text = doc['text']
-            processed_text = preprocess(text)
+            label = 'uncertain'
+            unc_sent += 1
 
-            # Predict topic
-            # topic_dict = model.predict(f'{processed_text}', return_probability=True)
-            topic_dict = topic_model.topic(f'{processed_text}', return_probability=True)
-            topic = topic_dict['label']
+        # Counter - Nested dictionary with topics and sentiments (no topic cutoff)
+        if topic in topic_count_before:
+            topic_count_before[topic][label] += 1
+        else:
+            sentiment_count_before: dict = {'positive': 0, 'negative': 0, 'neutral': 0, 'uncertain': 0}
+            sentiment_count_before[label] += 1
+            topic_count_before[topic] = sentiment_count_before
 
-            # Predict sentiment
-            encoded_input = tokenizer(processed_text, return_tensors='pt')
-            output = sentiment_model(**encoded_input)
-            scores = output[0][0].detach().numpy()
-            scores = softmax(scores)
-            score_pos = scores[2]
-            score_neu = scores[1]
-            score_neg = scores[0]
-            if (score_pos > score_neu) and (score_pos > score_neg) and (score_pos > 0.5):
-                label = 'positive'
-                pos_sent += 1
-            elif (score_neu > score_pos) and (score_neu > score_neg) and (score_neu > 0.5):
-                label = 'neutral'
-                neu_sent += 1
-            elif (score_neg > score_pos) and (score_neg > score_neu) and (score_neg > 0.5):
-                label = 'negative'
-                neg_sent += 1
-            else:
-                label = 'uncertain'
-                unc_sent += 1
+        probabilities = topic_dict['probability']
+        # Implement cutoff value for topics
+        topic = cutoff_value(probabilities)
 
-            # Counter - Nested dictionary with topics and sentiments (no topic cutoff)
-            if topic in topic_count_before:
-                topic_count_before[topic][label] += 1
-            else:
-                sentiment_count_before: dict = {'positive': 0, 'negative': 0, 'neutral': 0, 'uncertain': 0}
-                sentiment_count_before[label] += 1
-                topic_count_before[topic] = sentiment_count_before
+        # Counter - Nested dictionary with topics and sentiments (with topic cutoff)
+        if topic in topic_count_after:
+            topic_count_after[topic][label] += 1
+        else:
+            sentiment_count_after: dict = {'positive': 0, 'negative': 0, 'neutral': 0, 'uncertain': 0}
+            sentiment_count_after[label] += 1
+            topic_count_after[topic] = sentiment_count_after
 
-            probabilities = topic_dict['probability']
-            # Implement cutoff value for topics
-            topic = cutoff_value(probabilities)
-
-            # Counter - Nested dictionary with topics and sentiments (with topic cutoff)
-            if topic in topic_count_after:
-                topic_count_after[topic][label] += 1
-            else:
-                sentiment_count_after: dict = {'positive': 0, 'negative': 0, 'neutral': 0, 'uncertain': 0}
-                sentiment_count_after[label] += 1
-                topic_count_after[topic] = sentiment_count_after
-
-            # print(total_count)
+        # print(total_count)
 
     # Convert counters to nested DataFrames
     df_before = pd.DataFrame.from_dict(topic_count_before, orient='index')

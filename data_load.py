@@ -6,7 +6,7 @@ import time
 
 client = pymongo.MongoClient("mongodb://localhost:27017")
 db = client['DBL_data']
-collection = db['data']
+collection = db['conversations']
 directory = "C:/DBL_Data_Challenge/All Data/data"
 airlines = {'KLM': {'id_str': '56377143', 'tweet_count': 36221, 'tweeted_at_count': 236089},
             'AirFrance': {'id_str': '106062176', 'tweet_count': 10076, 'tweeted_at_count': 96299},

@@ -30,23 +30,18 @@ def analyze_airline_tweets(chosen_airline_id):
 # analyze_airline_tweets(chosen_airline_id)
 
 def analyze_sentiment(chosen_airline_id):
-    sentiment_analysis = sentiment_analysis2.sentiment_analysis(chosen_airline_id)
-    print(sentiment_analysis)
+    sentiment_analysis_from_airline = sentiment_analysis2.sentiment_analysis_from_airline(chosen_airline_id)
+    print(sentiment_analysis_from_airline)
+    sentiment_analysis_to_airline = sentiment_analysis2.sentiment_analysis_to_airline(chosen_airline_id)
+    print(sentiment_analysis_to_airline)
 
-
-analyze_sentiment(chosen_airline_id)
+# analyze_sentiment(chosen_airline_id)
 
 
 def analyze_topics(chosen_airline_id):
-    # topic_single_100 = topic_classification.topic_single_stop(chosen_airline_id, 250)
-    # print(topic_single_100)
-    # print('\n')
-    #
-    # topic_multi_100 = topic_classification.topic_multi_stop(chosen_airline_id, 250)
-    # print(topic_multi_100)
-    # print('\n')
+    topic_sentiment_from_airline = topic_classification.topic_single_sentiment_from_airline(chosen_airline_id)
+    print(topic_sentiment_from_airline)
+    topic_sentiment_to_airline = topic_classification.topic_single_sentiment_to_airline(chosen_airline_id)
+    print(topic_sentiment_to_airline)
 
-    topic_sentiment = topic_classification.topic_single_sentiment(chosen_airline_id)
-    print(topic_sentiment)
-
-# analyze_topics(chosen_airline_id)
+analyze_topics(chosen_airline_id)

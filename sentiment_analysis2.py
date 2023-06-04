@@ -187,25 +187,32 @@ def sentiment_analysis_from_airline(id_str):
 
     end_time = time.time()
 
-    usable_lines = (total_count - unc_sent) / total_count
-    ratio_pos = pos_sent / total_count
-    ratio_neu = neu_sent / total_count
-    ratio_neg = neg_sent / total_count
-    ratio_unc = unc_sent / total_count
+    try:
+        usable_lines = (total_count - unc_sent) / total_count
+        ratio_pos = pos_sent / total_count
+        ratio_neu = neu_sent / total_count
+        ratio_neg = neg_sent / total_count
+        ratio_unc = unc_sent / total_count
 
-    print(f'Total lines: {total_count}')
-    print(f'Ratio non-uncertain lines: {usable_lines}')
-    print('\n')
+        print(f'Total lines: {total_count}')
+        print(f'Ratio non-uncertain lines: {usable_lines}')
+        print('\n')
 
-    print(sentiment_counter)
-    print('\n')
+        print(sentiment_counter)
+        print('\n')
 
-    print(f'Ratio positive tweets: {ratio_pos}')
-    print(f'Ratio neutral tweets: {ratio_neu}')
-    print(f'Ratio negative tweets: {ratio_neg}')
-    print(f'Ratio uncertain tweets: {ratio_unc}')
-    print('\n')
+        print(f'Ratio positive tweets: {ratio_pos}')
+        print(f'Ratio neutral tweets: {ratio_neu}')
+        print(f'Ratio negative tweets: {ratio_neg}')
+        print(f'Ratio uncertain tweets: {ratio_unc}')
+        print('\n')
+    except:
+        print('Nothing to analyze')
 
     elapsed_time = end_time - start_time
     print("Time: ", elapsed_time)
-    print("Time/Item: ", elapsed_time / total_count)
+
+    try:
+        print("Time/Item: ", elapsed_time / total_count)
+    except:
+        None

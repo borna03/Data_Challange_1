@@ -33,10 +33,9 @@ def topic_single_sentiment(id_str):
     Topic Classification and subsequent sentiment analysis per topic.
     Using TweetNLP single-label model for topic classification (See https://github.com/cardiffnlp/tweetnlp).
     Using roBERTa model for sentiment analysis (see https://huggingface.co/cardiffnlp/twitter-xlm-roberta-base-sentiment).
-    On tweets 'tweeted at' the airline, not including retweets (OLD: New collection based on conversation already
-    doesn't have retweets anymore).
+    For all tweets for which the airline is the one tweeting, is mentioned (@) or is replied to.
+    Not including re-tweets
     :param id_str: id of airline
-    :param stop: amount of tweets you want to evaluate
     """
     start_time = time.time()
 
@@ -124,6 +123,11 @@ def topic_single_sentiment(id_str):
 
     print(f'Total evaluated tweets: {total_count}')
     print('\n')
+
+    print(topic_count_before)
+    print (topic_count_after)
+    print('\n')
+
     print(f'Topic occurrences & Sentiment (before cutoff): \n {df_before}')
     print(f'Topic occurrences & Sentiment (after cutoff): \n {df_after}')
 

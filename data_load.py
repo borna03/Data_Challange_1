@@ -3,7 +3,6 @@ import json
 import os
 import time
 
-
 client = pymongo.MongoClient("mongodb://localhost:27017")
 db = client['DBL_data']
 collection = db['conversations']
@@ -21,4 +20,3 @@ airlines = {'KLM': {'id_str': '56377143', 'tweet_count': 36221, 'tweeted_at_coun
             'Qantas': {'id_str': '218730857', 'tweet_count': 12863, 'tweeted_at_count': 168063},
             'EtihadAirways': {'id_str': '45621423', 'tweet_count': 1513, 'tweeted_at_count': 80441},
             'VirginAtlantic': {'id_str': '20626359', 'tweet_count': 22813, 'tweeted_at_count': 163544}}
-

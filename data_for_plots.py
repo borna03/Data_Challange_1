@@ -32,3 +32,12 @@ replied_to_langs_British = {'en': 63564, 'und': 150, 'rest': 152}
 nested_pie_Virgin = [[136541, 12958], [9828, 25], [4183, 9]]
 nested_pie_British = [[462605, 63564], [16314, 150], [21493, 152]]
 
+# Topic Classification + Sentiment Analysis
+topic_Virgin = {'positive': 39777, 'negative': 46468, 'neutral': 21501, 'uncertain': 7284}
+topic_sentiment_Virgin = {'daily_life': {'positive': 30113, 'negative': 14052, 'neutral': 27086, 'uncertain': 4546},
+                          'business_&_entrepreneurs': {'positive': 2580, 'negative': 4401, 'neutral': 10943, 'uncertain': 1327},
+                          'sports_&_gaming': {'positive': 1503, 'negative': 779, 'neutral': 1506, 'uncertain': 296},
+                          'pop_culture': {'positive': 4369, 'negative': 1353, 'neutral': 4862, 'uncertain': 825},
+                          'science_&_technology': {'positive': 563, 'negative': 713, 'neutral': 1412, 'uncertain': 199},
+                          'Uncertain': {'positive': 347, 'negative': 142, 'neutral': 460, 'uncertain': 56},
+                          'arts_&_culture': {'positive': 302, 'negative': 61, 'neutral': 199, 'uncertain': 35}}

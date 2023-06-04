@@ -1,9 +1,11 @@
 from data_load import *
 import plot_figures
 import data_cleaning
+import sentiment_analysis2
 import topic_classification
 
 chosen_airline_id = "20626359"
+
 
 # Function to analyze airline tweets
 def analyze_airline_tweets(chosen_airline_id):
@@ -27,6 +29,14 @@ def analyze_airline_tweets(chosen_airline_id):
 
 # analyze_airline_tweets(chosen_airline_id)
 
+def analyze_sentiment(chosen_airline_id):
+    sentiment_analysis = sentiment_analysis2.sentiment_analysis(chosen_airline_id)
+    print(sentiment_analysis)
+
+
+analyze_sentiment(chosen_airline_id)
+
+
 def analyze_topics(chosen_airline_id):
     # topic_single_100 = topic_classification.topic_single_stop(chosen_airline_id, 250)
     # print(topic_single_100)
@@ -39,4 +49,4 @@ def analyze_topics(chosen_airline_id):
     topic_sentiment = topic_classification.topic_single_sentiment(chosen_airline_id)
     print(topic_sentiment)
 
-analyze_topics(chosen_airline_id)
+# analyze_topics(chosen_airline_id)

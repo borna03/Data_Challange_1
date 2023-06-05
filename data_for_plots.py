@@ -33,32 +33,32 @@ nested_pie_Virgin = [[136541, 12958], [9828, 25], [4183, 9]]
 nested_pie_British = [[462605, 63564], [16314, 150], [21493, 152]]
 
 # Sentiment Analysis
-sentiment_to_airlines = {'KLM': {'id_str': '56377143'},
-            'AirFrance': {'id_str': '106062176'},
+sentiment_to_airlines = {'KLM': {'id_str': '56377143', 'positive': 24562, 'negative': 37853, 'neutral': 50549, 'uncertain': 8902},
+            'AirFrance': {'id_str': '106062176', 'positive': 8344, 'negative': 12601, 'neutral': 17533, 'uncertain': 3399},
             'British_Airways': {'id_str': '18332190'},
             'AmericanAir': {'id_str': '22536055'},
             'Lufthansa': {'id_str': '124476322', 'neutral': 26076, 'negative': 20150, 'positive': 11386, 'uncertain': 4618},
             'AirBerlin': {'id_str': '26223583', 'negative': 55, 'neutral': 167, 'positive': 41, 'uncertain': 15},
             'AirBerlin assist': {'id_str': '2182373406', 'neutral': 1, 'negative': 0, 'positive': 1, 'uncertain': 0},
             'easyJet': {'id_str': '38676903'},
-            'RyanAir': {'id_str': '1542862735'},
-            'SingaporeAir': {'id_str': '253340062'},
+            'RyanAir': {'id_str': '1542862735', 'neutral': 76594, 'positive': 26412, 'negative': 60735, 'uncertain': 13580},
+            'SingaporeAir': {'id_str': '253340062', 'neutral': 18380, 'uncertain': 2031, 'negative': 6851, 'positive': 7955},
             'Qantas': {'id_str': '218730857', 'neutral': 28639, 'negative': 28858, 'uncertain': 7091, 'positive': 16065},
-            'EtihadAirways': {'id_str': '45621423'},
+            'EtihadAirways': {'id_str': '45621423', 'neutral': 11581, 'negative': 5192, 'positive': 6488, 'uncertain': 1844},
             'VirginAtlantic': {'id_str': '20626359', 'positive': 32456, 'negative': 36837, 'neutral': 17398, 'uncertain': 5754}}
 
-sentiment_from_airlines = {'KLM': {'id_str': '56377143'},
-            'AirFrance': {'id_str': '106062176'},
+sentiment_from_airlines = {'KLM': {'id_str': '56377143', 'neutral': 20595, 'uncertain': 1307, 'negative': 6700, 'positive': 7517},
+            'AirFrance': {'id_str': '106062176', 'neutral': 4478, 'positive': 2442, 'uncertain': 792, 'negative': 2349},
             'British_Airways': {'id_str': '18332190', 'neutral': 55384, 'positive': 21754, 'negative': 28924, 'uncertain': 8354},
-            'AmericanAir': {'id_str': '22536055'},
+            'AmericanAir': {'id_str': '22536055', 'positive': 36268, 'neutral': 57374, 'negative': 20574, 'uncertain': 10193},
             'Lufthansa': {'id_str': '124476322', 'neutral': 8628, 'positive': 1632, 'negative': 2963, 'uncertain': 742},
             'AirBerlin': {'id_str': '26223583', 'neutral': 0, 'negative': 0, 'positive': 0, 'uncertain': 0},
             'AirBerlin assist': {'id_str': '2182373406', 'neutral': 0, 'negative': 0, 'positive': 0, 'uncertain': 0},
-            'easyJet': {'id_str': '38676903'},
-            'RyanAir': {'id_str': '1542862735'},
-            'SingaporeAir': {'id_str': '253340062'},
+            'easyJet': {'id_str': '38676903', 'negative': 15546, 'neutral': 27986, 'positive': 9915, 'uncertain': 4537},
+            'RyanAir': {'id_str': '1542862735', 'neutral': 17232, 'uncertain': 720, 'positive': 1777, 'negative': 1995},
+            'SingaporeAir': {'id_str': '253340062', 'neutral': 10233, 'positive': 2060, 'negative': 631, 'uncertain': 677},
             'Qantas': {'id_str': '218730857', 'neutral': 7751, 'positive': 2824, 'negative': 1026, 'uncertain': 1218},
-            'EtihadAirways': {'id_str': '45621423'},
+            'EtihadAirways': {'id_str': '45621423', 'positive': 711, 'neutral': 662, 'negative': 51, 'uncertain': 63},
             'VirginAtlantic': {'id_str': '20626359', 'positive': 7321, 'negative': 9631, 'neutral': 4103, 'uncertain': 1530}}
 sentiment_all_Virgin = {'positive': 39777, 'negative': 46468, 'neutral': 21501, 'uncertain': 7284}
 

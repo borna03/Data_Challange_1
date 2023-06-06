@@ -45,6 +45,8 @@ def sentiment_analysis_to_airline(id_str):
 
     start_time = time.time()
 
+    error_count = 0
+
     # Find all tweets for which the airline is mentioned (@) or is replied to:
     query = {'$or': [{'in_reply_to_user_id_str': id_str}, {'entities.user_mentions': {'$elemMatch': {'id_str': id_str}}}]}
 
@@ -55,38 +57,45 @@ def sentiment_analysis_to_airline(id_str):
     print('Starting analysis:')
     # Iterate over all tweets, with live counter
     for tweet in tqdm(all_tweets):
-        total_count += 1
-        text = tweet['text']
-        processed_text = preprocess(text)
+        try:
+            total_count += 1
+            text = tweet['text']
+            processed_text = preprocess(text)
 
-        # Sentiment analysis model
-        encoded_input = tokenizer(processed_text, return_tensors='pt')
-        output = model(**encoded_input)
-        scores = output[0][0].detach().numpy()
-        scores = softmax(scores)
-        score_pos = scores[2]
-        score_neu = scores[1]
-        score_neg = scores[0]
+            # Sentiment analysis model
+            encoded_input = tokenizer(processed_text, return_tensors='pt')
+            output = model(**encoded_input)
+            scores = output[0][0].detach().numpy()
+            scores = softmax(scores)
+            score_pos = scores[2]
+            score_neu = scores[1]
+            score_neg = scores[0]
 
-        # Cutoff for probabilities under 50%
-        if (score_pos > score_neu) and (score_pos > score_neg) and (score_pos > 0.5):
-            label = 'positive'
-            pos_sent += 1
-        elif (score_neu > score_pos) and (score_neu > score_neg) and (score_neu > 0.5):
-            label = 'neutral'
-            neu_sent += 1
-        elif (score_neg > score_pos) and (score_neg > score_neu) and (score_neg > 0.5):
-            label = 'negative'
-            neg_sent += 1
-        else:
-            label = 'uncertain'
-            unc_sent += 1
+            # Cutoff for probabilities under 50%
+            if (score_pos > score_neu) and (score_pos > score_neg) and (score_pos > 0.5):
+                label = 'positive'
+                pos_sent += 1
+            elif (score_neu > score_pos) and (score_neu > score_neg) and (score_neu > 0.5):
+                label = 'neutral'
+                neu_sent += 1
+            elif (score_neg > score_pos) and (score_neg > score_neu) and (score_neg > 0.5):
+                label = 'negative'
+                neg_sent += 1
+            else:
+                label = 'uncertain'
+                unc_sent += 1
 
-        # Counter to put sentiments in a dictionary
-        if label in sentiment_counter:
-            sentiment_counter[label] += 1
-        else:
-            sentiment_counter[label] = 1
+            # Counter to put sentiments in a dictionary
+            if label in sentiment_counter:
+                sentiment_counter[label] += 1
+            else:
+                sentiment_counter[label] = 1
+        # There was a single error in the middle of the run somewhere, so print error and continue the loop
+        except Exception as e:
+            print(e)
+            error_count += 1
+
+    print(f'Error count: {error_count}')
 
     end_time = time.time()
 
@@ -142,6 +151,8 @@ def sentiment_analysis_from_airline(id_str):
 
     start_time = time.time()
 
+    error_count = 0
+
     # Find all tweets for which the airline is the one tweeting:
     query = {'$or': [{'user.id_str': id_str}]}
 
@@ -152,39 +163,45 @@ def sentiment_analysis_from_airline(id_str):
     print('Starting analysis:')
     # Iterate over all tweets, with live counter
     for tweet in tqdm(all_tweets):
-        total_count += 1
-        text = tweet['text']
-        processed_text = preprocess(text)
+        try:
+            total_count += 1
+            text = tweet['text']
+            processed_text = preprocess(text)
 
-        # Sentiment analysis model
-        encoded_input = tokenizer(processed_text, return_tensors='pt')
-        output = model(**encoded_input)
-        scores = output[0][0].detach().numpy()
-        scores = softmax(scores)
-        score_pos = scores[2]
-        score_neu = scores[1]
-        score_neg = scores[0]
+            # Sentiment analysis model
+            encoded_input = tokenizer(processed_text, return_tensors='pt')
+            output = model(**encoded_input)
+            scores = output[0][0].detach().numpy()
+            scores = softmax(scores)
+            score_pos = scores[2]
+            score_neu = scores[1]
+            score_neg = scores[0]
 
-        # Cutoff for probabilities under 50%
-        if (score_pos > score_neu) and (score_pos > score_neg) and (score_pos > 0.5):
-            label = 'positive'
-            pos_sent += 1
-        elif (score_neu > score_pos) and (score_neu > score_neg) and (score_neu > 0.5):
-            label = 'neutral'
-            neu_sent += 1
-        elif (score_neg > score_pos) and (score_neg > score_neu) and (score_neg > 0.5):
-            label = 'negative'
-            neg_sent += 1
-        else:
-            label = 'uncertain'
-            unc_sent += 1
+            # Cutoff for probabilities under 50%
+            if (score_pos > score_neu) and (score_pos > score_neg) and (score_pos > 0.5):
+                label = 'positive'
+                pos_sent += 1
+            elif (score_neu > score_pos) and (score_neu > score_neg) and (score_neu > 0.5):
+                label = 'neutral'
+                neu_sent += 1
+            elif (score_neg > score_pos) and (score_neg > score_neu) and (score_neg > 0.5):
+                label = 'negative'
+                neg_sent += 1
+            else:
+                label = 'uncertain'
+                unc_sent += 1
 
-        # Counter to put sentiments in a dictionary
-        if label in sentiment_counter:
-            sentiment_counter[label] += 1
-        else:
-            sentiment_counter[label] = 1
+            # Counter to put sentiments in a dictionary
+            if label in sentiment_counter:
+                sentiment_counter[label] += 1
+            else:
+                sentiment_counter[label] = 1
+        # There was a single error in the middle of the run somewhere, so print error and continue the loop
+        except Exception as e:
+            print(e)
+            error_count += 1
 
+    print(f'Error count: {error_count}')
     end_time = time.time()
 
     try:
@@ -207,6 +224,7 @@ def sentiment_analysis_from_airline(id_str):
         print(f'Ratio uncertain tweets: {ratio_unc}')
         print('\n')
     except:
+        # Don't do anything if total_count = 0; Airberlin and Airberlin assist tweeted 0 tweets themselves
         print('Nothing to analyze')
 
     elapsed_time = end_time - start_time
@@ -215,4 +233,5 @@ def sentiment_analysis_from_airline(id_str):
     try:
         print("Time/Item: ", elapsed_time / total_count)
     except:
+        # Don't do anything if total_count = 0; Airberlin and Airberlin assist tweeted 0 tweets themselves
         None

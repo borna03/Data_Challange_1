@@ -1,10 +1,11 @@
 from data_load import *
 import plot_figures
 import data_cleaning
-import sentiment_analysis2
+import sentiment_analysis
 import topic_classification
+import topic_sentiment_plots
 
-chosen_airline_id = "20626359"
+chosen_airline_id = "22536055"
 
 
 # Function to analyze airline tweets
@@ -30,8 +31,8 @@ def analyze_airline_tweets(chosen_airline_id):
 # analyze_airline_tweets(chosen_airline_id)
 
 def analyze_sentiment(chosen_airline_id):
-    sentiment_analysis_from_airline = sentiment_analysis2.sentiment_analysis_from_airline(chosen_airline_id)
-    print(sentiment_analysis_from_airline)
+    # sentiment_analysis_from_airline = sentiment_analysis2.sentiment_analysis_from_airline(chosen_airline_id)
+    # print(sentiment_analysis_from_airline)
     sentiment_analysis_to_airline = sentiment_analysis2.sentiment_analysis_to_airline(chosen_airline_id)
     print(sentiment_analysis_to_airline)
 
@@ -44,4 +45,15 @@ def analyze_topics(chosen_airline_id):
     topic_sentiment_to_airline = topic_classification.topic_single_sentiment_to_airline(chosen_airline_id)
     print(topic_sentiment_to_airline)
 
-analyze_topics(chosen_airline_id)
+# analyze_topics(chosen_airline_id)
+
+def topic_sentiment_plotting():
+    topic_sentiment_plots.stacked_bar_chart_topic_sentiment(1)  # Topic stacked bar chart British
+    topic_sentiment_plots.stacked_bar_chart_topic_sentiment(2)  # Topic stacked bar char Virgin
+    topic_sentiment_plots.pie_chart_topic(1)                    # Topic pie chart British
+    topic_sentiment_plots.pie_chart_topic(2)                    # Topic pie chart Virgin
+
+    # Sentiment stacked bar chart
+    topic_sentiment_plots.stacked_bar_chart_sentiment(topic_sentiment_plots.sentiment_from_airlines)
+
+# topic_sentiment_plotting()

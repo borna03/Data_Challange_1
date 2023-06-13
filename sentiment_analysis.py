@@ -48,7 +48,8 @@ def sentiment_analysis_to_airline(id_str):
     error_count = 0
 
     # Find all tweets for which the airline is mentioned (@) or is replied to:
-    query = {'$or': [{'in_reply_to_user_id_str': id_str}, {'entities.user_mentions': {'$elemMatch': {'id_str': id_str}}}]}
+    query = {
+        '$or': [{'in_reply_to_user_id_str': id_str}, {'entities.user_mentions': {'$elemMatch': {'id_str': id_str}}}]}
 
     print(f'Expected amount of iterations/tweets: {collection.count_documents(query)}')
 
@@ -90,6 +91,14 @@ def sentiment_analysis_to_airline(id_str):
                 sentiment_counter[label] += 1
             else:
                 sentiment_counter[label] = 1
+
+            # Put sentiment label as value of 'sentiment' key
+            print(text)
+            print(label)
+            print('\n')
+            newvalues = {'$set': {'sentiment': label}}
+            collection.update_one(tweet, newvalues)
+
         # There was a single error in the middle of the run somewhere, so print error and continue the loop
         except Exception as e:
             print(e)
@@ -121,6 +130,20 @@ def sentiment_analysis_to_airline(id_str):
     elapsed_time = end_time - start_time
     print("Time: ", elapsed_time)
     print("Time/Item: ", elapsed_time / total_count)
+
+    with open('zzAnalysisLogs.txt', 'a') as f:
+        print(f'Airline (TO) id: {id_str}', file=f)
+        print('\n')
+
+        print(f'Error count: {error_count}', file=f)
+        print('\n')
+
+        print(f'Total lines: {total_count}', file=f)
+        print(sentiment_counter, file=f)
+        print('\n')
+
+        print("Time: ", elapsed_time, file=f)
+
 
 def sentiment_analysis_from_airline(id_str):
     """
@@ -196,6 +219,11 @@ def sentiment_analysis_from_airline(id_str):
                 sentiment_counter[label] += 1
             else:
                 sentiment_counter[label] = 1
+
+            # Put sentiment label as value of 'sentiment' key
+            newvalues = {'$set': {'sentiment': label}}
+            collection.update_one(tweet, newvalues)
+
         # There was a single error in the middle of the run somewhere, so print error and continue the loop
         except Exception as e:
             print(e)
@@ -235,3 +263,16 @@ def sentiment_analysis_from_airline(id_str):
     except:
         # Don't do anything if total_count = 0; Airberlin and Airberlin assist tweeted 0 tweets themselves
         None
+
+    with open('zzAnalysisLogs.txt', 'a') as f:
+        print(f'Airline (FROM) id: {id_str}', file=f)
+        print('\n')
+
+        print(f'Error count: {error_count}', file=f)
+        print('\n')
+
+        print(f'Total lines: {total_count}', file=f)
+        print(sentiment_counter, file=f)
+        print('\n')
+
+        print("Time: ", elapsed_time, file=f)

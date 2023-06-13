@@ -105,6 +105,10 @@ def topic_single_sentiment_to_airline(id_str):
                 label = 'uncertain'
                 unc_sent += 1
 
+            # Put sentiment label as value of 'sentiment' key
+            newvalues_sent = {'$set': {'sentiment': label}}
+            collection.update_one(doc, newvalues_sent)
+
             # Counter - Nested dictionary with topics and sentiments (no topic cutoff)
             if topic in topic_count_before:
                 topic_count_before[topic][label] += 1
@@ -117,6 +121,10 @@ def topic_single_sentiment_to_airline(id_str):
             # Implement cutoff value for topics
             topic = cutoff_value(probabilities)
 
+            # Put topic classification as value of 'topic' key
+            newvalues_topic = {'$set': {'topic': topic}}
+            collection.update_one(doc, newvalues_topic)
+
             # Counter - Nested dictionary with topics and sentiments (with topic cutoff)
             if topic in topic_count_after:
                 topic_count_after[topic][label] += 1
@@ -124,6 +132,7 @@ def topic_single_sentiment_to_airline(id_str):
                 sentiment_count_after: dict = {'positive': 0, 'negative': 0, 'neutral': 0, 'uncertain': 0}
                 sentiment_count_after[label] += 1
                 topic_count_after[topic] = sentiment_count_after
+
         # There was a single error in the middle of the run somewhere, so print error and continue the loop
         except Exception as e:
             print(e)
@@ -156,6 +165,19 @@ def topic_single_sentiment_to_airline(id_str):
     elapsed_time = end_time - start_time
     print("Time: ", elapsed_time)
     print("Time/Item: ", elapsed_time / total_count)
+
+    with open('zzAnalysisLogs.txt', 'a') as f:
+        print(f'Airline (TO) id: {id_str}', file=f)
+        print('\n')
+
+        print(f'Error count: {error_count}', file=f)
+        print('\n')
+
+        print(f'Total lines: {total_count}', file=f)
+        print(topic_count_after, file=f)
+        print('\n')
+
+        print("Time: ", elapsed_time, file=f)
 
 def topic_single_sentiment_from_airline(id_str):
     """
@@ -234,6 +256,10 @@ def topic_single_sentiment_from_airline(id_str):
                 label = 'uncertain'
                 unc_sent += 1
 
+            # Put sentiment label as value of 'sentiment' key
+            newvalues_sent = {'$set': {'sentiment': label}}
+            collection.update_one(doc, newvalues_sent)
+
             # Counter - Nested dictionary with topics and sentiments (no topic cutoff)
             if topic in topic_count_before:
                 topic_count_before[topic][label] += 1
@@ -246,6 +272,10 @@ def topic_single_sentiment_from_airline(id_str):
             # Implement cutoff value for topics
             topic = cutoff_value(probabilities)
 
+            # Put topic classification as value of 'topic' key
+            newvalues_topic = {'$set': {'topic': topic}}
+            collection.update_one(doc, newvalues_topic)
+
             # Counter - Nested dictionary with topics and sentiments (with topic cutoff)
             if topic in topic_count_after:
                 topic_count_after[topic][label] += 1
@@ -253,7 +283,8 @@ def topic_single_sentiment_from_airline(id_str):
                 sentiment_count_after: dict = {'positive': 0, 'negative': 0, 'neutral': 0, 'uncertain': 0}
                 sentiment_count_after[label] += 1
                 topic_count_after[topic] = sentiment_count_after
-        # There was a single error in the middle of the run somewhere, so print error and continue the loop
+
+            # There was a single error in the middle of the run somewhere, so print error and continue the loop
         except Exception as e:
             print(e)
             error_count += 1
@@ -285,3 +316,16 @@ def topic_single_sentiment_from_airline(id_str):
     elapsed_time = end_time - start_time
     print("Time: ", elapsed_time)
     print("Time/Item: ", elapsed_time / total_count)
+
+    with open('zzAnalysisLogs.txt', 'a') as f:
+        print(f'Airline (FROM) id: {id_str}', file=f)
+        print('\n')
+
+        print(f'Error count: {error_count}', file=f)
+        print('\n')
+
+        print(f'Total lines: {total_count}', file=f)
+        print(topic_count_after, file=f)
+        print('\n')
+
+        print("Time: ", elapsed_time, file=f)

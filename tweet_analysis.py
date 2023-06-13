@@ -4,9 +4,9 @@ import data_cleaning
 import sentiment_analysis
 import topic_classification
 import topic_sentiment_plots
+import create_conversations
 
-chosen_airline_id = "22536055"
-
+chosen_airline_id = '20626359'
 
 # Function to analyze airline tweets
 def analyze_airline_tweets(chosen_airline_id):
@@ -31,8 +31,8 @@ def analyze_airline_tweets(chosen_airline_id):
 # analyze_airline_tweets(chosen_airline_id)
 
 def analyze_sentiment(chosen_airline_id):
-    # sentiment_analysis_from_airline = sentiment_analysis.sentiment_analysis_from_airline(chosen_airline_id)
-    # print(sentiment_analysis_from_airline)
+    sentiment_analysis_from_airline = sentiment_analysis.sentiment_analysis_from_airline(chosen_airline_id)
+    print(sentiment_analysis_from_airline)
     sentiment_analysis_to_airline = sentiment_analysis.sentiment_analysis_to_airline(chosen_airline_id)
     print(sentiment_analysis_to_airline)
 
@@ -45,8 +45,13 @@ def analyze_topics(chosen_airline_id):
     topic_sentiment_to_airline = topic_classification.topic_single_sentiment_to_airline(chosen_airline_id)
     print(topic_sentiment_to_airline)
 
-
 # analyze_topics(chosen_airline_id)
+
+def set_keys(key1, key2, value):
+    create_conversations.set_new_column(key1, value)
+    create_conversations.set_new_column(key2, value)
+
+# set_keys('sentiment', 'topic', null)
 
 def topic_sentiment_plotting():
     topic_sentiment_plots.stacked_bar_chart_topic_sentiment(1)  # Topic stacked bar chart British
@@ -59,4 +64,4 @@ def topic_sentiment_plotting():
     # Sentiment multiple bar chart values
     topic_sentiment_plots.multiple_bar_chart_sentiment_numbers(topic_sentiment_plots.sentiment_to_airlines)
 
-topic_sentiment_plotting()
+# topic_sentiment_plotting()

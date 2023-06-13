@@ -82,3 +82,40 @@ def clean():
         end_time = time.time()
         elapsed_time = end_time - start_time
         print("Time: ", elapsed_time, file_name)
+
+
+# Removes all deleted tweets and duplicates and indexes id_str if necessary
+def clean_2(coll):
+    delete_duplicates(coll)
+    delete_deleted(coll)
+    indices = collection.list_indexes()
+    for index in indices:
+        if 'id_str' in index.get('key'):
+            print('id_str is already an index')
+            return
+    print('Indexing id_str')
+    collection.create_index("id_str", unique=True)
+
+
+# Deletes all duplicates based on id_str
+def delete_duplicates(coll):
+    print('Start removing duplicates')
+    # Get all documents with a duplicate id_str
+    pipeline = [
+        {"$group": {"_id": "$id_str", "count": {"$sum": 1}, "ids": {"$push": "$_id"}}},
+        {"$match": {"_id": {"$ne": None}, "count": {"$gt": 1}}}
+    ]
+    duplicates = coll.aggregate(pipeline)
+
+    # Delete all but one for every duplicate
+    result = coll.delete_many({"_id": {"$in": [_id for duplicate in duplicates for _id in duplicate['ids'][1:]]}})
+    print("Deleted duplicates:", result.deleted_count)
+
+
+# Deletes all documents that are deleted tweets
+def delete_deleted(coll):
+    # Get all documents with a duplicate id_str and delete them
+    print('Start removing deleted tweets')
+    duplicates = coll.find({"id_str": None})
+    result = coll.delete_many({"_id": {"$in": [duplicate['_id'] for duplicate in duplicates]}})
+    print("Deleted count:", result.deleted_count)

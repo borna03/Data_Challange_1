@@ -5,6 +5,29 @@ import heapq
 import time
 
 
+# Compilation function
+def add_conversations():
+    absolute_start = time.time()
+    start_time = time.time()
+    add_replies()
+    end_time = time.time()
+    print(f"add_replies finished in {round((end_time-start_time)/60, 2)} minutes")
+    start_time = end_time
+    general_conversations()
+    end_time = time.time()
+    print(f"general_conversations finished in {round((end_time-start_time)/60, 2)} minutes")
+    start_time = end_time
+    subdivide_conversations()
+    end_time = time.time()
+    print(f"subdivide_conversations finished in {round((end_time-start_time)/60, 2)} minutes")
+    start_time = end_time
+    subdivide_large_conversation(109384)
+    subdivide_large_conversation(289444)
+    end_time = time.time()
+    print(f"subdivide_large_conversation finished in {round((end_time-start_time)/60, 2)} minutes")
+    print(f"Total runtime: {round((end_time-absolute_start)/60, 2)} minutes")
+
+
 # Function to (re)set a column
 def set_new_column(column_name, column_value):
     print('Cleaning/Creating ' + column_name + " column")
@@ -19,26 +42,25 @@ def add_replies():
     set_new_column('replies', [])
 
     # Initialise needed variables
+    print('Getting tweets')
     tweets = collection.find()
     replies = {}
     bulk_updates = []
-
-    # Start timer
-    print('Starting calculation')
-    start_time = time.time()
+    count = 0
 
     # Iterate over documents and make a list containing for every tweet the tweets that reply to them
-    count = 0
+    print('Starting calculation')
     for tweet in tweets:
         # See if the tweet is a reply and add it to the tweet that it is a reply to
         if tweet['in_reply_to_status_id_str'] is not None:
             replies.setdefault(tweet['in_reply_to_status_id_str'], []).append(
                 tweet['id_str'])
         count += 1
-        if count % 10000 == 0:
+        if count % 100000 == 0:
             print('Amount of documents handled: ' + str(count))
 
     # Define all update operations needed
+    print('Defining update operations')
     for key, value in replies.items():
         filter = {"id_str": {"$eq": key}}
         update_operation = {"$push": {"replies": {"$each": value}}}
@@ -47,80 +69,114 @@ def add_replies():
 
     # Perform the bulk write operation
     print('Doing the bulk update now')
-    start_time_write = time.time()
     collection.bulk_write(bulk_updates)
-    end_time = time.time()
-    calc_time = start_time_write - start_time
-    write_time = end_time - start_time_write
-    total_time = end_time - start_time
-    print(f"Calc time: {calc_time} seconds")
-    print(f"Write time: {write_time} seconds")
-    print(f"Total time: {total_time} seconds")
     print('Done')
+
+
+# For very large conversations
+def subdivide_large_conversation(conversation_id):
+    print('Getting conversations')
+    conversation = collection.find({'conversation_id': conversation_id})
+    convo = []
+    print('Assembling convo')
+    for tweet in conversation:
+        convo.append(tweet)
+
+    print('Finding sub-conversations')
+    bulk_updates = subdivide_conversation(convo)
+    print('Updating database')
+    collection.bulk_write(bulk_updates)
 
 
 # Function to create the sub-conversations
 def subdivide_conversations():
+    # Create/Clean the sub-conversation_id column
+    start_time = time.time()
+    set_new_column('sub-conversation_id', [])
+
     # Gather all conversations grouped by conversation_id
-    pipeline = [{
-        "$group": {
-            "_id": "$conversation_id",
-            "tweets": {"$push": "$$ROOT"}
-        }}]
+    pipeline = [
+        {"$match": {"conversation_id": {"$nin": [0, 109384, 289444]}}},
+        {"$group": {"_id": "$conversation_id", "tweets": {"$push": "$$ROOT"}}}
+    ]
+
+    print('Retrieving all conversations')
     conversations = collection.aggregate(pipeline)
 
     # Initialise bulk_updates
     bulk_updates = []
 
     # Loop over all general conversations
+    print('Subdividing conversations')
+    start_time = time.time()
+    counter = 0
+    convo_time = time.time()
     for convo in conversations:
-        # Get the levels and chain of every leaf tweet in the conversation
-        tweets = {tweet['id_str']: tweet['in_reply_to_status_id_str'] for tweet in convo}
-        tweet_info = determine_levels(convo, tweets)
-        subconversation_id = 1
+        bulk_updates.extend(subdivide_conversation(convo['tweets']))
+        counter += 1
+        if counter % 50000 == 0:
+            print(f"Finished {format(counter, ',')}/372,362 conversations")
+            print(f"Batch completed in {round(time.time() - convo_time, 2)} seconds")
+            convo_time = time.time()
 
-        # Loop over all tweets in the conversation
-        for tweet in convo:
-
-            # Check if it is a leaf node and if it isn't handled
-            if not tweet['replies'] and tweet_info[tweet['id_str']]['handled'] is False:
-                subconvo_tweets = []
-                # Add all tweets on the same level that reply to the same tweet to the same conversation
-                for key, value in tweet_info:
-                    if value['level'] == tweet_info[tweet['id_str']]['level'] and \
-                            tweets[tweet['id_str']] == tweets[tweet[key]]:
-                        subconvo_tweets.append(key)
-                        value['handled'] = True
-
-                subconvo_tweets.extend(tweets[tweet['id_str']])
-                filter = {"id_str": {'$in': subconvo_tweets}}
-                update_operation = {"$set": {"sub-conversation_id": subconversation_id}}
-                update = UpdateOne(filter, update_operation)
-                bulk_updates.append(update)
-                subconversation_id += 1
-
+    # Perform the update
+    print('Performing the update')
     collection.bulk_write(bulk_updates)
+    end_time = time.time()
+    print(f"Finished updates in {round(end_time-convo_time, 2)} seconds")
+    print(f"Total process time: {round((end_time-start_time)/60, 2)} minutes")
 
 
-# Determine the levels of the tweets in a given conversation
-def determine_levels(conversation, tweet_chain):
-    levels = {}
+# Finds the sub-conversations in a conversation and outputs the update operation
+def subdivide_conversation(convo):
+    # Get the levels and chain of every leaf tweet in the conversation
+    tweets = {tweet['id_str']: tweet['in_reply_to_status_id_str'] for tweet in convo}
+    leaf_nodes = get_convo_info(convo, tweets)
+    subconversation_id = 1
+    bulk_updates = []
+
+    # Loop over all tweets in the conversation
+    for leaf_id, leaf in leaf_nodes.items():
+        # Check if leaf is handled
+        if leaf['handled'] is False:
+            # Add all tweets in the tweet chain
+            subconvo_tweets = leaf['chain']
+
+            # Add all tweets on the same level that reply to the same tweet
+            for key, value in leaf_nodes.items():
+                if value['level'] == leaf['level'] and tweets[leaf_id] == tweets[key] and leaf_id != key:
+                    subconvo_tweets.append(key)
+                    value['handled'] = True
+
+            # Add the update operation to bulk_updates
+            filter = {"id_str": {'$in': subconvo_tweets}}
+            update_operation = {"$push": {"sub-conversation_id": subconversation_id}}
+            update = UpdateMany(filter, update_operation)
+            bulk_updates.append(update)
+            subconversation_id += 1
+    return bulk_updates
+
+
+# Gets general information about all tweets in a conversation
+def get_convo_info(conversation, tweets):
+    info = {}
     for tweet in conversation:
+        # Only handle if it is a leaf node
         if not tweet['replies']:
-            levels[tweet['id_str']]['level'] = levels_count(tweet_chain, tweet["id_str"], 0)
-            levels[tweet['id_str']]['chain'] = get_tweet_chain(tweet_chain, tweet['id_str'])
-            levels[tweet['id_str']]['handled'] = False
-    return levels
+            info[tweet['id_str']] = {}
+            info[tweet['id_str']]['level'] = levels_count(tweets, tweet["id_str"], 0)
+            info[tweet['id_str']]['chain'] = get_tweet_chain(tweets, tweet['id_str'])
+            info[tweet['id_str']]['handled'] = False
+    return info
 
 
 # Get all tweets in a chain (given a leaf node)
-def get_tweet_chain(tweet_chain, id_str):
+def get_tweet_chain(tweets, id_str):
     if id_str is None:
         return []
     else:
         chain = [id_str]
-        if tweet_chain.get(id_str):
-            chain.extend(get_tweet_chain(tweet_chain, tweet_chain.get(id_str)))
+        chain.extend(get_tweet_chain(tweets, tweets.get(id_str)))
         return chain
 
 
@@ -132,83 +188,69 @@ def levels_count(tweet_chain, id_str, level):
         return levels_count(tweet_chain, tweet_chain[id_str], level) + 1
 
 
-# Add the general conversation id
-def general_conversation():
-    # Clean/Create the conversation_id column
+# Function for defining general conversations
+def general_conversations():
+    # Creating/Cleaning conversation_id column
     set_new_column('conversation_id', 0)
 
-    # Get all tweets
-    print('Getting tweets')
-    tweets = collection.find()
+    # Getting all roots
+    print('Getting roots')
+    root_tweets = collection.find({'in_reply_to_status_id_str': None})
 
-    # Initialise needed variables
+    # Initialising needed variables
+    roots = 372362
     conversations = {}
-    seen_tweets = []
-    bulk_updates = []
-    conversation_id = 1
-    counter = 0
     start_time = time.time()
-    tweet_time = start_time
+    convo_start_time = start_time
+    counter = 0
+    total = 0
 
-    # Evaluate every tweet and its replies, and add it to the dictionary
-    for tweet in tweets:
-        # Initialise tracking variables
-        active_tweets = tweet['replies'] + [tweet['id_str']]
-        unseen_tweets = sorted(active_tweets)
-        matching_keys = []
-
-        # Check if we've already handled one of the tweets/replies and get its conversation_id
-        for id_str in active_tweets:
-            if id_str in seen_tweets:
-                keys = [key for key, value in conversations.items() if tweet['id_str'] in value]
-                matching_keys.extend(list(set(keys) - set(matching_keys)))
-                unseen_tweets.remove(id_str)
-
-        # If we've not seen the tweets before make a new entry and up the conversation_id
-        if len(matching_keys) == 0:
-            conversations[conversation_id] = active_tweets
-            conversation_id += 1
-
-        # If one of the tweets is in another conversation, add all active tweets to that conversation
-        elif len(matching_keys) == 1:
-            conversations[matching_keys[0]].extend(list(set(active_tweets) - set(conversations[matching_keys[0]])))
-        elif len(matching_keys) > 1:
-            seen_id = matching_keys[0]
-            conversations[seen_id].extend(list(set(active_tweets) - set(conversations[seen_id])))
-            for key in matching_keys[1:]:
-                conversations[seen_id].extend(list(set(conversations[key]) - set(conversations[seen_id])))
-                del conversations[key]
-
-        # Add previously unseen tweets to the seen_tweets list
-        seen_tweets = list(heapq.merge(seen_tweets, unseen_tweets))
+    # Getting general conversation for every root
+    print('Getting conversations (batches of 10.000)')
+    for root in root_tweets:
+        # Getting general conversation
+        conversations[root['id_str']] = build_conversation_chain(root, [])
         counter += 1
         if counter % 10000 == 0:
-            current_time = time.time()
-            handle_time = current_time - tweet_time
-            tweet_time = current_time
-            print(f"Batch handle time: {handle_time} seconds")
-            print('Handled tweets: ' + str(counter))
+            convo_end_time = time.time()
+            convo_time = round((convo_end_time - convo_start_time), 2)
+            convo_start_time = convo_end_time
+            total += convo_time
+            print(f"Conversations found: {format(counter, ',')} out of {format(roots, ',')} possible conversations")
+            print(f"Batch time: {convo_time} seconds")
+            print(f"Estimated time left for conversation finding: "
+                  f"{round((((roots-counter)/10000)*(total/(counter/10000)))/60, 2)} minutes")
+            print("-----------------------")
 
-    # Define all update operations needed
-    print('Adding update operations')
-    start_write_time = time.time()
-    for key, value in conversations.items():
-        filter = {"id_str": {"$in": value}}
-        update_operation = {"$set": {"conversation_id": key}}
+    print('Creating update operations')
+    conversation_id = 1
+    bulk_updates = []
+    for root, replies in conversations.items():
+        # Convert to a list of id's
+        id_list = [root] + [reply for reply in replies]
+
+        # Add an update operation to bulk_updates
+        filter = {"id_str": {"$in": id_list}}
+        update_operation = {"$set": {"conversation_id": conversation_id}}
         update = UpdateMany(filter, update_operation)
         bulk_updates.append(update)
 
-    # Perform bulk update
-    print('Performing updates')
-    collection.bulk_write(bulk_updates)
+        # Up the conversation_id
+        conversation_id += 1
+
     end_time = time.time()
-    calc_time = start_write_time - start_time
-    write_time = end_time - start_write_time
-    total_time = end_time - start_time
-    print(f"Calc time: {calc_time} seconds")
-    print(f"Write time: {write_time} seconds")
-    print(f"Total time: {total_time} seconds")
-    print('Done')
+    print(f"Found {conversation_id} conversations in {round(((end_time - start_time) / 60), 2)} minutes")
+    print('Performing update operations')
+    collection.bulk_write(bulk_updates)
+    print(f'Finish entire process in {round(((time.time() - start_time)/60), 2)} minutes')
 
 
+# Function for recursively finding general conversations
+def build_conversation_chain(tweet, convo_chain):
+    # For every reply get the replies and add them to the chain
+    for reply_id in tweet['replies']:
+        reply = collection.find_one({'id_str': reply_id})
+        convo_chain.append(reply_id)
+        build_conversation_chain(reply, convo_chain)
+    return convo_chain
 

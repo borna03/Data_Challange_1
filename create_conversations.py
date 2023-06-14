@@ -1,7 +1,5 @@
 from pymongo import UpdateOne, UpdateMany
 from data_load import *
-import pandas as pd
-import heapq
 import time
 
 

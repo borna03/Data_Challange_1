@@ -1,0 +1,105 @@
+Amount of total data per category:
+BaggageAndSecurity: 216
+FlightExperience: 104
+CustomerService: 50
+
+[[56  0  0]
+ [ 3  7  0]
+ [22  0  5]]
+
+Accuracy of Logistic Regression on TfIdf Vectorizer data: 73.11827956989248%
+
+                                                                                                           Text          Actual Topic       Predicted Topic
+0                                           I had to wait a long time for my baggage to arrive at the carousel.  Baggage and Security  Baggage and Security
+1                                   The security screening process was quick and efficient. Kudos to the staff!  Baggage and Security  Baggage and Security
+2                                          One of my checked bags was damaged during the flight. Disappointing.     Flight Experience  Baggage and Security
+3                       The flight attendants were helpful in assisting passengers with their carry-on luggage.  Baggage and Security  Baggage and Security
+4                           The security personnel were friendly and made the screening process less stressful.     Flight Experience     Flight Experience
+5                                The airline provided secure locks for checked baggage, ensuring peace of mind.  Baggage and Security  Baggage and Security
+6                          The overhead compartments were spacious, allowing for easy storage of carry-on bags.  Baggage and Security  Baggage and Security
+7                                 The security announcement emphasized the importance of following regulations.  Baggage and Security  Baggage and Security
+8                                               The baggage claim area was well-organized and easy to navigate.  Baggage and Security  Baggage and Security
+9                              The flight attendants helped passengers stow their luggage in the overhead bins.     Flight Experience  Baggage and Security
+10                        The security checkpoint had separate lines for families, making the process smoother.  Baggage and Security  Baggage and Security
+11                                     The airline had strict baggage weight limits and enforced them strictly.  Baggage and Security  Baggage and Security
+12                   The cabin crew made announcements reminding passengers to keep their bags securely stowed.     Flight Experience     Flight Experience
+13                                     The security screening included advanced technology for enhanced safety.     Flight Experience     Flight Experience
+14                                             The baggage handlers were careful and handled luggage with care.  Baggage and Security  Baggage and Security
+15                      The flight attendants offered assistance to passengers who needed help with their bags.  Baggage and Security  Baggage and Security
+16                          The security personnel conducted thorough checks while maintaining professionalism.  Baggage and Security  Baggage and Security
+17                               The airline provided clear guidelines on restricted items in carry-on baggage.  Baggage and Security  Baggage and Security
+18                      The cabin crew monitored the overhead compartments to ensure they were not overcrowded.     Flight Experience  Baggage and Security
+19                              The security checkpoint had designated lanes for passengers with special needs.  Baggage and Security  Baggage and Security
+20                                        The baggage delivery at the arrival airport was prompt and efficient.  Baggage and Security  Baggage and Security
+21                                 The flight attendants offered storage solutions for oversized carry-on bags.     Flight Experience  Baggage and Security
+22                                          The security staff maintained a friendly and approachable demeanor.     Flight Experience  Baggage and Security
+23                            The airline provided bag tags to ensure proper identification of checked luggage.      Customer Service      Customer Service
+24                          The cabin crew offered help to passengers who had difficulty retrieving their bags.  Baggage and Security  Baggage and Security
+25                           The security screening process was thorough but respectful of passengers' privacy.  Baggage and Security  Baggage and Security
+26                             The baggage carts were readily available at the airport for easy transportation.     Flight Experience  Baggage and Security
+27              The flight attendants reminded passengers to keep their bags securely stored during the flight.  Baggage and Security  Baggage and Security
+28                       The security personnel conducted random checks to ensure the safety of all passengers.      Customer Service      Customer Service
+29                               The baggage handling system at the airport was well-organized and streamlined.  Baggage and Security  Baggage and Security
+30                    The airline had strict carry-on baggage size restrictions and enforced them consistently.  Baggage and Security  Baggage and Security
+31                                The cabin crew directed passengers to available storage space for their bags.  Baggage and Security  Baggage and Security
+32                            The security checkpoint had separate lanes for pre-check and TSA Pre? passengers.     Flight Experience  Baggage and Security
+33                                       The baggage drop-off process was efficient, with minimal waiting time.     Flight Experience  Baggage and Security
+34             The flight attendants helped passengers retrieve their bags from the overhead bins upon arrival.     Flight Experience  Baggage and Security
+35                               The security screening process included thorough checks of electronic devices.  Baggage and Security  Baggage and Security
+36                                    The baggage claim area had clear signage and instructions for passengers.  Baggage and Security  Baggage and Security
+37                     The cabin crew ensured that the aisles were clear of obstructive bags during the flight.     Flight Experience  Baggage and Security
+38               The security personnel provided clear instructions to passengers during the screening process.  Baggage and Security  Baggage and Security
+39                                             The airline offered baggage tracking services for peace of mind.  Baggage and Security  Baggage and Security
+40                The flight attendants assisted passengers in organizing their belongings before disembarking.  Baggage and Security  Baggage and Security
+41           The security checkpoint had separate lanes for passengers with medical conditions or disabilities.  Baggage and Security  Baggage and Security
+42                            The baggage handling system had automated tracking for efficient baggage routing.  Baggage and Security  Baggage and Security
+43                                           The airline had designated areas for oversized or fragile baggage.  Baggage and Security  Baggage and Security
+44                           The cabin crew reminded passengers not to leave their bags unattended at any time.  Baggage and Security  Baggage and Security
+45             The security personnel were vigilant in detecting prohibited items during the screening process.     Flight Experience  Baggage and Security
+46                             The baggage claim area had staff available to assist passengers with any issues.     Flight Experience  Baggage and Security
+47                The flight attendants provided updates on the estimated time of arrival for baggage delivery.      Customer Service  Baggage and Security
+48                      The security screening process included the use of trained dogs for enhanced detection.  Baggage and Security  Baggage and Security
+49                                     The baggage carts were easily accessible and free to use at the airport.  Baggage and Security  Baggage and Security
+50                        The airline offered self-tagging options for checked baggage to expedite the process.  Baggage and Security  Baggage and Security
+51                    The cabin crew reminded passengers to double-check the overhead bins before disembarking.     Flight Experience  Baggage and Security
+52                      The security checkpoint had dedicated lanes for frequent flyers and premium passengers.      Customer Service  Baggage and Security
+53                     The baggage handling system had backup measures in place to prevent loss or mishandling.     Flight Experience  Baggage and Security
+54                   The flight attendants assisted passengers in retrieving their bags from the overhead bins.  Baggage and Security  Baggage and Security
+55                 The security personnel maintained a professional and respectful attitude towards passengers.      Customer Service      Customer Service
+56                          The airline had clear policies on prohibited items in checked and carry-on baggage.  Baggage and Security  Baggage and Security
+57                            The cabin crew ensured that the exit rows were clear of any bags or obstructions.  Baggage and Security  Baggage and Security
+58                                 The security screening process included body scanners for enhanced security.  Baggage and Security  Baggage and Security
+59               The baggage claim area had accessible ramps and elevators for passengers with mobility issues.  Baggage and Security  Baggage and Security
+60             The flight attendants offered assistance to passengers who needed help with heavy or bulky bags.  Baggage and Security  Baggage and Security
+61                                    The security checkpoint had designated lanes for international travelers.  Baggage and Security  Baggage and Security
+62        The baggage handling system had efficient processes for transferring bags between connecting flights.  Baggage and Security  Baggage and Security
+63       The airline provided clear instructions on how to handle fragile or valuable items in checked baggage.     Flight Experience  Baggage and Security
+64              The cabin crew reminded passengers to remove all personal belongings from the seatback pockets.     Flight Experience  Baggage and Security
+65         The security personnel were trained to handle sensitive situations with professionalism and empathy.     Flight Experience  Baggage and Security
+66                                       The baggage carts at the airport were equipped with brakes for safety.  Baggage and Security  Baggage and Security
+67                   The flight attendants kept the aisles clear of bags and other obstacles during the flight.  Baggage and Security  Baggage and Security
+68                                 The security screening process included random pat-downs for added security.      Customer Service  Baggage and Security
+69  The baggage claim area had staff available to assist passengers with oversized or irregularly shaped items.  Baggage and Security  Baggage and Security
+70                                   The airline had dedicated baggage drop-off counters for expedited service.  Baggage and Security  Baggage and Security
+71                      The cabin crew ensured that the emergency exits were clear of any bags or obstructions.     Flight Experience  Baggage and Security
+72                    The security personnel conducted thorough checks of liquids and gels in carry-on baggage.  Baggage and Security  Baggage and Security
+73                    The baggage handling system had efficient sorting mechanisms for quick baggage retrieval.  Baggage and Security  Baggage and Security
+74        The flight attendants provided assistance to passengers with limited mobility in handling their bags.      Customer Service      Customer Service
+75                    The security checkpoint had separate lanes for passengers with infants or small children.  Baggage and Security  Baggage and Security
+76                       The baggage claim area had designated areas for oversized or irregularly shaped items.     Flight Experience     Flight Experience
+77                                  The airline had clear policies on compensation for lost or damaged baggage.     Flight Experience  Baggage and Security
+78                     The cabin crew reminded passengers to take their belongings with them when disembarking.      Customer Service      Customer Service
+79          The security personnel were trained to handle potential threats with vigilance and professionalism.     Flight Experience     Flight Experience
+80                                       The baggage carts at the airport had adequate space for multiple bags.  Baggage and Security  Baggage and Security
+81         The flight attendants assisted passengers in locating their bags in the overhead bins upon boarding.  Baggage and Security  Baggage and Security
+82              The security screening process included the use of X-ray scanners for efficient baggage checks.      Customer Service      Customer Service
+83                           The baggage claim area had a dedicated counter for reporting lost or damaged bags.  Baggage and Security  Baggage and Security
+84                                         The airline provided baggage wrapping services for added protection.  Baggage and Security  Baggage and Security
+85              The cabin crew ensured that the seat pockets were clear of any previous passengers' belongings.  Baggage and Security  Baggage and Security
+86                         The security personnel conducted random swab tests on bags for explosives detection.      Customer Service      Customer Service
+87                        The baggage handling system had clear signage for different flights and destinations.     Flight Experience  Baggage and Security
+88          The flight attendants coordinated with ground staff to ensure smooth baggage loading and unloading.     Flight Experience  Baggage and Security
+89                               The security checkpoint had separate lanes for passengers traveling with pets.  Baggage and Security  Baggage and Security
+90                The baggage claim area had trolleys available for convenient transportation of multiple bags.  Baggage and Security  Baggage and Security
+91                                      The airline had a dedicated baggage hotline for tracking and inquiries.     Flight Experience  Baggage and Security
+92                     The cabin crew reminded passengers to keep their bags securely stored during the flight.  Baggage and Security  Baggage and Security

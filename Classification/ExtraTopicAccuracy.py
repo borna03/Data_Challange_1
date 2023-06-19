@@ -7,7 +7,6 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix, accuracy_score, classification_report
-import random
 import eli5
 
 nltk.download('stopwords')
@@ -43,18 +42,22 @@ def load_classification_data():
 
     return combined_data
 
+
 def load_classification_data2():
     # Load the data in the labeled csv file as a pandas DataFrame
     csv_file = f'ClassificationData/HumanLabeledData.csv'
     data = pd.read_csv(csv_file, delimiter=',', header=0,
-                       usecols=['airline_sentiment', 'airline_sentiment_confidence', 'negativereason', 'negativereason_confidence', 'text'])
+                       usecols=['airline_sentiment', 'airline_sentiment_confidence', 'negativereason',
+                                'negativereason_confidence', 'text'])
     data.rename(columns={'negativereason': 'topic', 'negativereason_confidence': 'topic_confidence'}, inplace=True)
 
     # Masks (loc) to get the needed rows
-    data = data.loc[data['airline_sentiment'] == 'negative'].loc[data['airline_sentiment_confidence'] > 0.75].loc[data['topic_confidence'] > 0.75]
+    data = data.loc[data['airline_sentiment'] == 'negative'].loc[data['airline_sentiment_confidence'] > 0.75].loc[
+        data['topic_confidence'] > 0.75]
 
     # Reset index to start with 0, drop unneeded columns
-    cleaned_data = data.reset_index().drop(columns=['index', 'airline_sentiment', 'airline_sentiment_confidence', 'topic_confidence'])
+    cleaned_data = data.reset_index().drop(
+        columns=['index', 'airline_sentiment', 'airline_sentiment_confidence', 'topic_confidence'])
 
     # # Shuffle the data and assign arbitrary seed
     # cleaned_data = cleaned_data.sample(frac=1, random_state=random.randint(0, 1000))
@@ -71,6 +74,7 @@ def load_classification_data2():
 
     return cleaned_data
 
+
 def preprocess(text):
     new_text = []
     for t in text.split(" "):
@@ -79,13 +83,10 @@ def preprocess(text):
         new_text.append(t)
     return " ".join(new_text)
 
+
 def preprocess_data(combined_data):
     # Remove NaN values
     combined_data['text'].fillna('', inplace=True)
-
-    # Put sentences and labels into a list
-    sentences = combined_data['text'].tolist()
-    labels = combined_data['topic'].tolist()
 
     # Preprocessing for Vectorization
     lemmatizer = WordNetLemmatizer()
@@ -103,7 +104,7 @@ def preprocess_data(combined_data):
         review = ' '.join(review)
         corpus.append(review)
 
-    return sentences, labels, corpus
+    return corpus
 
 
 def train_classifier(corpus, combined_data):
@@ -121,7 +122,7 @@ def train_classifier(corpus, combined_data):
     return tfidf, lr_classifier, y_test, X_test
 
 
-def classify_tweets(lr_classifier, tfidf, y_test, X_test, combined_data):
+def classify_tweets(lr_classifier, tfidf, y_test, X_test, combined_data, data_type):
     # Predict topic
     lr_y_pred = lr_classifier.predict(X_test)
 
@@ -137,13 +138,18 @@ def classify_tweets(lr_classifier, tfidf, y_test, X_test, combined_data):
     # Accuracy test & Other evaluation metrics
     accuracy = accuracy_score(y_test, lr_y_pred)
     print(f'Accuracy of Logistic Regression on TfIdf Vectorizer data {accuracy * 100}%')
-    topics = ['Bad Flight', "Can't Tell", 'Cancelled Flight', 'Customer Service Issue', 'Damaged Luggage',
-              'Flight Attendant Complaints', 'Flight Booking Problems', 'Late Flight', 'Lost Luggage', 'longlines']
+    if data_type == 1:
+        topics = ['Baggage and Security', 'Customer Service', 'Flight Experience']
+    elif data_type == 2:
+        topics = ['Bad Flight', "Can't Tell", 'Cancelled Flight', 'Customer Service Issue', 'Damaged Luggage',
+                  'Flight Attendant Complaints', 'Flight Booking Problems', 'Late Flight', 'Lost Luggage', 'longlines']
+
     metrics = classification_report(y_test, lr_y_pred, target_names=topics)
     print(metrics)
 
     # Gets 20 most negative and 20 most positive weights for a given category
-    get_weights = eli5.explain_weights_df(estimator=lr_classifier, top=(20, 20), feature_names=list(tfidf.get_feature_names_out())).to_string()
+    get_weights = eli5.explain_weights_df(estimator=lr_classifier, top=(20, 20),
+                                          feature_names=list(tfidf.get_feature_names_out())).to_string()
 
     # Write confusion matrix, accuracy score and DataFrame into a text tile
     with open('Extra Topic Backup Results.txt', 'a') as f:
@@ -165,63 +171,70 @@ def classify_tweets(lr_classifier, tfidf, y_test, X_test, combined_data):
     return df_topic_pred, accuracy, lr_y_pred
 
 
-def run():
+def run(data_type):
     """
-    Run all functions for TF-IDF Vectorization + Logistic Regression accuracy test for the AI labeled tweets
+    Run all functions for TF-IDF Vectorization + Logistic Regression tests, either for AI generated or human labeled data.
+    :param data_type: for AI data, input 1, for human labeled data, input 2
+    :return: invalid input message, if applicable
     """
     # Load data into DataFrame
-    combined_data = load_classification_data()
+    if data_type == 1:
+        combined_data = load_classification_data()
+    elif data_type == 2:
+        combined_data = load_classification_data2()
+    else:
+        return 'Invalid input'
+
     print(combined_data)
 
     # Preprocess data (into corpus)
-    sentences, labels, corpus = preprocess_data(combined_data)
-    print(labels)
-    print(corpus)
+    corpus = preprocess_data(combined_data)
 
     # Train TF-IDF and Logistic Regression
     tfidf, lr_classifier, y_test, X_test = train_classifier(corpus, combined_data)
 
     # Predict topics
-    df_topic_pred, accuracy, lr_y_pred = classify_tweets(lr_classifier, tfidf, y_test, X_test, combined_data)
+    df_topic_pred, accuracy, lr_y_pred = classify_tweets(lr_classifier, tfidf, y_test, X_test, combined_data, data_type)
     print(df_topic_pred.to_string())
 
     # Show Vectorization weights
-    print(eli5.explain_weights_df(estimator=lr_classifier, top=(20, 20), feature_names=list(tfidf.get_feature_names_out())).to_string())
+    print(eli5.explain_weights_df(estimator=lr_classifier, top=(20, 20),
+                                  feature_names=list(tfidf.get_feature_names_out())).to_string())
 
-# run()
 
-def run2():
+# run(2)
+
+def accuracy_run(runs, data_type):
     """
-    Run all functions for TF-IDF Vectorization + Logistic Regression accuracy test for the human labeled tweets
+    Get average accuracy over multiple runs, either for AI generated or human labeled data.
+    :param runs: amount of runs to get an average accuracy from
+    :param data_type: for AI data, input 1, for human labeled data, input 2
     """
-    combined_data = load_classification_data2()
-    print(combined_data)
-    sentences, labels, corpus = preprocess_data(combined_data)
-    tfidf, lr_classifier, y_test, X_test = train_classifier(corpus, combined_data)
-    df_topic_pred, accuracy, lr_y_pred = classify_tweets(lr_classifier, tfidf, y_test, X_test, combined_data)
-    print(df_topic_pred.to_string())
 
-    print(eli5.explain_weights_df(estimator=lr_classifier, top=(20, 20), feature_names=list(tfidf.get_feature_names_out())).to_string())
-
-
-run2()
-
-def accuracy_run(runs):
     total_acc = 0
     count = 0
     for i in range(0, runs):
         count += 1
         # Load data into DataFrame
-        combined_data = load_classification_data2()
+        if data_type == 1:
+            combined_data = load_classification_data()
+        elif data_type == 2:
+            combined_data = load_classification_data2()
+        else:
+            return 'Invalid input'
+
+        print(combined_data)
 
         # Preprocess data (into corpus)
-        sentences, labels, corpus = preprocess_data(combined_data)
+        corpus = preprocess_data(combined_data)
 
         # Train TF-IDF and Logistic Regression
         tfidf, lr_classifier, y_test, X_test = train_classifier(corpus, combined_data)
 
         # Predict topics
-        df_topic_pred, accuracy, lr_y_pred = classify_tweets(lr_classifier, tfidf, y_test, X_test, combined_data)
+        df_topic_pred, accuracy, lr_y_pred = classify_tweets(lr_classifier, tfidf, y_test, X_test, combined_data,
+                                                             data_type)
+
         print(f'Accuracy: {accuracy}')
         total_acc += accuracy
 
@@ -229,4 +242,5 @@ def accuracy_run(runs):
     print(f'Accumulated accuracy: {total_acc}')
     print(f'Total iterations: {count}')
     print(f'Average accuracy: {total_acc / count}')
-# accuracy_run(5)
+
+accuracy_run(3, 2)

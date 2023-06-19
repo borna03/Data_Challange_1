@@ -14,35 +14,35 @@ Damaged Luggage                0.007831
 longlines                      0.007251
 Name: proportion, dtype: float64
 
-[[  0   2   0  28   0   0   0   5   0   0]
- [  0   7   0  46   0   0   0   2   0   0]
- [  0   0  89  10   0   0   0   3   0   0]
- [  0   0   3 340   0   0   0   7   2   0]
- [  0   0   0   5   0   0   0   0   2   0]
- [  0   0   0  12   0   6   0   6   0   0]
- [  0   0   0  21   0   0   0   0   0   0]
- [  0   0   0  45   0   0   0 119   0   0]
- [  0   1   1  58   0   0   0   3  32   0]
- [  0   0   0   5   0   0   0   1   1   0]]
+[[  0   3   0  31   0   0   0   3   1   0]
+ [  0   7   0  41   0   0   0   0   0   0]
+ [  0   0  88   6   0   0   0   1   0   0]
+ [  0   0   4 324   0   0   0   8   0   0]
+ [  0   0   0   1   0   0   0   0   0   0]
+ [  0   0   0  20   0   4   0   1   0   0]
+ [  0   0   1  20   0   0   1   0   0   0]
+ [  0   6   2  72   0   0   0 118   1   0]
+ [  0   0   0  64   0   0   0   3  24   0]
+ [  0   0   0   6   0   0   0   1   0   0]]
 
-Accuracy of Logistic Regression on TfIdf Vectorizer data: 68.79350348027842%
+Accuracy of Logistic Regression on TfIdf Vectorizer data: 65.66125290023201%
 
 Metrics: 
                              precision    recall  f1-score   support
 
-                 Bad Flight       0.00      0.00      0.00        35
-                 Can't Tell       0.70      0.13      0.22        55
-           Cancelled Flight       0.96      0.87      0.91       102
-     Customer Service Issue       0.60      0.97      0.74       352
-            Damaged Luggage       0.00      0.00      0.00         7
-Flight Attendant Complaints       1.00      0.25      0.40        24
-    Flight Booking Problems       0.00      0.00      0.00        21
-                Late Flight       0.82      0.73      0.77       164
-               Lost Luggage       0.86      0.34      0.48        95
+                 Bad Flight       0.00      0.00      0.00        38
+                 Can't Tell       0.44      0.15      0.22        48
+           Cancelled Flight       0.93      0.93      0.93        95
+     Customer Service Issue       0.55      0.96      0.70       336
+            Damaged Luggage       0.00      0.00      0.00         1
+Flight Attendant Complaints       1.00      0.16      0.28        25
+    Flight Booking Problems       1.00      0.05      0.09        22
+                Late Flight       0.87      0.59      0.71       199
+               Lost Luggage       0.92      0.26      0.41        91
                   longlines       0.00      0.00      0.00         7
 
-                   accuracy                           0.69       862
-                  macro avg       0.49      0.33      0.35       862
-               weighted avg       0.68      0.69      0.63       862
+                   accuracy                           0.66       862
+                  macro avg       0.57      0.31      0.33       862
+               weighted avg       0.70      0.66      0.61       862
 
 

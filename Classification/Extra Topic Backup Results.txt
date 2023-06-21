@@ -1,48 +1,39 @@
-Total amount of data points: 3448
+Total amount of data points: 3818
 
 Amount of data points per category:
 topic
-Customer Service Issue         0.383991
-Late Flight                    0.214327
-Cancelled Flight               0.118039
-Lost Luggage                   0.112529
-Can't Tell                     0.064675
-Flight Attendant Complaints    0.035093
-Bad Flight                     0.033933
-Flight Booking Problems        0.022332
-Damaged Luggage                0.007831
-longlines                      0.007251
+Customer Service Remarks    0.359874
+Delayed/Cancelled Flight    0.300157
+Luggage Problems            0.165270
+On-flight Problems          0.089576
+Can't Tell                  0.058408
+Flight Booking Problems     0.020168
+longlines                   0.006548
 Name: proportion, dtype: float64
 
-[[  0   3   0  31   0   0   0   3   1   0]
- [  0   7   0  41   0   0   0   0   0   0]
- [  0   0  88   6   0   0   0   1   0   0]
- [  0   0   4 324   0   0   0   8   0   0]
- [  0   0   0   1   0   0   0   0   0   0]
- [  0   0   0  20   0   4   0   1   0   0]
- [  0   0   1  20   0   0   1   0   0   0]
- [  0   6   2  72   0   0   0 118   1   0]
- [  0   0   0  64   0   0   0   3  24   0]
- [  0   0   0   6   0   0   0   1   0   0]]
+[[ 12  43   5   0   0   0   0]
+ [  2 322  14   0   1   1   0]
+ [  1  44 229   0   1   1   0]
+ [  0  16   0   0   0   0   0]
+ [  0  69  11   0 103   2   0]
+ [  1  37  10   0   5  22   0]
+ [  0   3   0   0   0   0   0]]
 
-Accuracy of Logistic Regression on TfIdf Vectorizer data: 65.66125290023201%
+Accuracy of Logistic Regression on TfIdf Vectorizer data: 72.04188481675394%
 
 Metrics: 
-                             precision    recall  f1-score   support
+                          precision    recall  f1-score   support
 
-                 Bad Flight       0.00      0.00      0.00        38
-                 Can't Tell       0.44      0.15      0.22        48
-           Cancelled Flight       0.93      0.93      0.93        95
-     Customer Service Issue       0.55      0.96      0.70       336
-            Damaged Luggage       0.00      0.00      0.00         1
-Flight Attendant Complaints       1.00      0.16      0.28        25
-    Flight Booking Problems       1.00      0.05      0.09        22
-                Late Flight       0.87      0.59      0.71       199
-               Lost Luggage       0.92      0.26      0.41        91
-                  longlines       0.00      0.00      0.00         7
+      On-flight problems       0.75      0.20      0.32        60
+  Customer Service Issue       0.60      0.95      0.74       340
+Delayed/Cancelled Flight       0.85      0.83      0.84       276
+ Flight Booking Problems       0.00      0.00      0.00        16
+        Luggage Problems       0.94      0.56      0.70       185
+              Can't tell       0.85      0.29      0.44        75
+              Long Lines       0.00      0.00      0.00         3
 
-                   accuracy                           0.66       862
-                  macro avg       0.57      0.31      0.33       862
-               weighted avg       0.70      0.66      0.61       862
+                accuracy                           0.72       955
+               macro avg       0.57      0.40      0.43       955
+            weighted avg       0.76      0.72      0.69       955
 
 

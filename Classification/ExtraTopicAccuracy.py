@@ -8,12 +8,14 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix, accuracy_score, classification_report
 import eli5
+from openpyxl import Workbook, load_workbook
 
 nltk.download('stopwords')
 nltk.download('wordnet')
 
-
+categories = []
 def load_classification_data():
+    global categories
     # Clean text file
     open('Extra Topic Backup Results.txt', 'w').close()
 
@@ -21,27 +23,23 @@ def load_classification_data():
     with open('Extra Topic Backup Results.txt', 'a') as f:
         print(f'Amount of total data per category:', file=f)
 
-    # Available topics
-    classification_topic = ["BaggageAndSecurity", "FlightExperience", "CustomerService"]
-    all_data_list = []
+    book = load_workbook('ClassificationData/AllData.xlsx')
+    categories = book.sheetnames
 
-    for topic in classification_topic:
-        # Get the data in the csv files as a pandas DataFrame
-        csv_file = f'ClassificationData/{topic}.csv'
-        data = pd.read_csv(csv_file, delimiter=';', header=None, names=['text', 'topic'])
+    all_data_list = []
+    for category in book.worksheets:
+        rows = list(category.values)
+        data = pd.DataFrame(rows, columns=['text', 'topic'])
+        all_data_list.append(data)
+
+        print(f"Loaded data from {category}: {data.shape[0]}")
 
         # Write total amount of data point per category in file
         with open('Extra Topic Backup Results.txt', 'a') as f:
-            print(f'{topic}: {data.shape[0]}', file=f)
-
-        # Append all data to a list
-        all_data_list.append(data)
-        print(f"Loaded data from {csv_file}")
-    # Concatenate all data to a DataFrame
+            print(f'{category}: {data.shape[0]}', file=f)
+    print(categories)
     combined_data = pd.concat(all_data_list, ignore_index=True)
-
     return combined_data
-
 
 def load_classification_data2():
     # Load the data in the labeled csv file as a pandas DataFrame
@@ -139,7 +137,7 @@ def classify_tweets(lr_classifier, tfidf, y_test, X_test, combined_data, data_ty
     accuracy = accuracy_score(y_test, lr_y_pred)
     print(f'Accuracy of Logistic Regression on TfIdf Vectorizer data {accuracy * 100}%')
     if data_type == 1:
-        topics = ['Baggage and Security', 'Customer Service', 'Flight Experience']
+        topics = categories
     elif data_type == 2:
         topics = ['Bad Flight', "Can't Tell", 'Cancelled Flight', 'Customer Service Issue', 'Damaged Luggage',
                   'Flight Attendant Complaints', 'Flight Booking Problems', 'Late Flight', 'Lost Luggage', 'longlines']
@@ -243,4 +241,5 @@ def accuracy_run(runs, data_type):
     print(f'Total iterations: {count}')
     print(f'Average accuracy: {total_acc / count}')
 
-accuracy_run(3, 2)
+data = load_classification_data()
+print(data)

@@ -1,39 +1,10 @@
-Total amount of data points: 3818
-
-Amount of data points per category:
-topic
-Customer Service Remarks    0.359874
-Delayed/Cancelled Flight    0.300157
-Luggage Problems            0.165270
-On-flight Problems          0.089576
-Can't Tell                  0.058408
-Flight Booking Problems     0.020168
-longlines                   0.006548
-Name: proportion, dtype: float64
-
-[[ 12  43   5   0   0   0   0]
- [  2 322  14   0   1   1   0]
- [  1  44 229   0   1   1   0]
- [  0  16   0   0   0   0   0]
- [  0  69  11   0 103   2   0]
- [  1  37  10   0   5  22   0]
- [  0   3   0   0   0   0   0]]
-
-Accuracy of Logistic Regression on TfIdf Vectorizer data: 72.04188481675394%
-
-Metrics: 
-                          precision    recall  f1-score   support
-
-      On-flight problems       0.75      0.20      0.32        60
-  Customer Service Issue       0.60      0.95      0.74       340
-Delayed/Cancelled Flight       0.85      0.83      0.84       276
- Flight Booking Problems       0.00      0.00      0.00        16
-        Luggage Problems       0.94      0.56      0.70       185
-              Can't tell       0.85      0.29      0.44        75
-              Long Lines       0.00      0.00      0.00         3
-
-                accuracy                           0.72       955
-               macro avg       0.57      0.40      0.43       955
-            weighted avg       0.76      0.72      0.69       955
-
-
+Amount of total data per category:
+<Worksheet "LongLines">: 200
+<Worksheet "Baggage">: 200
+<Worksheet "DelaysCancellations">: 207
+<Worksheet "CustomerService">: 200
+<Worksheet "Booking&Reservation ">: 200
+<Worksheet "TicketPrices&discounts">: 200
+<Worksheet "TicketRefounds">: 100
+<Worksheet "FlightExperince">: 200
+<Worksheet "AppriciationMessages">: 100

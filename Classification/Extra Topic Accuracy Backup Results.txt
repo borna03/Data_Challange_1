@@ -1,0 +1,4 @@
+Trained of AI data, tested on human labeled data
+Accumulated accuracy: 1.30635838150289
+Total iterations: 5
+Average accuracy: 26.1271676300578

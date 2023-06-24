@@ -6,7 +6,7 @@ import topic_classification
 import topic_sentiment_plots
 import create_conversations
 
-chosen_airline_id = '20626359'
+chosen_airline_id = '22536055'
 
 # Function to analyze airline tweets
 def analyze_airline_tweets(chosen_airline_id):
@@ -36,7 +36,6 @@ def analyze_sentiment(chosen_airline_id):
     sentiment_analysis_to_airline = sentiment_analysis.sentiment_analysis_to_airline(chosen_airline_id)
     print(sentiment_analysis_to_airline)
 
-# analyze_sentiment(chosen_airline_id)
 
 
 def analyze_topics(chosen_airline_id):

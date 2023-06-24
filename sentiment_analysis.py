@@ -93,9 +93,6 @@ def sentiment_analysis_to_airline(id_str):
                 sentiment_counter[label] = 1
 
             # Put sentiment label as value of 'sentiment' key
-            print(text)
-            print(label)
-            print('\n')
             newvalues = {'$set': {'sentiment': label}}
             collection.update_one(tweet, newvalues)
 

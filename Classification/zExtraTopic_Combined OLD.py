@@ -8,26 +8,28 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix, accuracy_score, classification_report
 import eli5
+from openpyxl import Workbook, load_workbook
 
 nltk.download('stopwords')
 nltk.download('wordnet')
 
 def load_classification_data():
     # Load AI Data
-    # Available topics
-    classification_topic = ["BaggageAndSecurity", "FlightExperience", "CustomerService"]
+    book = load_workbook('ClassificationData/AllData.xlsx')
+    categories = book.sheetnames
+
     all_data_list = []
+    for category in book.worksheets:
+        rows = list(category.values)
+        data = pd.DataFrame(rows, columns=['text', 'topic'])
+        all_data_list.append(data)
 
-    for topic in classification_topic:
-        # Get the data in the csv files as a pandas DataFrame
-        csv_file = f'ClassificationData/{topic}.csv'
-        AI_data = pd.read_csv(csv_file, delimiter=';', header=None, names=['text', 'topic'])
+        print(f"Loaded data from {category}: {data.shape[0]}")
 
-        # Append all data to a list
-        all_data_list.append(AI_data)
-    # Concatenate all data to a DataFrame
+        # Write total amount of data point per category in file
+        with open('Extra Topic Backup Results.txt', 'a') as f:
+            print(f'{category}: {data.shape[0]}', file=f)
     AI_data_full = pd.concat(all_data_list, ignore_index=True)
-
 
     # Load Human Labeled Data
     # Load the data in the labeled csv file as a pandas DataFrame
@@ -63,6 +65,8 @@ def load_classification_data():
         print(f'{combined_data.topic.value_counts(normalize=True)}', file=f)
 
     return combined_data
+
+print(load_classification_data())
 
 def preprocess(text):
     new_text = []

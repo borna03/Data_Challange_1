@@ -1,4 +1,8 @@
-Trained of AI data, tested on human labeled data
-Accumulated accuracy: 1.30635838150289
+Trained on self-labeled data, trained on pre-labeled data (Current classifier model)
+Accumulated accuracy: 3.167630057803468
 Total iterations: 5
-Average accuracy: 26.1271676300578
+Average accuracy: 63.35260115606937
+Trained on self-labeled data, trained on pre-labeled data (Original classifier model)
+Accumulated accuracy: 2.0809248554913293
+Total iterations: 5
+Average accuracy: 41.618497109826585

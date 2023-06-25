@@ -1,8 +1,34 @@
-Trained on self-labeled data, trained on pre-labeled data (Current classifier model)
-Accumulated accuracy: 3.167630057803468
-Total iterations: 5
-Average accuracy: 63.35260115606937
-Trained on self-labeled data, trained on pre-labeled data (Original classifier model)
+Trained on self-labeled data, tested on pre-labeled data (Original classifier model | 97 Data Points)
 Accumulated accuracy: 2.0809248554913293
 Total iterations: 5
 Average accuracy: 41.618497109826585
+Trained on self-labeled data, tested on pre-labeled data (Original classifier model | 97 Data Points)
+Accumulated accuracy: 9.242774566473988
+Total iterations: 20
+Average accuracy: 46.21387283236994
+
+Trained on self-labeled data, tested on pre-labeled data (Current classifier model | Count Vectorizer | 97 Data Points)
+Accumulated accuracy: 3.167630057803468
+Total iterations: 5
+Average accuracy: 63.35260115606937
+Trained on self-labeled data, tested on pre-labeled data (Current Classifier Model | Count Vectorizer | 97 Data Points)
+Accumulated accuracy: 12.953757225433526
+Total iterations: 20
+Average accuracy: 64.76878612716763
+Trained on self-labeled data, tested on pre-labeled data (Current Classifier Model | Count Vectorizer | 97 Data Points)
+Accumulated accuracy: 12.76878612716763
+Total iterations: 20
+Average accuracy: 63.843930635838156
+Trained on self-labeled data, trained on pre-labeled data (Current Classifier Model | Count Vectorizer | 193 Data Points)
+Accumulated accuracy: 13.61271676300578
+Total iterations: 20
+Average accuracy: 68.0635838150289
+
+Trained on self-labeled data, tested on pre-labeled data (Current Classifier Model | TF-IDF Vectorizer | 97 Data Points)
+Accumulated accuracy: 12.138728323699423
+Total iterations: 20
+Average accuracy: 60.69364161849712
+Trained on self-labeled data, tested on pre-labeled data (Current Classifier Model | TF-IDF Vectorizer | 193 Data Points)
+Accumulated accuracy: 12.867052023121387
+Total iterations: 20
+Average accuracy: 64.33526011560693

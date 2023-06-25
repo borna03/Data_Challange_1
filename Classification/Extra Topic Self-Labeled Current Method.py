@@ -50,9 +50,9 @@ def load_training_data():
     self_labeled_data = self_labeled_data.loc[(self_labeled_data['topic'] == 'Customer Service') |
                                               (self_labeled_data['topic'] == 'Delays & Cancellations') |
                                               (self_labeled_data['topic'] == 'Baggage') |
-                                              (self_labeled_data['topic'] == 'Flight Experience') |
+                                              (self_labeled_data['topic'] == 'On-Flight Experience') |
                                               (self_labeled_data['topic'] == "Can't Tell") |
-                                              (self_labeled_data['topic'] == 'Booking & Reservation') |
+                                              (self_labeled_data['topic'] == '(Online) Booking & Seats') |
                                               (self_labeled_data['topic'] == 'Long Lines')]
 
     # Clean text file
@@ -93,7 +93,7 @@ def load_test_data():
         ((human_labeled_data['topic'] == 'Damaged Luggage') | (human_labeled_data['topic'] == 'Lost Luggage')),
         'Baggage', inplace=True)
     human_labeled_data['topic'].mask(((human_labeled_data['topic'] == 'Bad Flight') | (
-            human_labeled_data['topic'] == 'Flight Attendant Complaints')), 'Flight Experience', inplace=True)
+            human_labeled_data['topic'] == 'Flight Attendant Complaints')), 'On-Flight Experience', inplace=True)
     human_labeled_data['topic'].mask(
         ((human_labeled_data['topic'] == 'Late Flight') | (human_labeled_data['topic'] == 'Cancelled Flight')),
         'Delays & Cancellations', inplace=True)
@@ -101,7 +101,7 @@ def load_test_data():
                                      inplace=True)
     human_labeled_data['topic'].mask((human_labeled_data['topic'] == 'longlines'), 'Long Lines', inplace=True)
     human_labeled_data['topic'].mask((human_labeled_data['topic'] == 'Flight Booking Problems'),
-                                     'Booking & Reservation', inplace=True)
+                                     '(Online) Booking & Seats', inplace=True)
 
     # Write amount of data points in file
     with open('Extra Topic Backup Results.txt', 'a') as f:
@@ -279,6 +279,7 @@ def accuracy_run(runs):
     total_acc = 0
     count = 0
     for i in range(0, runs):
+        print(f'Current iteration: {count}')
         count += 1
 
         # Load data into DataFrames
@@ -299,6 +300,7 @@ def accuracy_run(runs):
 
         print(f'Accuracy: {accuracy}')
         total_acc += accuracy
+        print('\n')
 
     print('\n')
     print(f'Accumulated accuracy: {total_acc}')
@@ -306,11 +308,11 @@ def accuracy_run(runs):
     print(f'Average accuracy: {total_acc / count * 100}')
 
     with open('Extra Topic Accuracy Backup Results.txt', 'a', encoding='utf-8') as f:
-        print(f'Trained on self-labeled data, trained on pre-labeled data', file=f)
+        print(f'Trained on self-labeled data, tested on pre-labeled data (Current Classifier Model | Count Vectorizer | 193 Data Points)', file=f)
         print(f'Accumulated accuracy: {total_acc}', file=f)
         print(f'Total iterations: {count}', file=f)
         print(f'Average accuracy: {total_acc / count * 100}', file=f)
 
 
-# run()
-# accuracy_run(5)
+run()
+# accuracy_run(20)

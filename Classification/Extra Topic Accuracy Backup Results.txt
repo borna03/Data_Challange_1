@@ -23,6 +23,10 @@ Trained on self-labeled data, trained on pre-labeled data (Current Classifier Mo
 Accumulated accuracy: 13.61271676300578
 Total iterations: 20
 Average accuracy: 68.0635838150289
+Trained on self-labeled data, trained on pre-labeled data (Current Classifier Model | Count Vectorizer | 244 Data Points (Updated "Can't Tell"))
+Accumulated accuracy: 14.289017341040461
+Total iterations: 20
+Average accuracy: 71.44508670520231
 
 Trained on self-labeled data, tested on pre-labeled data (Current Classifier Model | TF-IDF Vectorizer | 97 Data Points)
 Accumulated accuracy: 12.138728323699423
@@ -32,3 +36,12 @@ Trained on self-labeled data, tested on pre-labeled data (Current Classifier Mod
 Accumulated accuracy: 12.867052023121387
 Total iterations: 20
 Average accuracy: 64.33526011560693
+
+Trained and tested on self-labeled data (Current Classifier Model | Count Vectorizer | 404 Data Points)
+Accumulated accuracy: 10.518518518518519
+Total iterations: 20
+Average accuracy: 52.59259259259259
+Trained and tested on self-labeled data (Current Classifier Model | Count Vectorizer | 404 Data Points | More combined topics)
+Accumulated accuracy: 11.209876543209877
+Total iterations: 20
+Average accuracy: 56.04938271604938

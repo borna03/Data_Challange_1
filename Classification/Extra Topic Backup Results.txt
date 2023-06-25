@@ -1,54 +1,54 @@
 Amount of total data per category (Self labeled):
 
-Total amount of data points (Self Labeled): 193
+Total amount of data points (Self Labeled): 404
 Amount of data points per category:
 topic
-Customer Service            51
-On-Flight Experience        33
-Delays & Cancellations      32
-(Online) Booking & Seats    28
-Can't Tell                  28
-Baggage                     19
-Long Lines                   2
+Customer Service                       61
+On-Flight Experience                   55
+Financial (Prices, fees, air-miles)    49
+Delays & Cancellations                 41
+(Online) Booking & Seats               35
+Baggage                                35
+Claims & Refunds                       33
+Undefined / Unrelated                  31
+General Complaints & Hate Messages     30
+Appreciation Messages                  21
+Security, gates & Long Lines           13
 Name: count, dtype: int64
 
-Total amount of data points (Human Labeled): 3448
-Amount of data points per category:
-topic
-Customer Service            0.383991
-Delays & Cancellations      0.332367
-Baggage                     0.120360
-On-Flight Experience        0.069026
-Can't Tell                  0.064675
-(Online) Booking & Seats    0.022332
-Long Lines                  0.007251
-Name: proportion, dtype: float64
-
 Confusion Matrix:
-[[ 4  0  0  0  0  0  0]
- [ 0 10  1  2  1  0  1]
- [ 0  0  2  6  1  0  3]
- [ 3  1  4 47  3  0  4]
- [ 2  0  2  8 48  0  5]
- [ 0  0  0  1  0  0  0]
- [ 0  0  1  2  2  0  9]]
+[[4 0 0 0 0 1 0 0 0 0 0]
+ [0 4 0 0 0 0 0 0 0 0 0]
+ [0 0 7 0 2 0 0 0 0 0 0]
+ [0 1 0 4 0 0 0 0 0 0 0]
+ [1 0 0 1 7 0 2 0 1 0 0]
+ [1 0 1 1 0 5 0 0 0 0 0]
+ [1 0 0 0 2 0 6 1 3 0 0]
+ [0 0 0 0 1 0 1 3 1 1 0]
+ [0 0 0 0 1 0 1 0 6 0 0]
+ [0 0 2 0 0 0 0 0 0 0 0]
+ [1 0 0 0 2 1 0 0 4 0 0]]
 
-Accuracy of Logistic Regression on TfIdf Vectorizer data: 69.36416184971098%
+Accuracy of Logistic Regression on TfIdf Vectorizer data: 56.79012345679012%
 
 Metrics: 
-                          precision    recall  f1-score   support
+                                     precision    recall  f1-score   support
 
-(Online) Booking & Seats       0.44      1.00      0.62         4
-                 Baggage       0.91      0.67      0.77        15
-              Can't Tell       0.20      0.17      0.18        12
-        Customer Service       0.71      0.76      0.73        62
-  Delays & Cancellations       0.87      0.74      0.80        65
-              Long Lines       0.00      0.00      0.00         1
-    On-Flight Experience       0.41      0.64      0.50        14
+           (Online) Booking & Seats       0.50      0.80      0.62         5
+              Appreciation Messages       0.80      1.00      0.89         4
+                            Baggage       0.70      0.78      0.74         9
+                   Claims & Refunds       0.67      0.80      0.73         5
+                   Customer Service       0.47      0.58      0.52        12
+             Delays & Cancellations       0.71      0.62      0.67         8
+Financial (Prices, fees, air-miles)       0.60      0.46      0.52        13
+ General Complaints & Hate Messages       0.75      0.43      0.55         7
+               On-Flight Experience       0.40      0.75      0.52         8
+       Security, gates & Long Lines       0.00      0.00      0.00         2
+              Undefined / Unrelated       0.00      0.00      0.00         8
 
-                accuracy                           0.69       173
-               macro avg       0.51      0.57      0.51       173
-            weighted avg       0.72      0.69      0.70       173
+                           accuracy                           0.57        81
+                          macro avg       0.51      0.57      0.52        81
+                       weighted avg       0.53      0.57      0.53        81
 
 Precision = predicted topic correct / amount of times a topic was predicted
 Recall = predicted topic correct / amount of true (labeled) topic classifications
@@ -56,459 +56,527 @@ Support = amount of true (labeled) topic classifications
 So good precision, but bad recall ==> model doesn't recognize a topic often, but when it does, it does so correctly
 So good recall, but bad precision ==> model predicts this topic too much, therefore also gets it right when it's the actual topic
 
-                         topic                                                                                                                                                                        text           predicted topic
-554                    Baggage                         @united Why do I still not have my bags? They arrived @10AM &amp;website says they're still at the airport..2 1/2 hours Late Flightr???!! #nothappy                   Baggage
-3133                   Baggage                                                        @AmericanAir @British_Airways 2 weeks ago today i arrived in miami and I still don't have my bag, absolute disgrace!                   Baggage
-1594    Delays & Cancellations                                                                                                 @JetBlue, why must you always delay my Late Flight night Orlando flights? 💔    Delays & Cancellations
-2889    Delays & Cancellations                                @AmericanAir this is a big company should be happy to do something for a customer when now it's costing more for delays oh and did I mention          Customer Service
-1127          Customer Service                                       @SouthwestAir I was on hold for two hours and finally hung up. I was able to do what I needed to without customer service eventually.          Customer Service
-3072          Customer Service                                 @AmericanAir I called the EP line and 4 hours Late Flightr I was called back.  I sat on hold for over a hour to US Airways and then cut off          Customer Service
-1256          Customer Service                                               @SouthwestAir why can't you help me after you made mistake and dropped my early bird check in on your end?  Where is the LUV?                Can't Tell
-671       On-Flight Experience                                                                 @united no wifi on #ua688 #SF to #Chicago? 2015. That's all. Ps: This tech intro video is a joke. #EpicFail      On-Flight Experience
-639     Delays & Cancellations                                         .@united I appreciate you looking. Can you compensate me on anything for my troubles? Still haven't taken off for a 10:30 am flight      On-Flight Experience
-226           Customer Service                                          @united is the worst. Worst reservation policies. Worst costumer service. Worst worst worst. Congrats, @Delta you're not that bad!          Customer Service
-2506    Delays & Cancellations                                             @USAirways stop Cancelled Flighting flights over and over and not provide any real help to your customers. #strandedinnashville          Customer Service
-3341    Delays & Cancellations                                                                                          @AmericanAir 1416 Cancelled Flightled? Can't get out for two days? No explanation?    Delays & Cancellations
-1602    Delays & Cancellations                @JetBlue I ❤️ Jetblue but i was on flt 277 from fll to sfo. tke off was over 1 hr Late Flight, div to phx &amp; got in 2 hrs Late Flight. What will be done?    Delays & Cancellations
-3423          Customer Service                                 @AmericanAir @marxsterbcow How is this a real life response to a customer service issue? Seriously. Keep trying to call us. Eh, might work.          Customer Service
-2755  (Online) Booking & Seats                                     @AmericanAir My ticket was booked with AA with miles..... Sorry we sold you a ticket with a company we merged with but we can't fix it?  (Online) Booking & Seats
-2925          Customer Service                                  @AmericanAir 12 calls in the span of two days........none of which available to speak to someone.  You are un F-in believable.  worst ever          Customer Service
-2218    Delays & Cancellations                                        @USAirways sucks.  Flt 2692 Late Flight by 20 mins missed my connection.  Thanks for the 10 bucks and a middle seat on the next flt.  (Online) Booking & Seats
-3282                Can't Tell                                                @AmericanAir whenever I cheat on you it goes horribly wrong! I promise, I won't stray anymore. I'm talking about you @Delta!          Customer Service
-113     Delays & Cancellations                                 @united on 4124 arriving two hours Late Flight into CLT. Now sitting on the tarmac while they move a plane from the gate. Unhappy customer.    Delays & Cancellations
-1645          Customer Service                                @JetBlue rather than trying to resolve customer issues, only options offered were paying cash @ airport or write letter. #JustifyThisSupport          Customer Service
-1113          Customer Service                                                           @SouthwestAir On hold for 45 minutes trying to rebook a Cancelled Flightled flight with a companion ticket. Help?    Delays & Cancellations
-3335    Delays & Cancellations                                                               @AmericanAir flight 3056 in D/FW now delayed 2 hours waiting sitting in plane for baggage to be loaded - why?    Delays & Cancellations
-1938    Delays & Cancellations                                     @USAirways this says it was estimated to leave an hour ago (it hasn't left yet) so thanks for this useful information. #TheWorstAirline          Customer Service
-1329      On-Flight Experience                                                    @SouthwestAir According to TV passenger interviews, the landing was far from "uneventful" with heavy (panic) breaking to      On-Flight Experience
-2172          Customer Service                                                                         @USAirways three hours on hold then disconnected. Conf EBHSET. Need to be home Sunday for interview          Customer Service
-3245          Customer Service                                                                @AmericanAir no private msg me and will provide details...u really need customer svc training for your staff          Customer Service
-3194                   Baggage                                         @AmericanAir lies,lies,lies.  Worst travel experience of my life. Day 2 no clothes on vaca.  #lostluggage #unprofessional #pit #mia          Customer Service
-2544  (Online) Booking & Seats                                 @USAirways Hey! I booked a flight (Isabelle Gramp, Boston to LAX), and it said that it charged my credit card but the transaction didn't go  (Online) Booking & Seats
-917           Customer Service                                     @united Call customer service and of course they just say "theres nothing we can do" and then offer a transfer and disconnect the line.          Customer Service
-2379    Delays & Cancellations                                                                                                        @USAirways never let's me down, every. Single. Flight. Gets delayed.    Delays & Cancellations
-1488                Can't Tell                                                       @JetBlue I think it's safe to say that after 25 years of loyal #JetBlue flying we are officially DONE. #Byebyejetblue          Customer Service
-3277    Delays & Cancellations                                                                 @americanair anxious to see how you all care for customers you’ve inconvenienced #Cancelled Flightledflight          Customer Service
-576     Delays & Cancellations                                                                                @united UA 1706 delayed again - I get charged $600 if Late Flight by you - you say "oh well"    Delays & Cancellations
-606           Customer Service                                   @united again HORRIBLE service, again attitude when asked for information, again you make me not want to fly UNITED ever. #platinummember          Customer Service
-3267          Customer Service                                                      @AmericanAir that's the number I called -it wouldn't let me speak to an agent because of the issues with weather today    Delays & Cancellations
-2943    Delays & Cancellations                                                                                             @AmericanAir it's GTSVYB. It says it's Cancelled Flightled when I try to check.                Can't Tell
-107           Customer Service                                   @united has not responded to my various requests for contact numbers, does anyone know the UK customer service number for #UnitedAirlines          Customer Service
-2586      On-Flight Experience                                  @USAirways Only water on flight 763 to DCA? This is the first time I've ever seen this happen. #ExecutivePlatinumMeansNothing #IWantCoffee      On-Flight Experience
-1035    Delays & Cancellations                                                                                        @SouthwestAir flight 1028 no delayed 1.5 hours.  Another week another delayed flight    Delays & Cancellations
-3015    Delays & Cancellations                                                                @AmericanAir my flight to San Angelo via Dallas from Orlando Cancelled Flighted help! On hold and disconnect    Delays & Cancellations
-943                    Baggage                                                                          @united bags are still in Houston since Friday and still have not been reimbursed the baggage fee.                   Baggage
-837                    Baggage                                       @united Yeah, bag is on the way. As per usual.  I'm actually getting used to getting it delivered to me, its kind of nice in a sense.                Can't Tell
-1224                   Baggage                                                                                                                                  @SouthwestAir thanks for losing my luggage                   Baggage
-2346          Customer Service                                                                @USAirways it's painful being on hold to you!! Really 25 minutes to change a flight!! http://t.co/ocqk0JFXuA          Customer Service
-2859          Customer Service                                                                                                   @AmericanAir customer service (if you can call it that) refunded my money          Customer Service
-3251    Delays & Cancellations                                                           @AmericanAir can you tell me why all flights from XNA 2 DFW are Cancelled Flightled for tomorrow morning already?    Delays & Cancellations
-2286          Customer Service                                  All followers please note that @USAirways is not taking customer service calls, nor responding by helping via soc. media #dontflyusairways          Customer Service
-2711    Delays & Cancellations                                  @AmericanAir r u serious?? 304min #delay with #AmericanAirlines #AA2444 #ohio - #dallas missed my connecting flight http://t.co/DNMsblzumr    Delays & Cancellations
-1839                Can't Tell                                  @USAirways citizen. I fly your airline constantly and am so offended.  Derrick Bussey. Now Im crying on this airplane because I'm so upset      On-Flight Experience
-3009          Customer Service                                      @AmericanAir @united just deplaned at O'Hare gate K13. Why don't you send a customer service rep to discuss my situation? God knows...          Customer Service
-1443                Can't Tell                                                                    @JetBlue @TatianaKing @thewayoftheid I feel only a few free travel vouchers will assuage my indignation.    Delays & Cancellations
-1887    Delays & Cancellations                                                                 @USAirways If my flight is going to be Cancelled Flightled every week I might as well be in business class.      On-Flight Experience
-3178    Delays & Cancellations               @AmericanAir Your agent sent our family on 3 diff planes to dfw that were as Late Flight due to delay as the Cancelled Flighted plane that started this #fail    Delays & Cancellations
-2595          Customer Service  @USAirways My Flight Booking Problems C68LD9 just times out when I select it under Manage My Flight Booking Problems for months now. I have emailed but no response. Help?  (Online) Booking & Seats
-1755                   Baggage                                @USAirways I will NEVER travel US Airways again. Flew in from LA to DC last night and for the 2nd time on this airline my bags didn't arrive      On-Flight Experience
-346     Delays & Cancellations                                @united worst flying experience ever and they tried to blame it on ATC?! I watched them load bags for 30min after boarding 45min Late Flight    Delays & Cancellations
-961           Customer Service                                                                                                                                     @united why am i mot getting my refund?          Customer Service
-918     Delays & Cancellations                                                                                @united if our already rescheduled flight is Cancelled Flightled is our hotel room paid for?    Delays & Cancellations
-991     Delays & Cancellations                                                             @SouthwestAir LA always has traffic, but this is INSANE. I can't be the only one with this issue on flight 1625    Delays & Cancellations
-635       On-Flight Experience                                 @united Thank U for the 1hr delay then boarding us onto a plane that reeks of vomit, flight attendant indicated it wasn't cleaned properly.    Delays & Cancellations
-2495    Delays & Cancellations                         @USAirways #USAirways So my flight was Late Flight getting into charlotte so i miss my connector to Phoenix thanks again last time I EVER FLY USAIR    Delays & Cancellations
-811     Delays & Cancellations                                       @united idea: if u don't want us to be frustrated don't Cancelled Flight flights because your crew overflowed a toilet. Get a plumber    Delays & Cancellations
-3121    Delays & Cancellations                                                                                                                  @AmericanAir 953 our  fligth Somthing to talk  about this?                Can't Tell
-2538          Customer Service                                                              @USAirways 2 days in a row I call and still can't get anyone on the phone. Do you actually have any employees?          Customer Service
-2345    Delays & Cancellations                                         @USAirways more lies, they said in their email we were delayed due to weather when the sky was clear in the city we were departing.    Delays & Cancellations
-2044    Delays & Cancellations          @USAirways  you Cancelled Flighted &amp; rescheduled my flight &amp; still getting updates &amp; can't find my current flight on my account http://t.co/8Je1h3666w    Delays & Cancellations
-1024          Customer Service                                     @SouthwestAir Sorry to bother you, but I've been on hold for more than 2 hours and 30 minutes. Should I continue holding? Or call back?          Customer Service
-1099    Delays & Cancellations                                                  @SouthwestAir I use to #LUV swa but after an hour and counting on hold, for a flight they Cancelled Flighted on me? #noluv    Delays & Cancellations
-1857    Delays & Cancellations                                 @USAirways my flight is delayed so I missed my connecting flight. Stuck in Philadelphia over night and no hotel voucher? Thanks for nothing    Delays & Cancellations
-1884          Customer Service                                     @USAirways is struggling. had me on hold for 25 minutes, kicked me back to the start, then said they couldnt handle the amount of calls          Customer Service
-1834    Delays & Cancellations                                  @USAirways I have never had a more unpleasant travel experience in my life. Now I might not get on my flight till tomorrow? This is insane  (Online) Booking & Seats
-1564          Customer Service                                                                                                                                           @JetBlue you guys need live chat.          Customer Service
-2027          Customer Service                                          @USAirways you have got to be kidding me!  No info on 4565 from DCA to BGR and your phone line tells me to call back Late Flightr?          Customer Service
-1202                   Baggage                                                        @southwestair Landed an hour Late Flight from IND to DEN, and 40+ min Late Flightr, our bags are not here. Not cool.    Delays & Cancellations
-2617    Delays & Cancellations                                                                                               @USAirways can I get free wifi since the flight 1808 was Cancelled Flightled?    Delays & Cancellations
-944     Delays & Cancellations                                               @united flight 4567 have already been Cancelled Flightled once, been trying to get home two days. Staff being very unhelpful.    Delays & Cancellations
-142           Customer Service                                                 @united Soooo, it's been 15 days and you've offered no response. So I assume poor treatment by gate agents is the norm now?          Customer Service
-1111    Delays & Cancellations             @SouthwestAir  Flight today from PHL to DAL Cancelled Flightled. 96 min on hold, rebooked for tomorrow. Now that flight is Cancelled Flightled.  On hold again.    Delays & Cancellations
-978           Customer Service                          @SouthwestAir My first call got dropped. Waited 15 mins for the second but ran out of time. Will try again Late Flightr. No way to do this online?          Customer Service
-3296          Customer Service                                                                                                              @AmericanAir pls tell me how to get a person on the phone asap                Can't Tell
-1485    Delays & Cancellations                                                                                                                @JetBlue why is flight 1106 delayed out to NY? Same problem?    Delays & Cancellations
-1207    Delays & Cancellations                                                                             @SouthwestAir my parents flight frm STL2ATL Cancelled Flighted 2nite. When's the next one out?!    Delays & Cancellations
-3272          Customer Service                                      @AmericanAir @carlw1980 I have followed and dm'd you. . . Please respond to my concern too. Really disappointed with customer service.          Customer Service
-2799      On-Flight Experience                                                        @AmericanAir I tried, EXTREMELY RUDE. Even the supervisor. And when I asked to speak to HIS supervisor I was told no          Customer Service
-66                  Can't Tell                                                                                                                                      @united I will not be flying you again          Customer Service
-1275                Can't Tell                                                               @SouthwestAir A little surprised my Early Bird got me B15 from DEN to KC just now. Worst I've had. What's up?      On-Flight Experience
-341                    Baggage                                                                                     @united no, we still have not heard anything from anyone at @united or the @ErieAirport          Customer Service
-3220                Can't Tell                                                                                                                        @AmericanAir wow @AmericanAir still screw n stuff up          Customer Service
-396       On-Flight Experience                                  @united broken light, 35 mins to get bridge to gate, airplane parked wrong , bathroom not emptied last night....your airline in last 3 hrs      On-Flight Experience
-1599    Delays & Cancellations                                                                            @JetBlue Two delays.  A little proactive communication goes a long way. #howhardcanthatreallybe?      On-Flight Experience
-1190    Delays & Cancellations                                                    @SouthwestAir thanks for the Cancelled Flightation today. Only airline that's Cancelled Flighted. Lost a customer today.      On-Flight Experience
-295     Delays & Cancellations                                                                                                                       @united except all of that delayed the flight anyway.    Delays & Cancellations
-371                    Baggage                                  @united thank you for letting me down.My luggage is still in Denver but I'm in Phl. #neveragain #flyingwithUS #disappointed #lostacustomer                   Baggage
-3438    Delays & Cancellations                              @AmericanAir Cancelled Flights my flight, doesn't send an email, text or call. Then puts me on way earlier flight I might miss now. Thanks AA!    Delays & Cancellations
-1445                Can't Tell                                       No no no bad airline bad! *bops you with newspaper* “@JetBlue: @maatkare67 We hope you're still our bae! @TatianaKing @thewayoftheid”          Customer Service
-3164    Delays & Cancellations                      @AmericanAir you Cancelled Flightled my flight tomorrow (without telling me) and I want to rebook-please help me book a new flight! What # can I call?    Delays & Cancellations
-2710          Customer Service                                     .@AmericanAir can you connect me to a person without having to wait 2+ hours on hold? I still haven't been able to resolve the problem.          Customer Service
-372     Delays & Cancellations                                          @united flight UA3774 after two delays. just Cancelled Flightled and no more flights to Norfolk that aren't booked. Renting a car.    Delays & Cancellations
-324     Delays & Cancellations                                                                                                           @united UA1565 IAH -&gt; SJO is delayed by like 1.5 hours. Crazy!    Delays & Cancellations
-2583      On-Flight Experience                                                                                                         @USAirways stuck in Charlotte being treated like a nobody by staff.      On-Flight Experience
-2327          Customer Service                                                                                                   @USAirways worst customer service experience ever today. Get it together.          Customer Service
-3444          Customer Service                                                              @AmericanAir How do I change my flight if the phone system keeps telling me that the representatives are busy?  (Online) Booking & Seats
-2007      On-Flight Experience                                        @USAirways @AmericanAir @GMA could not have had a worse airline experience. Rude, unhelpful, got yelled at😳. @JetBlue need your help      On-Flight Experience
-1486          Customer Service                                  @JetBlue I hope your customer service reps are as reliable/friendly as they usually are, so far you are not living up to your + rep/exper.          Customer Service
-1452    Delays & Cancellations                                                                                            @JetBlue Sure did go south after breakfast though! Delayed three hours. :( :( :(    Delays & Cancellations
-1038                   Baggage                                     @SouthwestAir loses baggage a day ago and still has no idea or interest in finding it? ALL items for new job in that bag! Unacceptable.                   Baggage
-3215          Customer Service                                        @AmericanAir is the new @SpiritAirlines, and both are worse than taking the @GreyhoundBus #americanairlines #nocustomerservice #fail      On-Flight Experience
-1942    Delays & Cancellations                                              @USAirways absolutely worst experience of my life at PHL. 6 hrs, 1 failed departure, 3 gates, and ZERO communication or help!!          Customer Service
-2584                Can't Tell                                                                                                                                         @USAirways sits on a throne of lies                Can't Tell
-5             Customer Service                                              @VirginAmerica help, left expensive headphones on flight 89 IAD to LAX today. Seat 2A. No one answering L&amp;F number at LAX!          Customer Service
-815                 Can't Tell                                 @united #vegan meals can be more creative than noodles, peas, and zukes. Non-vegan yogurt is not acceptable for a vegan. Can you do better?      On-Flight Experience
-2691          Customer Service                                                                                           @AmericanAir another day another grievance with this airline. No customer service          Customer Service
-2384      On-Flight Experience                                                                                  @USAirways now the plane is 100 degrees and we are burning up. This is completely illegal.      On-Flight Experience
-1053          Customer Service                         @SouthwestAir I need to Cancelled Flight one leg of a flight, but can't seem to do this online. Been on hold on the phone for 10 minutes. Any help?  (Online) Booking & Seats
-2462                Long Lines                                 @USAirways really frustrating to be endlessly waiting at PHL for a ground crew to taxi us in at 10pm at night. Why is this taking so long?!          Customer Service
-2537          Customer Service                                             @USAirways Thank you. But it is sad that she couldn't talk 2 a REAL person &amp; kept getting disconnected by an automated msg.                Can't Tell
-2540    Delays & Cancellations                                                                       @USAirways flight is delayed 5 hours. No reason given. Sure love flying with your airline. #whatajoke    Delays & Cancellations
-1424    Delays & Cancellations                                                                                                                              @JetBlue we were supposed to be Vieques by 3pm          Customer Service
-1700          Customer Service                                                                                                                        @JetBlue dispatcher keeps yelling and hung up on me!      On-Flight Experience
-617     Delays & Cancellations                                                   @united 2 days and 3 planes with mechanical issues?  Now over 1.5 hrs Late Flight sitting on this plane. This is insane!!    Delays & Cancellations
-1860    Delays & Cancellations                                                 @USAirways going to miss my connection due to another tarmac delay - on US5268 then 4050 - need a flight home today please!    Delays & Cancellations
-2370    Delays & Cancellations                               @USAirways 2133. Flight now Cancelled Flightled. Have been rebooked on 2pm flight. If on time take off, I'll have spent 5 extra hours at DCA.    Delays & Cancellations
-2356      On-Flight Experience                                 @USAirways flight is already over. I think the airline should just have the flight attendants actually emphasize that VAPE is still smoking    Delays & Cancellations
-2488    Delays & Cancellations                                                                                     @USAirways. I'm delayed in Cha, will miss my connection in Charlotte for lga.  Not good    Delays & Cancellations
-2671    Delays & Cancellations             @AmericanAir You are jumping the gun and Cancelled Flighting flights that could've made it before the snow. Now, more Cancelled Flightlations. It's ridiculous.    Delays & Cancellations
-1618                   Baggage                                                                                 @JetBlue what is going on? We arrived at 10:51pm Not One Bag Has Been Unloaded!! Flight 424                   Baggage
-2456          Customer Service                                                                                                  @USAirways this has been the worst trip with little to no customer service          Customer Service
-94            Customer Service                                                               @united service so far has been horrid. We wanted to end the trip on a high note. Guess that's not an option.          Customer Service
-2796                   Baggage                                            @AmericanAir gah this is so frustrating! Nobody has my address here in the USA. Where are my bags!?!? So disorganised!!!!!!!!!!!                   Baggage
-802           Customer Service                                                                         @united I mean is there a real live person somewhere I can go and speak to at Newark post security?                Can't Tell
-2209    Delays & Cancellations                                                                              @usairways you mean 10:30pm. I'd be in vegas by now if I'd been allowed on my original flight.    Delays & Cancellations
-2619    Delays & Cancellations                                                                 @USAirways have done that. Sadly no flight from CLT has gotten to IND today and we head back to Tampa tmrw.      On-Flight Experience
-3273    Delays & Cancellations                                              @AmericanAir AA 2258 why have you Cancelled Flightled our flight without courtesy of notifying us or alternatives?  Very poor.    Delays & Cancellations
-828     Delays & Cancellations                                                                                  @united UA1740 just admit you have no clue when flight will leave Denver. #unfriendlyskies    Delays & Cancellations
-914   (Online) Booking & Seats                                                                                         @united I'm 0/3 for Flight Booking Problems without major problems. 0% isn't bad!👎👎  (Online) Booking & Seats
-1571          Customer Service                               @JetBlue You have very unhappy customer. After waiting 20 min on hold, rude &amp; uncaring rep has now frozen my acct. can't print bdng pass!          Customer Service
-3230                Can't Tell                                                                     @AmericanAir  is the worst airline to ever travel with!!!! The worst!! They're equivalent to DIRT!!!!!!          Customer Service
-1197          Customer Service                                                                            @SouthwestAir I'm going to need you to answer your phones. Being on hold for an hour isn't okay.          Customer Service
-727           Customer Service                                 @united thanks for trying to take my money without notice. In any other industry, you Cancelled Flight a service, a refund is issued. Cont…    Delays & Cancellations
-1578          Customer Service                                                                                                    @JetBlue you're customer service is terrible. #NeverAgain #flywhonotblue          Customer Service
-2131    Delays & Cancellations                                                                                                 @USAirways Good grief! Flight Cancelled Flightled. Been on hold since 0400.    Delays & Cancellations
-125           Customer Service                                      @united again I ask, who can I call to get this fixed? Tweeting me BS questions to stall only makes things worse. Phone number please.          Customer Service
-44                     Baggage                                    @VirginAmerica my luggage is gone. I've filed my paperwork, promised a call/email. Still no resolution or response from central luggage.                   Baggage
-2839          Customer Service                                @AmericanAir airport and 2 extra nights for hotels and not once have I heard of anything from your embarrassing airline saying that you will      On-Flight Experience
-618           Customer Service                                                                                                               @united I didn't get a message from you. I'll resend numbers.          Customer Service
-1470    Delays & Cancellations                                                                                                                                @JetBlue #611 from JFK to LAS still delayed?    Delays & Cancellations
-2392          Customer Service                                   @USAirways hi is there somebody avail who can help .....with an refund ? its unbelievable on the phone w US for more than 7 hrs in 4 days          Customer Service
-1307          Customer Service                             @SouthwestAir Therefore, since I've received no recourse through phone I have submitted an email complaint &amp; a letter via mail will follow.                   Baggage
-1640      On-Flight Experience                                     @JetBlue i am sharing it to the public. I fly 20 times a year and sitting now on the tarmac in fll. Your staff is the worst i ever met.      On-Flight Experience
-1841    Delays & Cancellations                      @USAirways is okay for u 2 Cancelled Flight change a flight when good 4 u but you cant logistically figure out what 2 do when a plane comes in on time    Delays & Cancellations
-3276          Customer Service                                    @AmericanAir never got an update and we had the worst communication from u. Our flight delay was mechanical and not a word. #poorservice          Customer Service
-3265          Customer Service                                                                         @AmericanAir Unfortunately that is not true. A robot apologizes and hangs up. So how do I get help?          Customer Service
-1382    Delays & Cancellations                                        @SouthwestAir how about when there are Cancelled Flightlations you just have a link to rebook like you did for initial storm issues?    Delays & Cancellations
-1381          Customer Service                                       @SouthwestAir also, they said they couldn't even book the flight. They were having to put me on hold &amp; have someone else do it???          Customer Service
-18            Customer Service                                                                 @VirginAmerica is anyone doing anything there today?  Website is useless and no one is answering the phone.          Customer Service
-1027                   Baggage                                 @SouthwestAir My bags are on the way to Chicago, without me! Help! I was confirmed for 2 flights and told there isn't room and I'm screwed.                   Baggage
-1915      On-Flight Experience                                                      @USAirways the only time I tweet is to tell you how horrible you're attendants are. Flight 3841 to LGA. I feel in jail      On-Flight Experience
-1115    Delays & Cancellations                        @SouthwestAir you have the worst service, you Cancelled Flightled all your flights FLL to PHL all @USAirways flights flew. Stuck in FL 3 days. #done          Customer Service
-1049          Customer Service                                    @SouthwestAir what robot is running this account. The same one that doesn't remember anything they ask. Same conversation over and over.          Customer Service
-2153    Delays & Cancellations                                   @USAirways truly been the worst experience this weekend. Delayed, rerouted 3x, now not boarding A 715 flight and says flight is "on time"    Delays & Cancellations
-739     Delays & Cancellations                                                                                                  @united just delayed my flight to SLC by 2.5 hours. What gives? #snowforce    Delays & Cancellations
-990           Customer Service                                                @SouthwestAir Hey, friends. When I phone the A-list number your IVR hangs up on me. Multiple times. Not sure how to proceed?          Customer Service
-1421  (Online) Booking & Seats                             @JetBlue Need your help. I'm moving to DC &amp; I want to book a one way fare on your website. It won't seem to let me. Am I missing something?  (Online) Booking & Seats
-1934          Customer Service                                                                                                                                         @USAirways the call hung up on me..          Customer Service
-1999          Customer Service                                            @USAirways Gave up after more than 2 hours on hold. Still need that receipt; last time it was promised, it never arrived. Help?!          Customer Service
-2179          Customer Service                                                  @USAirways I was on hold for 2 hours and still no answer. Is this really how you run your business? http://t.co/P8xFhq4kps          Customer Service
-2846          Customer Service                                  @AmericanAir LITERALLY just told me they'd rather have an empty seat than my mom get to come earlier &amp; take me to Dr. appointment. WOW      On-Flight Experience
-2559    Delays & Cancellations                                   @USAirways @SDFAirport  I really needed to be back home yesterday and at work at 9am today. Been on plane and sitting for an hour #peeved          Customer Service
-870       On-Flight Experience                                @united RTB&gt;IAH 2/17 First class. My wife (Global Services) and I had headaches due to our neighbors smoking e cigarettes. Contact me pls          Customer Service
-1118    Delays & Cancellations                       @SouthwestAir Cancelled Flightled all flights Fort Lauderdale to Philly. USAir flights got to Philly with no problem. WTF is wrong with SW @USAirways    Delays & Cancellations
-624           Customer Service                                @united incompetent/rude service today. Missed my connecting flight, then the customer service desk was terrible to me. Really upset w untd.          Customer Service
-2325                Can't Tell                                                                                                                                  @USAirways / @AmericanAir are incompetent.                Can't Tell
-963       On-Flight Experience                                 @United - Ridiculous to fly outdated 757s anywhere much less btwn IAH and SFO. No power ports, no  Wifi, no personal entertainment. TORTURE                Can't Tell
+                                                                                                                                                                                                                                                                                                                                                         text                                topic                      predicted topic
+151                                                                                                                                                                                                                                     @AirlineFlyer @KLM Did he mention @KLM service Amsterdam-Brussels? Or his investment in Air Antwerp (Antwerp-London)?  Financial (Prices, fees, air-miles)                     Customer Service
+231                                                                                   @AmericanAir we are waiting to board flight AA208 to Dublin from Chicago and there have been 0 announcements about a late departure from the desk, and we’re now delayed 90 mins (and rising). Can we get any insight at all? This doesn’t feel like a good experience.               Delays & Cancellations               Delays & Cancellations
+113                                                                                                                                          @British_Airways Thanks. Can you please advise on the process of claiming reimbursement for the day of lost work I incurred? (as in, I took Monday off from work, but in reality only flew out Tuesday). Thanks!                     Claims & Refunds                Appreciation Messages
+147                                                                                                                                                                                                                                                           @VirginAtlantic Pay your staff. They are your biggest asset, yet you treat them like a doormat.  Financial (Prices, fees, air-miles)                 On-Flight Experience
+107                                                                                                                                                                                                                                                                                                        @Qantas I have a question about a seat assignment.             (Online) Booking & Seats             (Online) Booking & Seats
+199                                                                                                                                                                                          @stephenhardie @SimonCalder @jet2tweets @VirginAtlantic I haven’t met anybody who switched to Jet2 who said they regretted it. It is simply a better experience.                 On-Flight Experience                 On-Flight Experience
+313                                                                                                                                                                                                                                                                                                    @united I'm so frustrated and nervous because of this.   General Complaints & Hate Messages                     Customer Service
+184                                                                                                                                                                                                                                                                                                 @williamsmarkal @VirginAtlantic That’s true! Thank you! 😊                Appreciation Messages                Appreciation Messages
+186                                                                                                                                                                                                                                                                                                                              @lachlan Thanks @AmericanAir                Appreciation Messages                Appreciation Messages
+318                                                                                                                                                                                                                                                                                                                                     @USAirways i hate you   General Complaints & Hate Messages         Security, gates & Long Lines
+88                                                                                                                                                                                                                                               Another @easyJet flight delayed.. after our flight yesterday was cancelled. @easyjet get your shit together.               Delays & Cancellations               Delays & Cancellations
+117                                                                                                                                                                                                                                                                                                                       I don't want rebook, want a refund.                     Claims & Refunds                     Claims & Refunds
+203                                                                                                                                                                                                                                                                                Fantastic service and flight back from Venice last night with @easyJet 👍🇮🇹                 On-Flight Experience                     Customer Service
+102                                                                                                                                                                                                                                                                                                   @Ryanair can I take an umbrella in my carry on baggage?                              Baggage                              Baggage
+274                                                                                                                                                                                             @AmericanAir AND I booked 10 months in advance, now it’s so close to departure, low fares not available.   YOU made the change. I should not be price gouged!  Financial (Prices, fees, air-miles)  Financial (Prices, fees, air-miles)
+238                                                                                                                                                                                                                                                         This is terrible! @AmericanAir AA1 delayed more because the CAPTAIN is late smh! Get it together!               Delays & Cancellations               Delays & Cancellations
+85                                                                                                                                                                                                                  I want to know that flight number BA017 ，depart from LHR on 17March. Whether has been cancelled？Please tell me，thank you.@British_Airways               Delays & Cancellations                     Claims & Refunds
+403                                                                                                                                              @ShamaSrujan @CowboyExpat @jcasavant @steelersfanOG @BravoAndy @AmericanAir And yet, when you walk into someone else's space, if they punch you, by your own thought process above, you'd be fine with that.                Undefined / Unrelated                 On-Flight Experience
+359                                                                                                                                                                                                                                             @USAirways you have the ability to switch my flight to @AmericanAir but you cannot tell me where my bags are.                              Baggage                              Baggage
+276                                                                                                                                                                                                             @easyJet Will you also remind me how last time you put the price of the flights up whilst I was providing my contact and credit card details?  Financial (Prices, fees, air-miles)  Financial (Prices, fees, air-miles)
+387                                                                                                                                                                                            @British_Airways thanks BA pay 50 euro for a seat so i can leave aircraft early. Had to stick hand baggage in row 34. Means i will be last off plane . #ripoff  Financial (Prices, fees, air-miles)                 On-Flight Experience
+332                                                                                                                                                                                                                     @AmericanAir  upon entering plane to 2 @USAirways stewardesses: "can I have some water?" "no we don't do that. please take your seat"                 On-Flight Experience                 On-Flight Experience
+368                                                                                                                                                                                                                          @USAirways i dont need to check status of my flight because i was ON the plane and you had a door malfunction. Get it together!!                 On-Flight Experience  Financial (Prices, fees, air-miles)
+306                                                                                                                                                                                                             @pfhawks @AmericanAir I told them that at the gate. Even worse, all of my meds for all of my conditions are in my suitcase which I don’t have         Security, gates & Long Lines                              Baggage
+215                                                                                                                                                                                                                                                                                                @Ryanair Until when is it possible to change the bookings?             (Online) Booking & Seats             (Online) Booking & Seats
+8    @motormouthmedia @lufthansa @Lufthansa_USA @MaxAbrahms @FinancialTimes No one is saying not to, just be aware that these customer service people have NO POWER to help you. They can only pass on information passed down from corporate. aka you are wasting your time. If you want to get something done, you have to communicate with the highers up.                     Customer Service                     Customer Service
+158                                                                                                                                                                                                                                                                                                     @JSoLworld @Ryanair damn boy, what’d they do to you 💀                Undefined / Unrelated               Delays & Cancellations
+279                                                                                                                                                                                                                                                                    Non-stop from Los Angeles to Beijing, China for only $305 roundtrip with @AmericanAir.  Financial (Prices, fees, air-miles)                     Customer Service
+341                                                                                                                                                                                                                                               @SouthwestAir You've inspired me to start my own airline to combat your weak ass airline. sick of this shit   General Complaints & Hate Messages   General Complaints & Hate Messages
+346                                                                                                                                                                                                                 @AmericanAir I've been trying to change a Thursday flight and there's a ridiculous wait time on the phone, and your website isn't helping                     Customer Service             (Online) Booking & Seats
+16                                                                                                                                                                                            @easyJet Assess my claim. Are you joking you left us 200 miles from our destination at 11pm with three kids. We got in at almost 4 in the morning The next day.                     Customer Service  Financial (Prices, fees, air-miles)
+173                                                                                                                                                                              @SingaporeAir Was in contact with call centre and SQ_support@singaporeair.com.sg.... Was advised the issue is been investigated...... But have been going round in circles..                     Customer Service                     Customer Service
+338                                                                                                                                                                                                                                       @AmericanAir been calling 2 different offices already and still no sign of my baggage. First time on American Air..                              Baggage                     Customer Service
+87                                                                                                                                                                                                     @leighmrosier @British_Airways 🤣🤣 it's absolutely ridiculous. Abit of sunshine and the planes can't fly? WTF but to rebook me on a flight 2 days away!               Delays & Cancellations               Delays & Cancellations
+207                                                                                                                                                                                                                                                                      @TessFowler @TheBigBang_ I would recommend easyJet over Ryanair ANY day of the week!   General Complaints & Hate Messages  Financial (Prices, fees, air-miles)
+46                                                                                                                                                                                                                                  @British_Airways Thank you very much. If we were able to check in online could we get our boarding passes at the airport?                Appreciation Messages                Appreciation Messages
+202                                                     @TinieTempah @TinieTempah You literally posted a video 2 days ago of you sitting on a @British_Airways flight, questioning them about the cleanliness of the plane (and rightly so -it was disgusting) on that video, you literally say the words “Corona Virus is real” so what’s changed your mind?                 On-Flight Experience                 On-Flight Experience
+330                                                                                                                                                                                                                                                                                   @United DO NOT FLY UNITED WITH CHECKED BAGGAGE! It will never find you!                              Baggage                              Baggage
+142                                                                                                 @VirginAtlantic Thought I’d take advantage of your 30% bonus deal purchasing extra ‘flying miles’ through your website. Just to find that there is a £15.00 handling fee! 😱 So you’re not getting extra at all are you. Feels a bit of a con to be honest  Financial (Prices, fees, air-miles)  Financial (Prices, fees, air-miles)
+63                                                                                                                                                                        The fact that I have to fly with @AmericanAir pissed me off and my trip isn’t even in the end of June 🤬🤬🤬 even speaking to their rep to add London to the flight was horrible 🤦🏽‍♀️   General Complaints & Hate Messages   General Complaints & Hate Messages
+108                                                                                                                                                                                                                                                             @KentonCool @AdventureBase @British_Airways @LandRover @lyonequipment Simply stunning capture                 On-Flight Experience                 On-Flight Experience
+333                                                                                                                                                                                                             @USAirways 2133. Flight now Cancelled Flightled. Have been rebooked on 2pm flight. If on time take off, I'll have spent 5 extra hours at DCA.               Delays & Cancellations             (Online) Booking & Seats
+281                                                                                                                                                                                                                                              @British_Airways And while you’re at it, why haven’t my flights from Monday been credited to my account yet?  Financial (Prices, fees, air-miles)                 On-Flight Experience
+395                                                                                                                                                                                                                                                                                                                                 @SingaporeAir Thank you!!                Appreciation Messages                Appreciation Messages
+121                                                                                                                                                                                                                                                                 @business @SingaporeAir do the right thing. Give customers a refund for airfare to Japan.                     Claims & Refunds                     Claims & Refunds
+136                                                                                                                                                                                                                                                                              @KirstyW95 Have you never seen ryanair cheap deals? go to spain for like £15  Financial (Prices, fees, air-miles)   General Complaints & Hate Messages
+10                                                                                                 @AmericanAir I didn’t hang in there with the team- I’m subjected to whatever is imposed on me due to poor business and inability to mange what the business is- really not an @AmericanAir fan today. Customer service is NOT your shining attribute today                     Customer Service                     Customer Service
+1                                                                                                                                                                I’m so silly, why would an employee be monitoring the @AmericanAir mentions, no one else does their job well at this company. #americanairlines #americanairlinescomplaints #onlinecomplaint                     Customer Service  Financial (Prices, fees, air-miles)
+316                                                                                                                                                                                                                                @VirginAmerica it was a disappointing experience which will be shared with every business traveler I meet. #neverflyvirgin   General Complaints & Hate Messages                 On-Flight Experience
+152                                                                                                                                         @British_Airways So teachers who are only getting a 2.75% pay rise, and already have to pay a rediculous amount more to travel in the holidays, may not be able to fly the only time they’re able to? Great news.  Financial (Prices, fees, air-miles)             (Online) Booking & Seats
+308                                                                                                                                                                                                                                                                                                                                         @united YOU SUCK!   General Complaints & Hate Messages   General Complaints & Hate Messages
+171                                                                                                                                                                                                                                                                                                      @British_Airways @British_Airways I’ve sent you a DM                     Customer Service                     Customer Service
+329                                                                                                                                                                                                                 @united Could you update me on the suitcase please? The online and phone tracking told me nothing. I was told I'd have it back yesterday!                              Baggage                     Customer Service
+293                                                                                                                                                                                                     @bri_randy All of our planes delivered recently have power and over 80% of our domestic fleet. We're going to make that 100% by the end of this year.                Undefined / Unrelated                 On-Flight Experience
+25                                                                                                                               @British_Airways You guys told me, I will receive DM from you but there is nothing! Its a fucking joke! I fucking need a refund for staying like a refugee in airport without getting proper place to sleep and proper food.                     Customer Service                     Claims & Refunds
+370                                                                                                                                                                                                                                                                         @USAirways and yet the Flight Attendant argued with me over Exec Plat benefits...                 On-Flight Experience                 On-Flight Experience
+252                                                                                                                                                                                                                                                                                                @Ryanair can you take nail clippers through cabin baggage?                              Baggage                              Baggage
+262                                                                    Oh I laughed @British_Airways  so I bought two tickets.  From Bologna. Can’t use one of them. No refund. And it looks like you going to sell the seat. and you’ve charged me £90 for the extra bag.  £300 seat.   No BA stuff in sight only contractors who really couldn’t give a ...  Financial (Prices, fees, air-miles)  Financial (Prices, fees, air-miles)
+245                                                                                                                                                                                               @dallascowboys @michael13gallup @VanderEsch38 @AmericanAir @cedwilson95 @thetangibleC4 Look At Mikey Mike He Soo Fresh N So Clean Clean @michael13gallup 💙⛓               Delays & Cancellations                              Baggage
+254                                                                                                                                                                                                                                     @British_Airways hello! am i allowed to take my vitamins and melatonin tablets with me in my hand luggage? thank you!                              Baggage                              Baggage
+154                                                                                                                                                              @lauralake3 @tisharowemd @RyanMarino @AmericanAir He didn't even go IN. He dropped her off IN LABOR in the front drive &amp; drove away. She was a sweet person. He used to brag about this.                Undefined / Unrelated                     Customer Service
+223                                                                                                                                     @AmericanAir the plane is having the tire changed and the american app is showing that boarding is in progress. Very bad experience with this app, I'm never sure if my plane is delayed or not and what should I do.             (Online) Booking & Seats               Delays & Cancellations
+384                                                                                                                                            Like big props to Qantas for the free pass but honestly only boomers would pay literally hundreds of dollars a year to eat tinned peaches or Arnott's biscuits in a separate room from the rest of the airport  Financial (Prices, fees, air-miles)  Financial (Prices, fees, air-miles)
+156                                                                                                                                                                                                                                    @stoolpresidente @British_Airways Easy fix.......quit your bitching.....open your check book.....get a private jet....                Undefined / Unrelated             (Online) Booking & Seats
+129                                                                                                                                                                                                           @British_Airways Any chance you can get back to me on my refund as we are unable to contact you via phone and don’t have hrs free to be on hold                     Claims & Refunds                     Claims & Refunds
+358                                                                                                                                                                                                                                                                             @AmericanAir Oh, and losing my luggage #ridiculous # angrybird # where'smybag                              Baggage                              Baggage
+177                                                                                                                                                                                                                                                                        @LuxuryTravelMom @AmericanAir Good on American Air and their social listening team                     Customer Service                 On-Flight Experience
+22                                                                                                                                                                                                                                                                                                                                  @Ryanair Please see my DM                     Customer Service                     Customer Service
+220                                                                                                                                                                                                                                                                          @easyJet flight cancelled and online booking portal not working/no phone answer.             (Online) Booking & Seats             (Online) Booking & Seats
+26                                                                                                                                                                                                                                                                                                 @Qantas Almost 6 hours now and still waiting @Qantas .....                     Customer Service                     Customer Service
+24                                                                                                                                                                                                                                                                                 @AmericanAir I’ve dm’d you I would love a response and a prompt resolution                     Customer Service                     Customer Service
+196                                                                                                                                      @Aviationdailyy This is why the safety-conscious airlines like Qantas sit everyone down when striking unexpected turbulence. It’s not acceptable to have cabin crew unbuckled and only the passengers are protected.                 On-Flight Experience                 On-Flight Experience
+157                                                                                                                                                                                                                                                                                             @ElinJakobsen4 @nickcarter @KLM Whaaaat? It's not true 😱 shit                Undefined / Unrelated                 On-Flight Experience
+289                                                                         @BT77W @HeathrowAirport @AmericanAir @British_Airways During a couple of hours yesterday in the Flying Chariot, just 2 #B737s observed. I didn’t recognise the liveries. That illustrates the scale of change of types. Only a v few 4-engined a/c which were not #A380 or #QOTS.                Undefined / Unrelated                     Customer Service
+92                                                                                                                                                                                                                             @KLM mismanagement @Schiphol forced me and many others to miss flights all over the world. Zero apologies, just arrogance.#klm               Delays & Cancellations               Delays & Cancellations
+212                                                                                                                                                                                                                   @Ryanair we missed a connecting flight en route to our destination. Is our return flight impacted if we rebooked the connecting flight?             (Online) Booking & Seats             (Online) Booking & Seats
+273                                                                                                                                                                                                          @easyJet Hello there, two of my flights have been cancelled to which I can provide details. What is the procedure to process a refund? Thank you                     Claims & Refunds                     Claims & Refunds
+385                                                                                                                                                                                                   @AmericanAir @andrewkimmel Still cheaper than the nearly $2k they wanted you to pay, and now you can write a movie about your ordeal. “Frequent Flyer”.  Financial (Prices, fees, air-miles)  Financial (Prices, fees, air-miles)
+164                                                                                                                                                                                                                                                           @oluobededom @fatiabubakar_ @prettyskitchen @airfrance So what hppnd thereafter? In the room? 😁                Undefined / Unrelated                 On-Flight Experience
+343                                                                                                                                                                                                                                                                                                @JetBlue and the 20min line I stood in to drop my bag off?         Security, gates & Long Lines                              Baggage
+103                                                                                                                                                                                                                                                                          @regularcars @AmericanAir They definitely send your bags to Seattle didn't they.                              Baggage                              Baggage
 
-                       target           feature     weight
-0    (Online) Booking & Seats              seat  13.036531
-1    (Online) Booking & Seats           booking   9.521613
-2    (Online) Booking & Seats           website   9.190598
-3    (Online) Booking & Seats          rebooked   8.597885
-4    (Online) Booking & Seats            booked   8.510180
-5    (Online) Booking & Seats               app   8.407178
-6    (Online) Booking & Seats                th   7.137545
-7    (Online) Booking & Seats            online   6.827471
-8    (Online) Booking & Seats              able   6.516963
-9    (Online) Booking & Seats            portal   6.413634
-10   (Online) Booking & Seats        reschedule   6.221197
-11   (Online) Booking & Seats           finally   6.071253
-12   (Online) Booking & Seats            choose   5.580218
-13   (Online) Booking & Seats           checked   5.445891
-14   (Online) Booking & Seats              show   5.440881
-15   (Online) Booking & Seats        assignment   5.100822
-16   (Online) Booking & Seats          possible   5.068274
-17   (Online) Booking & Seats            option   4.955328
-18   (Online) Booking & Seats          separate   4.834525
-19   (Online) Booking & Seats            change   4.784410
-20   (Online) Booking & Seats              flew  -2.007048
-21   (Online) Booking & Seats               mom  -2.023119
-22   (Online) Booking & Seats             first  -2.023893
-23   (Online) Booking & Seats               min  -2.034927
-24   (Online) Booking & Seats            number  -2.040992
-25   (Online) Booking & Seats               day  -2.182820
-26   (Online) Booking & Seats              home  -2.204387
-27   (Online) Booking & Seats           jetblue  -2.246798
-28   (Online) Booking & Seats            called  -2.246798
-29   (Online) Booking & Seats           baggage  -2.279332
-30   (Online) Booking & Seats           airport  -2.339231
-31   (Online) Booking & Seats             class  -2.448147
-32   (Online) Booking & Seats           airline  -2.554811
-33   (Online) Booking & Seats             hotel  -2.564505
-34   (Online) Booking & Seats           luggage  -2.667232
-35   (Online) Booking & Seats            people  -2.710120
-36   (Online) Booking & Seats              told  -2.746647
-37   (Online) Booking & Seats            rebook  -2.796149
-38   (Online) Booking & Seats            anyone  -2.834670
-39   (Online) Booking & Seats            please  -3.067846
-40                    Baggage           luggage  15.230653
-41                    Baggage               bag  13.457990
-42                    Baggage           baggage  10.705921
-43                    Baggage              take   5.911589
-44                    Baggage               may   5.440029
-45                    Baggage             carry   5.321922
-46                    Baggage           receipt   5.211387
-47                    Baggage           missing   5.075820
-48                    Baggage             going   4.340003
-49                    Baggage              need   4.243469
-50                    Baggage            behind   4.231056
-51                    Baggage               amp   3.845134
-52                    Baggage           allowed   3.803584
-53                    Baggage             stuff   3.618995
-54                    Baggage           seattle   3.516351
-55                    Baggage              send   3.516351
-56                    Baggage        definitely   3.516351
-57                    Baggage            arrive   3.515268
-58                    Baggage           arrives   3.515268
-59                    Baggage           clipper   3.502824
-60                    Baggage              hold  -1.412080
-61                    Baggage              even  -1.425818
-62                    Baggage              book  -1.460239
-63                    Baggage          customer  -1.490525
-64                    Baggage           airline  -1.585518
-65                    Baggage             plane  -1.639069
-66                    Baggage         yesterday  -1.742831
-67                    Baggage                dm  -1.766076
-68                    Baggage           service  -1.778824
-69                    Baggage          response  -1.818520
-70                    Baggage            really  -1.934357
-71                    Baggage             delay  -1.945651
-72                    Baggage              plus  -1.978925
-73                    Baggage            ironic  -1.978925
-74                    Baggage              bday  -1.978925
-75                    Baggage              seat  -2.063465
-76                    Baggage               one  -2.098249
-77                    Baggage             issue  -2.151530
-78                    Baggage         cancelled  -2.266136
-79                    Baggage            flight  -3.714640
-80                 Can't Tell          purement   7.714264
-81                 Can't Tell            racist   6.776276
-82                 Can't Tell             count   6.087712
-83                 Can't Tell            muslim   6.087712
-84                 Can't Tell              damn   6.081660
-85                 Can't Tell         enlighten   5.454808
-86                 Can't Tell         president   5.454808
-87                 Can't Tell             truth   5.454808
-88                 Can't Tell      infantroopen   5.454808
-89                 Can't Tell          recently   5.223408
-90                 Can't Tell           whaaaat   5.154219
-91                 Can't Tell             hppnd   4.873861
-92                 Can't Tell        thereafter   4.873861
-93                 Can't Tell              shit   4.678708
-94                 Can't Tell               boy   4.648444
-95                 Can't Tell           uniform   4.626197
-96                 Can't Tell                pj   4.626197
-97                 Can't Tell     allllllllllll   4.501982
-98                 Can't Tell              open   4.418197
-99                 Can't Tell             blood   4.265658
-100                Can't Tell               fly  -2.566162
-101                Can't Tell               leg  -2.576100
-102                Can't Tell           delayed  -2.640623
-103                Can't Tell                dm  -2.643680
-104                Can't Tell          response  -2.657927
-105                Can't Tell              time  -2.661645
-106                Can't Tell            please  -2.694478
-107                Can't Tell           website  -2.722469
-108                Can't Tell           booking  -2.725902
-109                Can't Tell        experience  -2.811450
-110                Can't Tell              hold  -2.817248
-111                Can't Tell           luggage  -3.038288
-112                Can't Tell           baggage  -3.039683
-113                Can't Tell             still  -3.287474
-114                Can't Tell           service  -3.438262
-115                Can't Tell               one  -3.555653
-116                Can't Tell          customer  -3.655526
-117                Can't Tell              seat  -4.009611
-118                Can't Tell               bag  -4.377824
-119                Can't Tell            flight  -7.059657
-120          Customer Service                dm  11.930066
-121          Customer Service           service  10.118349
-122          Customer Service          customer   9.612239
-123          Customer Service            really   7.679630
-124          Customer Service              care   7.248041
-125          Customer Service              done   7.096036
-126          Customer Service              hold   6.777951
-127          Customer Service            please   6.302013
-128          Customer Service             still   6.022341
-129          Customer Service                pm   5.895410
-130          Customer Service           respond   5.657615
-131          Customer Service        assistance   5.517411
-132          Customer Service              call   5.453361
-133          Customer Service         estimated   5.272164
-134          Customer Service            almost   4.981571
-135          Customer Service       experienced   4.855566
-136          Customer Service              team   4.742757
-137          Customer Service          response   4.522238
-138          Customer Service              stop   4.521086
-139          Customer Service           support   4.501400
-140          Customer Service            thanks  -2.871817
-141          Customer Service              book  -2.904367
-142          Customer Service                ba  -3.032900
-143          Customer Service           working  -3.079369
-144          Customer Service        understand  -3.170327
-145          Customer Service               say  -3.182272
-146          Customer Service           finally  -3.245462
-147          Customer Service              made  -3.265996
-148          Customer Service              week  -3.274396
-149          Customer Service             march  -3.297457
-150          Customer Service             great  -3.313318
-151          Customer Service            cancel  -3.324663
-152          Customer Service               bag  -3.573932
-153          Customer Service             staff  -3.715807
-154          Customer Service                th  -3.842773
-155          Customer Service           missing  -3.879138
-156          Customer Service              seat  -4.542713
-157          Customer Service           delayed  -4.749103
-158          Customer Service           luggage  -6.794397
-159          Customer Service            flight  -7.391120
-160    Delays & Cancellations           delayed  14.759805
-161    Delays & Cancellations            flight  12.139271
-162    Delays & Cancellations             delay   7.501020
-163    Delays & Cancellations               fly   7.217021
-164    Delays & Cancellations            rebook   6.713721
-165    Delays & Cancellations             clean   6.693727
-166    Delays & Cancellations         cancelled   5.931936
-167    Delays & Cancellations           voucher   5.664439
-168    Delays & Cancellations             issue   5.555990
-169    Delays & Cancellations               due   5.313669
-170    Delays & Cancellations        understand   5.313005
-171    Delays & Cancellations              late   5.113787
-172    Delays & Cancellations            trying   4.987970
-173    Delays & Cancellations          canceled   4.902513
-174    Delays & Cancellations              home   4.788963
-175    Delays & Cancellations             hotel   4.544654
-176    Delays & Cancellations            cancel   4.325697
-177    Delays & Cancellations          schedule   4.255759
-178    Delays & Cancellations             truly   4.255759
-179    Delays & Cancellations              mean   4.255759
-180    Delays & Cancellations            really  -1.997403
-181    Delays & Cancellations       experienced  -2.068049
-182    Delays & Cancellations              life  -2.175604
-183    Delays & Cancellations             worst  -2.211116
-184    Delays & Cancellations          american  -2.256316
-185    Delays & Cancellations           airline  -2.298041
-186    Delays & Cancellations              hope  -2.304550
-187    Delays & Cancellations           booking  -2.364006
-188    Delays & Cancellations              back  -2.515127
-189    Delays & Cancellations        connecting  -2.556420
-190    Delays & Cancellations              call  -2.705741
-191    Delays & Cancellations           baggage  -2.787630
-192    Delays & Cancellations             phone  -2.941677
-193    Delays & Cancellations            online  -3.050888
-194    Delays & Cancellations                dm  -3.249328
-195    Delays & Cancellations              time  -3.452916
-196    Delays & Cancellations               bag  -3.686405
-197    Delays & Cancellations              well  -3.829403
-198    Delays & Cancellations              seat  -4.447193
-199    Delays & Cancellations           service  -4.937327
-200                Long Lines          priority  10.533883
-201                Long Lines            making   5.585944
-202                Long Lines              line   4.225495
-203                Long Lines            member   3.025061
-204                Long Lines            taking   3.025061
-205                Long Lines            though   3.025061
-206                Long Lines             stand   3.025061
-207                Long Lines           treated   3.025061
-208                Long Lines          platinum   3.025061
-209                Long Lines              glad   3.025061
-210                Long Lines          horribly   3.025061
-211                Long Lines             agent   2.781366
-212                Long Lines              huge   2.776508
-213                Long Lines              rude   2.770623
-214                Long Lines  americanairlines   2.591315
-215                Long Lines              care   2.427672
-216                Long Lines             check   2.322878
-217                Long Lines            thanks   2.175815
-218                Long Lines            change   2.136061
-219                Long Lines          spending   2.106777
-220                Long Lines             going  -0.261926
-221                Long Lines              back  -0.268153
-222                Long Lines         yesterday  -0.270807
-223                Long Lines              need  -0.273188
-224                Long Lines               see  -0.284274
-225                Long Lines           luggage  -0.287921
-226                Long Lines             plane  -0.291584
-227                Long Lines               one  -0.325659
-228                Long Lines              help  -0.326787
-229                Long Lines            please  -0.341657
-230                Long Lines             still  -0.346484
-231                Long Lines               day  -0.361170
-232                Long Lines                dm  -0.368649
-233                Long Lines          customer  -0.375024
-234                Long Lines               get  -0.378901
-235                Long Lines           delayed  -0.381507
-236                Long Lines           service  -0.387272
-237                Long Lines              hour  -0.409454
-238                Long Lines              seat  -0.443114
-239                Long Lines            <BIAS>  -3.646676
-240      On-Flight Experience             great   8.432788
-241      On-Flight Experience              crew   7.748975
-242      On-Flight Experience              flew   7.325016
-243      On-Flight Experience             class   7.261071
-244      On-Flight Experience             video   6.943856
-245      On-Flight Experience        experience   6.801617
-246      On-Flight Experience               leg   6.310598
-247      On-Flight Experience            thanks   6.141598
-248      On-Flight Experience               ago   5.439272
-249      On-Flight Experience         fantastic   5.073834
-250      On-Flight Experience            venice   5.073834
-251      On-Flight Experience           airline   5.038622
-252      On-Flight Experience              best   5.006191
-253      On-Flight Experience              tall   4.687221
-254      On-Flight Experience     inappropriate   4.604940
-255      On-Flight Experience              news   4.430732
-256      On-Flight Experience               met   4.427788
-257      On-Flight Experience             often   4.395189
-258      On-Flight Experience              back   4.271848
-259      On-Flight Experience             plane   4.226562
-260      On-Flight Experience         different  -2.211556
-261      On-Flight Experience              poor  -2.291534
-262      On-Flight Experience             still  -2.310364
-263      On-Flight Experience            choose  -2.391113
-264      On-Flight Experience            booked  -2.457608
-265      On-Flight Experience            please  -2.468999
-266      On-Flight Experience             think  -2.474565
-267      On-Flight Experience            messed  -2.490156
-268      On-Flight Experience          recently  -2.493592
-269      On-Flight Experience              home  -2.589213
-270      On-Flight Experience             delay  -2.659780
-271      On-Flight Experience              care  -2.689149
-272      On-Flight Experience             maybe  -2.873202
-273      On-Flight Experience             going  -2.894524
-274      On-Flight Experience               app  -2.975669
-275      On-Flight Experience           baggage  -3.082116
-276      On-Flight Experience          customer  -3.206689
-277      On-Flight Experience               get  -3.988419
-278      On-Flight Experience              hour  -4.007154
-279      On-Flight Experience           delayed  -4.335394
+                                  target          feature     weight
+0               (Online) Booking & Seats           booked  12.567537
+1               (Online) Booking & Seats             seat  12.488912
+2               (Online) Booking & Seats         rebooked  10.424694
+3               (Online) Booking & Seats          website  10.317165
+4               (Online) Booking & Seats             able   8.442608
+5               (Online) Booking & Seats             book   7.453003
+6               (Online) Booking & Seats       reschedule   7.208109
+7               (Online) Booking & Seats           cancel   7.147594
+8               (Online) Booking & Seats         separate   6.657596
+9               (Online) Booking & Seats             show   6.608884
+10              (Online) Booking & Seats             site   6.566221
+11              (Online) Booking & Seats          checked   6.536610
+12              (Online) Booking & Seats           choose   6.487951
+13              (Online) Booking & Seats               th   5.666022
+14              (Online) Booking & Seats          booking   5.529256
+15              (Online) Booking & Seats              app   5.503354
+16              (Online) Booking & Seats             busy   5.336434
+17              (Online) Booking & Seats           trying   5.005459
+18              (Online) Booking & Seats        demanding   4.979601
+19              (Online) Booking & Seats        september   4.944135
+20              (Online) Booking & Seats             week  -2.185088
+21              (Online) Booking & Seats          earlier  -2.242414
+22              (Online) Booking & Seats             wait  -2.351171
+23              (Online) Booking & Seats           people  -2.356170
+24              (Online) Booking & Seats           called  -2.371863
+25              (Online) Booking & Seats          voucher  -2.384421
+26              (Online) Booking & Seats            hotel  -2.388771
+27              (Online) Booking & Seats           thanks  -2.410155
+28              (Online) Booking & Seats             home  -2.419430
+29              (Online) Booking & Seats          jetblue  -2.451901
+30              (Online) Booking & Seats          airport  -2.527740
+31              (Online) Booking & Seats          delayed  -2.606974
+32              (Online) Booking & Seats            going  -2.679797
+33              (Online) Booking & Seats              bag  -2.825915
+34              (Online) Booking & Seats           please  -3.019697
+35              (Online) Booking & Seats          airline  -3.042077
+36              (Online) Booking & Seats            plane  -3.555306
+37              (Online) Booking & Seats           refund  -4.263356
+38              (Online) Booking & Seats           anyone  -4.554080
+39              (Online) Booking & Seats            never  -5.055066
+40                 Appreciation Messages            thank  17.271145
+41                 Appreciation Messages           thanks  14.344603
+42                 Appreciation Messages         pleasure   9.308512
+43                 Appreciation Messages            quick   5.579348
+44                 Appreciation Messages       confirming   4.964770
+45                 Appreciation Messages              sir   4.654256
+46                 Appreciation Messages         greatest   4.654256
+47                 Appreciation Messages              wow   4.434240
+48                 Appreciation Messages               dm   4.326770
+49                 Appreciation Messages          sharing   4.244721
+50                 Appreciation Messages               ok   4.169176
+51                 Appreciation Messages            swift   4.040588
+52                 Appreciation Messages         approach   4.040588
+53                 Appreciation Messages           beyond   4.003151
+54                 Appreciation Messages       recognised   4.003151
+55                 Appreciation Messages        completed   4.003151
+56                 Appreciation Messages            fiona   4.003151
+57                 Appreciation Messages          amazing   3.978496
+58                 Appreciation Messages           sorted   3.955592
+59                 Appreciation Messages        colleague   3.955592
+60                 Appreciation Messages             seat  -1.159897
+61                 Appreciation Messages           <BIAS>  -1.170456
+62                 Appreciation Messages            issue  -1.172868
+63                 Appreciation Messages          nothing  -1.207676
+64                 Appreciation Messages           trying  -1.236816
+65                 Appreciation Messages             make  -1.262088
+66                 Appreciation Messages           please  -1.266658
+67                 Appreciation Messages               hi  -1.322971
+68                 Appreciation Messages              get  -1.330772
+69                 Appreciation Messages              fly  -1.367898
+70                 Appreciation Messages          airline  -1.398165
+71                 Appreciation Messages              guy  -1.399863
+72                 Appreciation Messages       disability  -1.399990
+73                 Appreciation Messages             well  -1.517475
+74                 Appreciation Messages            still  -1.581852
+75                 Appreciation Messages              day  -1.685199
+76                 Appreciation Messages           cancel  -1.760898
+77                 Appreciation Messages             help  -1.920292
+78                 Appreciation Messages            great  -2.224513
+79                 Appreciation Messages           flight  -4.077567
+80                               Baggage              bag  19.784187
+81                               Baggage          luggage  16.587549
+82                               Baggage        delivered   8.582110
+83                               Baggage          baggage   7.105722
+84                               Baggage           cancun   6.444923
+85                               Baggage         suitcase   5.892703
+86                               Baggage              may   5.573393
+87                               Baggage             onto   5.019427
+88                               Baggage          missing   4.836316
+89                               Baggage               hr   4.727930
+90                               Baggage           behind   4.431037
+91                               Baggage            state   4.337572
+92                               Baggage            carry   4.312624
+93                               Baggage      mishandling   4.183332
+94                               Baggage          already   4.081206
+95                               Baggage             need   4.001755
+96                               Baggage          receipt   3.885559
+97                               Baggage            shirt   3.864370
+98                               Baggage        pleaseeee   3.864370
+99                               Baggage            clean   3.864370
+100                              Baggage          finally  -1.900812
+101                              Baggage           refund  -1.901581
+102                              Baggage             cant  -1.910571
+103                              Baggage            issue  -1.917635
+104                              Baggage              app  -1.919612
+105                              Baggage               go  -1.967743
+106                              Baggage          airline  -2.012415
+107                              Baggage         customer  -2.050303
+108                              Baggage            thank  -2.080894
+109                              Baggage           really  -2.122604
+110                              Baggage            delay  -2.170808
+111                              Baggage        cancelled  -2.213431
+112                              Baggage          booking  -2.226135
+113                              Baggage           flight  -2.239951
+114                              Baggage        yesterday  -2.250014
+115                              Baggage              got  -2.270147
+116                              Baggage           option  -2.489526
+117                              Baggage             seat  -2.777367
+118                              Baggage           access  -3.122385
+119                              Baggage              fee  -3.150444
+120                     Claims & Refunds           refund  24.097232
+121                     Claims & Refunds     compensation  12.984151
+122                     Claims & Refunds              per   8.971395
+123                     Claims & Refunds         refunded   7.344658
+124                     Claims & Refunds            claim   6.446442
+125                     Claims & Refunds          waiting   6.144952
+126                     Claims & Refunds              get   5.921966
+127                     Claims & Refunds             took   5.841824
+128                     Claims & Refunds            money   4.980663
+129                     Claims & Refunds            email   4.839386
+130                     Claims & Refunds           gotten   4.552861
+131                     Claims & Refunds              son   4.552861
+132                     Claims & Refunds           double   4.165652
+133                     Claims & Refunds            gimme   4.015664
+134                     Claims & Refunds         suitable   4.015664
+135                     Claims & Refunds              qld   4.015664
+136                     Claims & Refunds           canned   4.015664
+137                     Claims & Refunds            windy   4.015664
+138                     Claims & Refunds         airplane   3.859823
+139                     Claims & Refunds          booking   3.806963
+140                     Claims & Refunds           change  -1.677004
+141                     Claims & Refunds         customer  -1.686124
+142                     Claims & Refunds           people  -1.744886
+143                     Claims & Refunds             home  -1.754630
+144                     Claims & Refunds               hr  -1.823667
+145                     Claims & Refunds          voucher  -1.844487
+146                     Claims & Refunds               dm  -1.845602
+147                     Claims & Refunds             seat  -1.908608
+148                     Claims & Refunds           really  -2.027327
+149                     Claims & Refunds             need  -2.042127
+150                     Claims & Refunds           called  -2.081052
+151                     Claims & Refunds              fly  -2.132904
+152                     Claims & Refunds           travel  -2.142383
+153                     Claims & Refunds            thank  -2.224687
+154                     Claims & Refunds             time  -2.269800
+155                     Claims & Refunds         response  -2.276949
+156                     Claims & Refunds         rebooked  -2.286183
+157                     Claims & Refunds          luggage  -2.335920
+158                     Claims & Refunds          already  -2.528619
+159                     Claims & Refunds              bag  -2.596318
+160                     Customer Service          service  13.505993
+161                     Customer Service         customer  11.897708
+162                     Customer Service             hold   9.407018
+163                     Customer Service             care   8.405115
+164                     Customer Service               dm   8.158360
+165                     Customer Service             done   7.727036
+166                     Customer Service          respond   7.364422
+167                     Customer Service      experienced   6.933826
+168                     Customer Service  customerservice   6.811494
+169                     Customer Service            reply   6.734697
+170                     Customer Service           really   6.424642
+171                     Customer Service           number   6.256308
+172                     Customer Service        estimated   5.973689
+173                     Customer Service           please   5.867912
+174                     Customer Service         question   5.847286
+175                     Customer Service             word   5.839557
+176                     Customer Service       assistance   5.786641
+177                     Customer Service           centre   5.564093
+178                     Customer Service            agree   5.354942
+179                     Customer Service            avoid   5.287570
+180                     Customer Service           trying  -2.955336
+181                     Customer Service               ba  -2.956464
+182                     Customer Service           cancel  -3.004434
+183                     Customer Service             sure  -3.113588
+184                     Customer Service             next  -3.215252
+185                     Customer Service          working  -3.227598
+186                     Customer Service             much  -3.247617
+187                     Customer Service            money  -3.284313
+188                     Customer Service             want  -3.413100
+189                     Customer Service        attendant  -3.441046
+190                     Customer Service           refund  -3.635575
+191                     Customer Service              bag  -3.721307
+192                     Customer Service           thanks  -3.778600
+193                     Customer Service               th  -3.781010
+194                     Customer Service             made  -4.152266
+195                     Customer Service             busy  -4.238749
+196                     Customer Service           flight  -4.695848
+197                     Customer Service             week  -4.833742
+198                     Customer Service          luggage  -4.876988
+199                     Customer Service            thank  -5.848482
+200               Delays & Cancellations          delayed  17.816007
+201               Delays & Cancellations           flight  11.866493
+202               Delays & Cancellations            delay   8.004016
+203               Delays & Cancellations            leave   7.059257
+204               Delays & Cancellations           cancel   6.672968
+205               Delays & Cancellations            issue   6.396989
+206               Delays & Cancellations              due   6.248108
+207               Delays & Cancellations             home   5.878700
+208               Delays & Cancellations          voucher   5.792906
+209               Delays & Cancellations          flightr   5.574550
+210               Delays & Cancellations             wait   5.560301
+211               Delays & Cancellations       understand   5.229410
+212               Delays & Cancellations           rebook   5.183816
+213               Delays & Cancellations        cancelled   5.171852
+214               Delays & Cancellations             mean   5.170880
+215               Delays & Cancellations         schedule   5.170880
+216               Delays & Cancellations            truly   5.170880
+217               Delays & Cancellations             hour   5.152878
+218               Delays & Cancellations           taking   5.136366
+219               Delays & Cancellations         canceled   5.063830
+220               Delays & Cancellations          waiting  -2.200515
+221               Delays & Cancellations            worst  -2.242817
+222               Delays & Cancellations     compensation  -2.262956
+223               Delays & Cancellations             call  -2.286027
+224               Delays & Cancellations              pay  -2.291574
+225               Delays & Cancellations             even  -2.422566
+226               Delays & Cancellations             site  -2.422734
+227               Delays & Cancellations          airline  -2.451270
+228               Delays & Cancellations             gate  -2.467618
+229               Delays & Cancellations              got  -2.543183
+230               Delays & Cancellations           online  -2.903006
+231               Delays & Cancellations             able  -2.948718
+232               Delays & Cancellations              two  -3.076286
+233               Delays & Cancellations               dm  -3.282069
+234               Delays & Cancellations             well  -3.301732
+235               Delays & Cancellations            phone  -3.505972
+236               Delays & Cancellations           refund  -3.559109
+237               Delays & Cancellations          service  -3.606215
+238               Delays & Cancellations             seat  -3.686910
+239               Delays & Cancellations              bag  -3.729974
+240  Financial (Prices, fees, air-miles)            price  11.033298
+241  Financial (Prices, fees, air-miles)              fee   8.841896
+242  Financial (Prices, fees, air-miles)              pay   8.786930
+243  Financial (Prices, fees, air-miles)          charged   8.178982
+244  Financial (Prices, fees, air-miles)               kg   7.158873
+245  Financial (Prices, fees, air-miles)             cash   6.934991
+246  Financial (Prices, fees, air-miles)             also   6.339752
+247  Financial (Prices, fees, air-miles)          decided   6.323783
+248  Financial (Prices, fees, air-miles)           access   6.179512
+249  Financial (Prices, fees, air-miles)           london   5.955223
+250  Financial (Prices, fees, air-miles)          voucher   5.911084
+251  Financial (Prices, fees, air-miles)         charging   5.878240
+252  Financial (Prices, fees, air-miles)              use   5.846615
+253  Financial (Prices, fees, air-miles)       ridiculous   5.516027
+254  Financial (Prices, fees, air-miles)         purchase   5.493276
+255  Financial (Prices, fees, air-miles)           worker   5.385551
+256  Financial (Prices, fees, air-miles)           switch   5.321817
+257  Financial (Prices, fees, air-miles)             free   5.295439
+258  Financial (Prices, fees, air-miles)            basic   5.158755
+259  Financial (Prices, fees, air-miles)          easyjet   5.008208
+260  Financial (Prices, fees, air-miles)           double  -2.322737
+261  Financial (Prices, fees, air-miles)         response  -2.322937
+262  Financial (Prices, fees, air-miles)        passenger  -2.351140
+263  Financial (Prices, fees, air-miles)            would  -2.408685
+264  Financial (Prices, fees, air-miles)            never  -2.442144
+265  Financial (Prices, fees, air-miles)          working  -2.467459
+266  Financial (Prices, fees, air-miles)         absolute  -2.514599
+267  Financial (Prices, fees, air-miles)              one  -2.549796
+268  Financial (Prices, fees, air-miles)             suck  -2.556556
+269  Financial (Prices, fees, air-miles)            plane  -2.672148
+270  Financial (Prices, fees, air-miles)           cancel  -2.786426
+271  Financial (Prices, fees, air-miles)            today  -2.826760
+272  Financial (Prices, fees, air-miles)             show  -2.897461
+273  Financial (Prices, fees, air-miles)             time  -2.910910
+274  Financial (Prices, fees, air-miles)            worst  -2.914823
+275  Financial (Prices, fees, air-miles)          luggage  -3.054274
+276  Financial (Prices, fees, air-miles)          finally  -3.208575
+277  Financial (Prices, fees, air-miles)           flight  -3.269669
+278  Financial (Prices, fees, air-miles)           thanks  -3.312085
+279  Financial (Prices, fees, air-miles)           refund  -3.427267
+280   General Complaints & Hate Messages            never  11.052790
+281   General Complaints & Hate Messages            worst  10.539159
+282   General Complaints & Hate Messages             blow  10.428326
+283   General Complaints & Hate Messages             lose   9.619019
+284   General Complaints & Hate Messages        nightmare   7.784908
+285   General Complaints & Hate Messages              nah   7.399682
+286   General Complaints & Hate Messages          airline   7.242497
+287   General Complaints & Hate Messages           agreed   6.929549
+288   General Complaints & Hate Messages    intentionally   6.013882
+289   General Complaints & Hate Messages           flying   5.853586
+290   General Complaints & Hate Messages         screwing   5.838949
+291   General Complaints & Hate Messages            worse   5.836083
+292   General Complaints & Hate Messages             suck   5.461931
+293   General Complaints & Hate Messages           donkey   5.443974
+294   General Complaints & Hate Messages             ball   5.443974
+295   General Complaints & Hate Messages              lot   5.386840
+296   General Complaints & Hate Messages             walk   5.386840
+297   General Complaints & Hate Messages            world   5.205895
+298   General Complaints & Hate Messages              big   4.837380
+299   General Complaints & Hate Messages          ashamed   4.744196
+300   General Complaints & Hate Messages            given  -1.921855
+301   General Complaints & Hate Messages              amp  -1.930377
+302   General Complaints & Hate Messages  customerservice  -1.971559
+303   General Complaints & Hate Messages               dr  -1.971573
+304   General Complaints & Hate Messages            still  -1.978409
+305   General Complaints & Hate Messages           better  -2.014409
+306   General Complaints & Hate Messages             hour  -2.024247
+307   General Complaints & Hate Messages          airport  -2.031859
+308   General Complaints & Hate Messages            awful  -2.041089
+309   General Complaints & Hate Messages             look  -2.092822
+310   General Complaints & Hate Messages      experienced  -2.106843
+311   General Complaints & Hate Messages             like  -2.281456
+312   General Complaints & Hate Messages             back  -2.362888
+313   General Complaints & Hate Messages             time  -2.446169
+314   General Complaints & Hate Messages            using  -2.467106
+315   General Complaints & Hate Messages              day  -2.498117
+316   General Complaints & Hate Messages              bag  -2.877183
+317   General Complaints & Hate Messages              get  -3.014243
+318   General Complaints & Hate Messages          service  -4.512512
+319   General Complaints & Hate Messages           flight  -5.344583
+320                 On-Flight Experience            great  11.642790
+321                 On-Flight Experience        attendant  10.693627
+322                 On-Flight Experience            plane   8.910163
+323                 On-Flight Experience             nice   8.000635
+324                 On-Flight Experience            class   7.834589
+325                 On-Flight Experience             wifi   7.749900
+326                 On-Flight Experience              leg   7.182897
+327                 On-Flight Experience             flew   6.984980
+328                 On-Flight Experience             crew   6.813849
+329                 On-Flight Experience            video   6.558535
+330                 On-Flight Experience       experience   6.508097
+331                 On-Flight Experience              row   6.305559
+332                 On-Flight Experience             seat   6.191064
+333                 On-Flight Experience          capture   6.023437
+334                 On-Flight Experience            space   5.931534
+335                 On-Flight Experience             tall   5.665038
+336                 On-Flight Experience          picture   5.464379
+337                 On-Flight Experience         business   5.417371
+338                 On-Flight Experience            cheap   5.358584
+339                 On-Flight Experience             good   5.300196
+340                 On-Flight Experience           please  -2.301617
+341                 On-Flight Experience             call  -2.407541
+342                 On-Flight Experience            never  -2.443442
+343                 On-Flight Experience             went  -2.516538
+344                 On-Flight Experience           choose  -2.577643
+345                 On-Flight Experience          baggage  -2.619287
+346                 On-Flight Experience            maybe  -2.648224
+347                 On-Flight Experience            month  -2.682216
+348                 On-Flight Experience           travel  -2.684850
+349                 On-Flight Experience           change  -2.739291
+350                 On-Flight Experience          luggage  -2.949432
+351                 On-Flight Experience            delay  -2.966276
+352                 On-Flight Experience           refund  -3.037160
+353                 On-Flight Experience            price  -3.133525
+354                 On-Flight Experience            thank  -3.324867
+355                 On-Flight Experience         tomorrow  -3.343625
+356                 On-Flight Experience             home  -3.504927
+357                 On-Flight Experience           trying  -3.911053
+358                 On-Flight Experience          delayed  -4.388678
+359                 On-Flight Experience              get  -4.622569
+360         Security, gates & Long Lines             line  11.886876
+361         Security, gates & Long Lines         priority   8.121452
+362         Security, gates & Long Lines         security   8.082335
+363         Security, gates & Long Lines             gate   7.566579
+364         Security, gates & Long Lines            agent   7.557025
+365         Security, gates & Long Lines             long   6.299132
+366         Security, gates & Long Lines            board   6.102394
+367         Security, gates & Long Lines           though   4.949028
+368         Security, gates & Long Lines         employee   4.833563
+369         Security, gates & Long Lines            stand   4.465152
+370         Security, gates & Long Lines        rearrange   4.435752
+371         Security, gates & Long Lines              ops   4.435752
+372         Security, gates & Long Lines          naustin   4.204489
+373         Security, gates & Long Lines             lane   4.204489
+374         Security, gates & Long Lines            kiosk   4.204489
+375         Security, gates & Long Lines        bergstrom   4.204489
+376         Security, gates & Long Lines         horrific   4.076950
+377         Security, gates & Long Lines             hill   4.076950
+378         Security, gates & Long Lines         anything   4.076950
+379         Security, gates & Long Lines              wtf   4.066253
+380         Security, gates & Long Lines             book  -0.926200
+381         Security, gates & Long Lines      information  -0.940084
+382         Security, gates & Long Lines             make  -0.950921
+383         Security, gates & Long Lines        yesterday  -0.968483
+384         Security, gates & Long Lines           qantas  -0.995762
+385         Security, gates & Long Lines      frustrating  -1.008914
+386         Security, gates & Long Lines               pm  -1.013828
+387         Security, gates & Long Lines           please  -1.032171
+388         Security, gates & Long Lines          baggage  -1.134419
+389         Security, gates & Long Lines           flying  -1.139597
+390         Security, gates & Long Lines            still  -1.153108
+391         Security, gates & Long Lines           refund  -1.170784
+392         Security, gates & Long Lines              one  -1.295940
+393         Security, gates & Long Lines              see  -1.377123
+394         Security, gates & Long Lines              fly  -1.380817
+395         Security, gates & Long Lines             seat  -1.399641
+396         Security, gates & Long Lines           <BIAS>  -1.437009
+397         Security, gates & Long Lines             hold  -1.444116
+398         Security, gates & Long Lines              day  -1.640552
+399         Security, gates & Long Lines         customer  -1.840282
+400                Undefined / Unrelated         purement   9.236193
+401                Undefined / Unrelated           racist   8.173125
+402                Undefined / Unrelated            count   6.832662
+403                Undefined / Unrelated           muslim   6.832662
+404                Undefined / Unrelated     infantroopen   6.530975
+405                Undefined / Unrelated        enlighten   6.530975
+406                Undefined / Unrelated            truth   6.530975
+407                Undefined / Unrelated        president   6.530975
+408                Undefined / Unrelated               pj   6.073988
+409                Undefined / Unrelated          uniform   6.073988
+410                Undefined / Unrelated            blood   5.537918
+411                Undefined / Unrelated    allllllllllll   5.289516
+412                Undefined / Unrelated            sense   5.213232
+413                Undefined / Unrelated            rouge   5.095689
+414                Undefined / Unrelated             gone   5.095689
+415                Undefined / Unrelated              lsg   5.095689
+416                Undefined / Unrelated              isi   5.064346
+417                Undefined / Unrelated            blown   5.064346
+418                Undefined / Unrelated          terrist   5.064346
+419                Undefined / Unrelated           azores   4.973348
+420                Undefined / Unrelated            thank  -1.979286
+421                Undefined / Unrelated             need  -2.026768
+422                Undefined / Unrelated           refund  -2.068914
+423                Undefined / Unrelated            plane  -2.094123
+424                Undefined / Unrelated            never  -2.115001
+425                Undefined / Unrelated              pay  -2.133076
+426                Undefined / Unrelated           flying  -2.253128
+427                Undefined / Unrelated          finally  -2.311059
+428                Undefined / Unrelated             even  -2.340724
+429                Undefined / Unrelated          service  -2.348252
+430                Undefined / Unrelated              bag  -2.425774
+431                Undefined / Unrelated             hour  -2.512326
+432                Undefined / Unrelated             like  -2.513959
+433                Undefined / Unrelated         customer  -2.694394
+434                Undefined / Unrelated            still  -2.766225
+435                Undefined / Unrelated              one  -2.794723
+436                Undefined / Unrelated             seat  -2.811638
+437                Undefined / Unrelated              fly  -2.969360
+438                Undefined / Unrelated           thanks  -3.075457
+439                Undefined / Unrelated           flight  -5.078801

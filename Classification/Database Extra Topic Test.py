@@ -26,7 +26,7 @@ def load_training_data():
     """
     global categories
 
-    book = load_workbook('ClassificationData/Self Labeled Data.xlsx')
+    book = load_workbook('ClassificationData/Self Labeled Data2.xlsx')
     categories = book.sheetnames
 
     all_data_list = []
@@ -46,14 +46,6 @@ def load_training_data():
 
     print(categories)
     self_labeled_data = pd.concat(all_data_list, ignore_index=True)
-
-    self_labeled_data = self_labeled_data.loc[(self_labeled_data['topic'] == 'Customer Service') |
-                                              (self_labeled_data['topic'] == 'Delays & Cancellations') |
-                                              (self_labeled_data['topic'] == 'Baggage') |
-                                              (self_labeled_data['topic'] == 'On-Flight Experience') |
-                                              (self_labeled_data['topic'] == 'General Complaints & Hate Messages') |
-                                              (self_labeled_data['topic'] == '(Online) Booking & Seats') |
-                                              (self_labeled_data['topic'] == 'Long Lines')]
 
     # Clean text file
     open('Extra Topic Backup Results.txt', 'w').close()
@@ -157,7 +149,7 @@ def preprocess_data(df_data):
     return corpus
 
 
-def train_classifier(corpus_train, corpus_test, train_data, test_data):
+def train_classifier(corpus_train, train_data):
     """
     Initializes TF-IDF vectorizer, trains Logistic Regression model, extracts part of test data.
     :param corpus_train: corpus for training data
@@ -167,7 +159,7 @@ def train_classifier(corpus_train, corpus_test, train_data, test_data):
     :return: TF-IDF Vectorizer; LogisticRegression Model; Known topics for testing data; The things we want to predict
     """
     # Split the test data into a smaller portion
-    X_train, X_test, y_train, y_test = train_test_split(corpus_test, test_data['topic'], test_size=0.05)
+    X_train, X_test, y_train, y_test = train_test_split(corpus_train, train_data['topic'], test_size=0.20)
 
     # Initialize the vectorizer and classifier
     vec = CountVectorizer(max_features=30000)
@@ -178,11 +170,10 @@ def train_classifier(corpus_train, corpus_test, train_data, test_data):
                               ('tfidf', TfidfTransformer()),
                               ('clf', clf),
                               ])
-    lr_classifier.fit(corpus_train, train_data['topic'])
+    lr_classifier.fit(X_train, y_train)
     return clf, vec, lr_classifier, y_test, X_test
 
-
-def classify_tweets(clf, vec, lr_classifier, y_test, X_test, test_data):
+def classify_tweets(clf, vec, lr_classifier, y_test, X_test, train_data):
     """
     Predicts topics, using the Logistic Regression model, and gives some added metrics and other insights.
     :param clf: used classification model
@@ -198,7 +189,7 @@ def classify_tweets(clf, vec, lr_classifier, y_test, X_test, test_data):
 
     # Put sentence, actual label and predicted label into a DataFrame
     ind_list = y_test.index.tolist()
-    df_topic_pred = test_data.iloc[ind_list]
+    df_topic_pred = train_data.iloc[ind_list]
     df_topic_pred.insert(2, 'predicted topic', lr_y_pred)
 
     # Confusion matrix
@@ -248,21 +239,18 @@ def run():
     and tested on human labeled data.
     """
     # Load data into DataFrames
+    # Load data into DataFrames
     train_data = load_training_data()
-    test_data = load_test_data()
     print(train_data)
-    print(test_data)
 
     # Preprocess data (into corpus)
     corpus_train = preprocess_data(train_data)
-    corpus_test = preprocess_data(test_data)
 
     # Train TF-IDF and Logistic Regression on the AI data
-    clf, vec, lr_classifier, y_test, X_test = train_classifier(corpus_train, corpus_test, train_data,
-                                                               test_data)
+    clf, vec, lr_classifier, y_test, X_test = train_classifier(corpus_train, train_data)
 
     # Predict topics
-    df_topic_pred, accuracy = classify_tweets(clf, vec, lr_classifier, y_test, X_test, test_data)
+    df_topic_pred, accuracy = classify_tweets(clf, vec, lr_classifier, y_test, X_test, train_data)
     print(df_topic_pred.to_string())
 
     # Show Vectorization weights
@@ -286,18 +274,15 @@ def accuracy_run(runs):
 
         # Load data into DataFrames
         train_data = load_training_data()
-        test_data = load_test_data()
 
         # Preprocess data (into corpus)
         corpus_train = preprocess_data(train_data)
-        corpus_test = preprocess_data(test_data)
 
         # Train TF-IDF and Logistic Regression on the AI data
-        clf, vec, lr_classifier, y_test, X_test = train_classifier(corpus_train, corpus_test, train_data,
-                                                                   test_data)
+        clf, vec, lr_classifier, y_test, X_test = train_classifier(corpus_train, train_data)
 
         # Predict topics
-        df_topic_pred, accuracy = classify_tweets(clf, vec, lr_classifier, y_test, X_test, test_data)
+        df_topic_pred, accuracy = classify_tweets(clf, vec, lr_classifier, y_test, X_test, train_data)
         print(df_topic_pred)
 
         print(f'Accuracy: {accuracy}')
@@ -316,5 +301,5 @@ def accuracy_run(runs):
         print(f'Average accuracy: {total_acc / count * 100}', file=f)
 
 
-# run()
-accuracy_run(20)
+run()
+# accuracy_run(20)

@@ -15,7 +15,7 @@ nltk.download('wordnet')
 
 def load_classification_data():
     # Load AI Data
-    book = load_workbook('ClassificationData/AllData.xlsx')
+    book = load_workbook('../Classification/ClassificationData/AllData.xlsx')
     categories = book.sheetnames
 
     all_data_list = []
@@ -27,13 +27,13 @@ def load_classification_data():
         print(f"Loaded data from {category}: {data.shape[0]}")
 
         # Write total amount of data point per category in file
-        with open('Extra Topic Backup Results.txt', 'a') as f:
+        with open('../Classification/Extra Topic Backup Results.txt', 'a') as f:
             print(f'{category}: {data.shape[0]}', file=f)
     AI_data_full = pd.concat(all_data_list, ignore_index=True)
 
     # Load Human Labeled Data
     # Load the data in the labeled csv file as a pandas DataFrame
-    csv_file = f'ClassificationData/HumanLabeledData.csv'
+    csv_file = f'../Classification/ClassificationData/HumanLabeledData.csv'
     data_labeled = pd.read_csv(csv_file, delimiter=',', header=0,
                        usecols=['airline_sentiment', 'airline_sentiment_confidence', 'negativereason',
                                 'negativereason_confidence', 'text'])
@@ -55,10 +55,10 @@ def load_classification_data():
     combined_data['topic'].mask(((combined_data['topic'] == 'Customer Service') | (combined_data['topic'] == 'Customer Service Issue')), 'Customer Service Remarks', inplace=True)
 
     # Clean text file
-    open('Extra Topic Backup Results.txt', 'w').close()
+    open('../Classification/Extra Topic Backup Results.txt', 'w').close()
 
     # Write amount of data points in file
-    with open('Extra Topic Backup Results.txt', 'a') as f:
+    with open('../Classification/Extra Topic Backup Results.txt', 'a') as f:
         print(f'Total amount of data points: {combined_data.shape[0]}', file=f)
         print('', file=f)
         print(f'Amount of data points per category:', file=f)
@@ -142,7 +142,7 @@ def classify_tweets(lr_classifier, tfidf, y_test, X_test, combined_data):
                                           feature_names=list(tfidf.get_feature_names_out())).to_string()
 
     # Write confusion matrix, accuracy score and DataFrame into a text tile
-    with open('Extra Topic Backup Results.txt', 'a') as f:
+    with open('../Classification/Extra Topic Backup Results.txt', 'a') as f:
         print('', file=f)
         print(f'{confusion_mat}', file=f)
         print('', file=f)

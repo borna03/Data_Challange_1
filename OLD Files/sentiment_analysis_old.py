@@ -41,7 +41,7 @@ def load_csv_line_by_line(file_path):
     print(accuracy)
 
 # Specify the file path
-file_path = 'test_data/Labled tweets.csv'
+file_path = '../test_data/Labled tweets.csv'
 
 # Call the function to load and process the CSV file
 load_csv_line_by_line(file_path)

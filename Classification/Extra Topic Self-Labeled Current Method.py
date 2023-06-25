@@ -9,7 +9,7 @@ from sklearn.metrics import confusion_matrix, accuracy_score, classification_rep
 import eli5
 from openpyxl import load_workbook
 
-from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import TfidfTransformer
 

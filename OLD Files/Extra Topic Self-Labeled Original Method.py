@@ -16,45 +16,62 @@ nltk.download('wordnet')
 categories = []
 
 
-def load_AI_data():
+def load_training_data():
     """
     Loads all rows from the AI generated data into a DataFrame
     :return: DataFrame with all generated AI data
     """
     global categories
-    # Clean text file
-    open('Extra Topic Backup Results.txt', 'w').close()
 
-    # Write something in text file
-    with open('Extra Topic Backup Results.txt', 'a') as f:
-        print(f'Amount of total data per category (AI generated):', file=f)
-
-    book = load_workbook('ClassificationData/AllData.xlsx')
+    book = load_workbook('../Classification/ClassificationData/Self Labeled Data.xlsx')
     categories = book.sheetnames
 
     all_data_list = []
     for category in book.worksheets:
-        rows = list(category.values)
-        data = pd.DataFrame(rows, columns=['text', 'topic'])
-        all_data_list.append(data)
+        if category.title == 'TO':
+            rows = list(category.values)
+            data = pd.DataFrame(rows, columns=['text', 'topic'])
+            all_data_list.append(data)
 
-        print(f"Loaded data from {category}: {data.shape[0]}")
+            print(f"Loaded data from {category}: {data.shape[0]}")
+        else:
+            rows = list(category.values)
+            data = pd.DataFrame(rows, columns=['text', 'topic'])
+            # all_data_list.append(data)
+            #
+            # print(f"Loaded data from {category}: {data.shape[0]}")
 
-        # Write total amount of data point per category in file
-        with open('Extra Topic Backup Results.txt', 'a') as f:
-            print(f'{category}: {data.shape[0]}', file=f)
     print(categories)
-    AI_data = pd.concat(all_data_list, ignore_index=True)
-    return AI_data
+    self_labeled_data = pd.concat(all_data_list, ignore_index=True)
+
+    self_labeled_data = self_labeled_data.loc[(self_labeled_data['topic'] == 'Customer Service') |
+                                              (self_labeled_data['topic'] == 'Delays & Cancellations') |
+                                              (self_labeled_data['topic'] == 'Baggage') |
+                                              (self_labeled_data['topic'] == 'Flight Experience') |
+                                              (self_labeled_data['topic'] == "Can't Tell") |
+                                              (self_labeled_data['topic'] == 'Booking & Reservation') |
+                                              (self_labeled_data['topic'] == 'Long Lines')]
+
+    # Clean text file
+    open('../Classification/Extra Topic Backup Results.txt', 'w').close()
+
+    # Write amount of data per category in text tile
+    with open('../Classification/Extra Topic Backup Results.txt', 'a') as f:
+        print(f'Amount of total data per category (Self labeled):', file=f)
+        print('', file=f)
+        print(f'Total amount of data points (Self Labeled): {self_labeled_data.shape[0]}', file=f)
+        print(f'Amount of data points per category:', file=f)
+        print(f'{self_labeled_data.topic.value_counts()}', file=f)
+    return self_labeled_data
 
 
-def load_human_labeled_data():
+def load_test_data():
     """
     Loads the useful rows from the human labeled dataset into a DataFrame
     :return: DataFrame with necessary rows from the human labeled dataset
     """
     # Load the data in the labeled csv file as a pandas DataFrame
-    csv_file = f'ClassificationData/HumanLabeledData.csv'
+    csv_file = f'../Classification/ClassificationData/HumanLabeledData.csv'
     data = pd.read_csv(csv_file, delimiter=',', header=0,
                        usecols=['airline_sentiment', 'airline_sentiment_confidence', 'negativereason',
                                 'negativereason_confidence', 'text'])
@@ -73,7 +90,7 @@ def load_human_labeled_data():
         ((human_labeled_data['topic'] == 'Damaged Luggage') | (human_labeled_data['topic'] == 'Lost Luggage')),
         'Baggage', inplace=True)
     human_labeled_data['topic'].mask(((human_labeled_data['topic'] == 'Bad Flight') | (
-                human_labeled_data['topic'] == 'Flight Attendant Complaints')), 'Flight Experience', inplace=True)
+            human_labeled_data['topic'] == 'Flight Attendant Complaints')), 'Flight Experience', inplace=True)
     human_labeled_data['topic'].mask(
         ((human_labeled_data['topic'] == 'Late Flight') | (human_labeled_data['topic'] == 'Cancelled Flight')),
         'Delays & Cancellations', inplace=True)
@@ -84,7 +101,7 @@ def load_human_labeled_data():
                                      'Booking & Reservation', inplace=True)
 
     # Write amount of data points in file
-    with open('Extra Topic Backup Results.txt', 'a') as f:
+    with open('../Classification/Extra Topic Backup Results.txt', 'a') as f:
         print('', file=f)
         print(f'Total amount of data points (Human Labeled): {human_labeled_data.shape[0]}', file=f)
         print(f'Amount of data points per category:', file=f)
@@ -135,38 +152,38 @@ def preprocess_data(df_data):
     return corpus
 
 
-def train_classifier(corpus_AI, corpus_human_labeled, AI_data, human_labeled_data):
+def train_classifier(corpus_train, corpus_test, train_data, test_data):
     """
-    Initializes TF-IDF vectorizer, trains Logistic Regression model, gets testing data.
-    :param corpus_AI: corpus for AI data
-    :param corpus_human_labeled: corpus for human labeled data
-    :param AI_data: AI data (DataFrame)
-    :param human_labeled_data: human labeled data (DataFrame)
-    :return: TF-IDF Vectorizer, LogisticRegression Model, Known topics for testing data, The things we want to predict
+    Initializes TF-IDF vectorizer, trains Logistic Regression model, extracts part of test data.
+    :param corpus_train: corpus for training data
+    :param corpus_test: corpus for test data
+    :param train_data: training data (in DataFrame)
+    :param test_data: test data (in DataFrame)
+    :return: TF-IDF Vectorizer; LogisticRegression Model; Known topics for testing data; The things we want to predict
     """
     # Initialize TfidfVectorizer
     tfidf = TfidfVectorizer(ngram_range=(2, 2), max_features=300000)
-    X_tf_AI = tfidf.fit_transform(corpus_AI).toarray()
-    X_tf_human_labeled = tfidf.transform(corpus_human_labeled).toarray()
+    X_tf_train = tfidf.fit_transform(corpus_train).toarray()
+    X_tf_test = tfidf.transform(corpus_test).toarray()
 
     # Initialize Logistic Regression Model on AI data
     lr_classifier = LogisticRegression(C=5e1, solver='lbfgs', multi_class='multinomial', n_jobs=4)
-    lr_classifier.fit(X_tf_AI, AI_data['topic'])
+    lr_classifier.fit(X_tf_train, train_data['topic'])
 
     # Split human labeled data for testing
-    X_train, X_test, y_train, y_test = train_test_split(X_tf_human_labeled, human_labeled_data['topic'], test_size=0.05)
+    X_train, X_test, y_train, y_test = train_test_split(X_tf_test, test_data['topic'], test_size=0.05)
 
     return tfidf, lr_classifier, y_test, X_test
 
 
-def classify_tweets(lr_classifier, tfidf, y_test, X_test, human_labeled_data):
+def classify_tweets(lr_classifier, tfidf, y_test, X_test, test_data):
     """
     Predicts topics, using the Logistic Regression model, and gives some added metrics and other insights.
     :param lr_classifier: logistic regression model
     :param tfidf: TF-IDF vectorizer
     :param y_test: known topics for testing data
     :param X_test: data with which we want to predict a topic
-    :param human_labeled_data: DataFrame with necessary rows from the human labeled dataset
+    :param test_data: test data (in DataFrame)
     :return: DataFrame with text, true topic and predicted topic; accuracy on testing data
     """
     # Predict topic
@@ -174,7 +191,7 @@ def classify_tweets(lr_classifier, tfidf, y_test, X_test, human_labeled_data):
 
     # Put sentence, actual label and predicted label into a DataFrame
     ind_list = y_test.index.tolist()
-    df_topic_pred = human_labeled_data.iloc[ind_list]
+    df_topic_pred = test_data.iloc[ind_list]
     df_topic_pred.insert(2, 'predicted topic', lr_y_pred)
 
     # Confusion matrix
@@ -193,7 +210,7 @@ def classify_tweets(lr_classifier, tfidf, y_test, X_test, human_labeled_data):
                                           feature_names=list(tfidf.get_feature_names_out())).to_string()
 
     # Write confusion matrix, accuracy score and DataFrame into a text tile
-    with open('Extra Topic Backup Results.txt', 'a', encoding='utf-8') as f:
+    with open('../Classification/Extra Topic Backup Results.txt', 'a', encoding='utf-8') as f:
         print('', file=f)
         print("Confusion Matrix:", file=f)
         print(f'{confusion_mat}', file=f)
@@ -224,21 +241,21 @@ def run():
     and tested on human labeled data.
     """
     # Load data into DataFrames
-    AI_data = load_AI_data()
-    human_labeled_data = load_human_labeled_data()
-    print(AI_data)
-    print(human_labeled_data)
+    train_data = load_training_data()
+    test_data = load_test_data()
+    print(train_data)
+    print(test_data)
 
     # Preprocess data (into corpus)
-    corpus_AI = preprocess_data(AI_data)
-    corpus_human_labeled = preprocess_data(human_labeled_data)
+    corpus_train = preprocess_data(train_data)
+    corpus_test = preprocess_data(test_data)
 
     # Train TF-IDF and Logistic Regression on the AI data
-    tfidf, lr_classifier, y_test, X_test = train_classifier(corpus_AI, corpus_human_labeled, AI_data,
-                                                            human_labeled_data)
+    tfidf, lr_classifier, y_test, X_test = train_classifier(corpus_train, corpus_test, train_data,
+                                                            test_data)
 
     # Predict topics
-    df_topic_pred, accuracy = classify_tweets(lr_classifier, tfidf, y_test, X_test, human_labeled_data)
+    df_topic_pred, accuracy = classify_tweets(lr_classifier, tfidf, y_test, X_test, test_data)
     print(df_topic_pred.to_string())
 
     # Show Vectorization weights
@@ -257,37 +274,38 @@ def accuracy_run(runs):
     total_acc = 0
     count = 0
     for i in range(0, runs):
+        print(f'Current iteration: {count}')
         count += 1
-        # Load data into DataFrame
-        AI_data = load_AI_data()
-        human_labeled_data = load_human_labeled_data()
+
+        # Load data into DataFrames
+        train_data = load_training_data()
+        test_data = load_test_data()
 
         # Preprocess data (into corpus)
-        corpus_AI = preprocess_data(AI_data)
-        corpus_human_labeled = preprocess_data(human_labeled_data)
+        corpus_train = preprocess_data(train_data)
+        corpus_test = preprocess_data(test_data)
 
         # Train TF-IDF and Logistic Regression on the AI data
-        tfidf, lr_classifier, y_test, X_test = train_classifier(corpus_AI, corpus_human_labeled, AI_data,
-                                                                human_labeled_data)
-
+        tfidf, lr_classifier, y_test, X_test = train_classifier(corpus_train, corpus_test, train_data,
+                                                                test_data)
         # Predict topics
-        df_topic_pred, accuracy = classify_tweets(lr_classifier, tfidf, y_test, X_test, human_labeled_data)
+        df_topic_pred, accuracy = classify_tweets(lr_classifier, tfidf, y_test, X_test, test_data)
         print(df_topic_pred)
 
         print(f'Accuracy: {accuracy}')
         total_acc += accuracy
+        print('\n')
 
     print('\n')
     print(f'Accumulated accuracy: {total_acc}')
     print(f'Total iterations: {count}')
     print(f'Average accuracy: {total_acc / count * 100}')
 
-    with open('Extra Topic Accuracy Backup Results.txt', 'a', encoding='utf-8') as f:
-        print(f'Trained of AI data, tested on human labeled data', file=f)
+    with open('../Classification/Extra Topic Accuracy Backup Results.txt', 'a', encoding='utf-8') as f:
+        print(f'Trained on self-labeled data, trained on pre-labeled data (Original classifier model)', file=f)
         print(f'Accumulated accuracy: {total_acc}', file=f)
         print(f'Total iterations: {count}', file=f)
         print(f'Average accuracy: {total_acc / count * 100}', file=f)
 
-
-run()
-# accuracy_run(5)
+# run()
+# accuracy_run(20)

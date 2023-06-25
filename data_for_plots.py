@@ -35,70 +35,66 @@ nested_pie_British = [[462605, 63564], [16314, 150], [21493, 152]]
 
 # Sentiment Analysis
 sentiment_to_airlines = {
-    'KLM': {'id_str': '56377143', 'positive': 24562, 'negative': 37853, 'neutral': 50549, 'uncertain': 8902},
-    'AirFrance': {'id_str': '106062176', 'positive': 8344, 'negative': 12601, 'neutral': 17533, 'uncertain': 3399},
-    'British_Airways': {'id_str': '18332190', 'positive': 64809, 'negative': 102426, 'neutral': 127238,
-                        'uncertain': 22977},
-    'AmericanAir': {'id_str': '22536055', 'neutral': 141078, 'negative': 189946, 'positive': 79967, 'uncertain': 37958},
-    'Lufthansa': {'id_str': '124476322', 'neutral': 26076, 'negative': 20150, 'positive': 11386, 'uncertain': 4618},
-    'AirBerlin': {'id_str': '26223583', 'negative': 55, 'neutral': 167, 'positive': 41, 'uncertain': 15},
+    'KLM': {'id_str': '56377143', 'positive': 23420, 'negative': 36700, 'neutral': 48484, 'uncertain': 8565},
+    'AirFrance': {'id_str': '106062176', 'positive': 7909, 'negative': 12052, 'neutral': 16788, 'uncertain': 3233},
+    'British_Airways': {'id_str': '18332190', 'uncertain': 21508, 'positive': 59142, 'neutral': 119969, 'negative': 97021},
+    'AmericanAir': {'id_str': '22536055', 'neutral': 131740, 'negative': 175809, 'positive': 74360, 'uncertain': 35283},
+    'Lufthansa': {'id_str': '124476322', 'neutral': 24908, 'negative': 19223, 'positive': 10644, 'uncertain': 4412},
+    'AirBerlin': {'id_str': '26223583', 'negative': 51, 'neutral': 132, 'positive': 36, 'uncertain': 14},
     'AirBerlin assist': {'id_str': '2182373406', 'neutral': 1, 'negative': 0, 'positive': 1, 'uncertain': 0},
-    'easyJet': {'id_str': '38676903', 'neutral': 82699, 'negative': 71154, 'positive': 30533, 'uncertain': 14601},
-    'RyanAir': {'id_str': '1542862735', 'neutral': 76594, 'positive': 26412, 'negative': 60735, 'uncertain': 13580},
-    'SingaporeAir': {'id_str': '253340062', 'neutral': 18380, 'uncertain': 2031, 'negative': 6851, 'positive': 7955},
-    'Qantas': {'id_str': '218730857', 'neutral': 28639, 'negative': 28858, 'uncertain': 7091, 'positive': 16065},
-    'EtihadAirways': {'id_str': '45621423', 'neutral': 11581, 'negative': 5192, 'positive': 6488, 'uncertain': 1844},
-    'VirginAtlantic': {'id_str': '20626359', 'positive': 32456, 'negative': 36837, 'neutral': 17398, 'uncertain': 5754}}
+    'easyJet': {'id_str': '38676903', 'neutral': 79585, 'negative': 68556, 'positive': 29045, 'uncertain': 14075},
+    'RyanAir': {'id_str': '1542862735', 'neutral': 72391, 'positive': 24735, 'negative': 58059, 'uncertain': 12822},
+    'SingaporeAir': {'id_str': '253340062', 'neutral': 17671, 'uncertain': 1946, 'negative': 6594, 'positive': 7511},
+    'Qantas': {'id_str': '218730857', 'neutral': 27071, 'negative': 27347, 'uncertain': 6685, 'positive': 15137},
+    'EtihadAirways': {'id_str': '45621423', 'neutral': 10941, 'negative': 4890, 'positive': 6179, 'uncertain': 1722},
+    'VirginAtlantic': {'id_str': '20626359', 'positive': 31134, 'negative': 35593, 'neutral': 16639, 'uncertain': 5516}}
 
 sentiment_from_airlines = {
-    'KLM': {'id_str': '56377143', 'neutral': 20595, 'uncertain': 1307, 'negative': 6700, 'positive': 7517},
-    'AirFrance': {'id_str': '106062176', 'neutral': 4478, 'positive': 2442, 'uncertain': 792, 'negative': 2349},
-    'British_Airways': {'id_str': '18332190', 'neutral': 55384, 'positive': 21754, 'negative': 28924,
-                        'uncertain': 8354},
-    'AmericanAir': {'id_str': '22536055', 'positive': 36268, 'neutral': 57374, 'negative': 20574, 'uncertain': 10193},
-    'Lufthansa': {'id_str': '124476322', 'neutral': 8628, 'positive': 1632, 'negative': 2963, 'uncertain': 742},
+    'KLM': {'id_str': '56377143', 'neutral': 19475, 'uncertain': 1253, 'negative': 6334, 'positive': 7094},
+    'AirFrance': {'id_str': '106062176', 'neutral': 4227, 'positive': 2322, 'uncertain': 742, 'negative': 2231},
+    'British_Airways': {'id_str': '18332190', 'neutral': 52079, 'uncertain': 7894, 'negative': 27089, 'positive': 19548},
+    'AmericanAir': {'id_str': '22536055', 'positive': 33002, 'neutral': 52167, 'negative': 18455, 'uncertain': 9214},
+    'Lufthansa': {'id_str': '124476322', 'neutral': 8132, 'positive': 1472, 'negative': 2747, 'uncertain': 690},
     'AirBerlin': {'id_str': '26223583', 'neutral': 0, 'negative': 0, 'positive': 0, 'uncertain': 0},
     'AirBerlin assist': {'id_str': '2182373406', 'neutral': 0, 'negative': 0, 'positive': 0, 'uncertain': 0},
-    'easyJet': {'id_str': '38676903', 'negative': 15546, 'neutral': 27986, 'positive': 9915, 'uncertain': 4537},
-    'RyanAir': {'id_str': '1542862735', 'neutral': 17232, 'uncertain': 720, 'positive': 1777, 'negative': 1995},
-    'SingaporeAir': {'id_str': '253340062', 'neutral': 10233, 'positive': 2060, 'negative': 631, 'uncertain': 677},
-    'Qantas': {'id_str': '218730857', 'neutral': 7751, 'positive': 2824, 'negative': 1026, 'uncertain': 1218},
-    'EtihadAirways': {'id_str': '45621423', 'positive': 711, 'neutral': 662, 'negative': 51, 'uncertain': 63},
-    'VirginAtlantic': {'id_str': '20626359', 'positive': 7321, 'negative': 9631, 'neutral': 4103, 'uncertain': 1530}}
+    'easyJet': {'id_str': '38676903', 'negative': 14605, 'neutral': 26171, 'positive': 9131, 'uncertain': 4231},
+    'RyanAir': {'id_str': '1542862735', 'neutral': 16121, 'uncertain': 666, 'positive': 1596, 'negative': 1771},
+    'SingaporeAir': {'id_str': '253340062', 'neutral': 9785, 'positive': 1913, 'negative': 596, 'uncertain': 623},
+    'Qantas': {'id_str': '218730857', 'neutral': 7315, 'positive': 2619, 'negative': 974, 'uncertain': 1155},
+    'EtihadAirways': {'id_str': '45621423', 'positive': 650, 'neutral': 608, 'negative': 46, 'uncertain': 60},
+    'VirginAtlantic': {'id_str': '20626359', 'positive': 7011, 'negative': 9086, 'neutral': 3883, 'uncertain': 1461}}
 
 # Topic Classification + Sentiment Analysis
 topic_sentiment_to_Virgin = {
-    'business_&_entrepreneurs': {'positive': 1798, 'negative': 3377, 'neutral': 6505, 'uncertain': 832},
-    'daily_life': {'positive': 24271, 'negative': 11155, 'neutral': 22497, 'uncertain': 3609},
-    'science_&_technology': {'positive': 468, 'negative': 607, 'neutral': 1096, 'uncertain': 149},
-    'Uncertain': {'positive': 313, 'negative': 130, 'neutral': 413, 'uncertain': 43},
-    'arts_&_culture': {'positive': 278, 'negative': 60, 'neutral': 186, 'uncertain': 34},
-    'pop_culture': {'positive': 3928, 'negative': 1317, 'neutral': 4692, 'uncertain': 802},
-    'sports_&_gaming': {'positive': 1400, 'negative': 752, 'neutral': 1448, 'uncertain': 285}}
+    'daily_life': {'positive': 23321, 'negative': 10620, 'neutral': 21747, 'uncertain': 3458},
+    'business_&_entrepreneurs': {'positive': 1722, 'negative': 3261, 'neutral': 6257, 'uncertain': 796},
+    'sports_&_gaming': {'positive': 1337, 'negative': 717, 'neutral': 1398, 'uncertain': 266},
+    'pop_culture': {'positive': 3738, 'negative': 1280, 'neutral': 4565, 'uncertain': 783},
+    'science_&_technology': {'positive': 448, 'negative': 585, 'neutral': 1042, 'uncertain': 143},
+    'Uncertain': {'positive': 299, 'negative': 122, 'neutral': 402, 'uncertain': 40},
+    'arts_&_culture': {'positive': 269, 'negative': 54, 'neutral': 182, 'uncertain': 30}}
 topic_sentiment_from_Virgin = {
-    'business_&_entrepreneurs': {'positive': 782, 'negative': 1024, 'neutral': 4438, 'uncertain': 495},
-    'daily_life': {'positive': 5842, 'negative': 2897, 'neutral': 4589, 'uncertain': 937},
-    'science_&_technology': {'positive': 95, 'negative': 106, 'neutral': 316, 'uncertain': 50},
-    'Uncertain': {'positive': 34, 'negative': 12, 'neutral': 47, 'uncertain': 13},
-    'arts_&_culture': {'positive': 24, 'negative': 1, 'neutral': 13, 'uncertain': 1},
-    'pop_culture': {'positive': 441, 'negative': 36, 'neutral': 170, 'uncertain': 23},
-    'sports_&_gaming': {'positive': 103, 'negative': 27, 'neutral': 58, 'uncertain': 11}}
+    'business_&_entrepreneurs': {'positive': 757, 'negative': 985, 'neutral': 4220, 'uncertain': 473},
+    'daily_life': {'positive': 5582, 'negative': 2733, 'neutral': 4311, 'uncertain': 897},
+    'science_&_technology': {'positive': 93, 'negative': 95, 'neutral': 287, 'uncertain': 44},
+    'Uncertain': {'positive': 32, 'negative': 12, 'neutral': 40, 'uncertain': 13},
+    'arts_&_culture': {'positive': 24, 'negative': 1, 'neutral': 12, 'uncertain': 1},
+    'pop_culture': {'positive': 426, 'negative': 32, 'neutral': 162, 'uncertain': 22},
+    'sports_&_gaming': {'positive': 97, 'negative': 25, 'neutral': 54, 'uncertain': 11}}
 
-topic_sentiment_from_British = {'pop_culture': {'positive': 1265, 'negative': 381, 'neutral': 523, 'uncertain': 131},
-                                'business_&_entrepreneurs': {'positive': 2341, 'negative': 5796, 'neutral': 29755,
-                                                             'uncertain': 2408},
-                                'daily_life': {'positive': 17248, 'negative': 21431, 'neutral': 21500,
-                                               'uncertain': 5459},
-                                'science_&_technology': {'positive': 353, 'negative': 878, 'neutral': 2857,
-                                                         'uncertain': 240},
-                                'sports_&_gaming': {'positive': 406, 'negative': 349, 'neutral': 493, 'uncertain': 75},
-                                'Uncertain': {'positive': 81, 'negative': 77, 'neutral': 218, 'uncertain': 30},
-                                'arts_&_culture': {'positive': 60, 'negative': 12, 'neutral': 38, 'uncertain': 11}}
-topic_sentiment_to_British = {
-    'daily_life': {'positive': 46695, 'negative': 65549, 'neutral': 72687, 'uncertain': 14356},
-    'business_&_entrepreneurs': {'positive': 5237, 'negative': 23223, 'neutral': 32883, 'uncertain': 4172},
-    'science_&_technology': {'positive': 1266, 'negative': 3900, 'neutral': 4226, 'uncertain': 695},
-    'Uncertain': {'positive': 766, 'negative': 700, 'neutral': 1074, 'uncertain': 196},
-    'sports_&_gaming': {'positive': 3136, 'negative': 3824, 'neutral': 3659, 'uncertain': 1114},
-    'pop_culture': {'positive': 6993, 'negative': 5048, 'neutral': 12157, 'uncertain': 2352},
-    'arts_&_culture': {'positive': 716, 'negative': 182, 'neutral': 552, 'uncertain': 92}}
+topic_sentiment_from_British = {'daily_life': {'positive': 15535, 'negative': 20005, 'neutral': 20070, 'uncertain': 5136},
+                                'business_&_entrepreneurs': {'positive': 2154, 'negative': 5530, 'neutral': 28186, 'uncertain': 2308},
+                                'sports_&_gaming': {'positive': 352, 'negative': 311, 'neutral': 439, 'uncertain': 67},
+                                'pop_culture': {'positive': 1070, 'negative': 335, 'neutral': 461, 'uncertain': 116},
+                                'science_&_technology': {'positive': 314, 'negative': 824, 'neutral': 2682, 'uncertain': 228},
+                                'Uncertain': {'positive': 71, 'negative': 73, 'neutral': 207, 'uncertain': 29},
+                                'arts_&_culture': {'positive': 52, 'negative': 11, 'neutral': 34, 'uncertain': 10}}
+topic_sentiment_to_British = {'daily_life': {'positive': 42697, 'negative': 62012, 'neutral': 68680, 'uncertain': 13421},
+                              'business_&_entrepreneurs': {'positive': 4832, 'negative': 22288, 'neutral': 31319, 'uncertain': 3962},
+                              'sports_&_gaming': {'positive': 2839, 'negative': 3594, 'neutral': 3389, 'uncertain': 1054},
+                              'pop_culture': {'positive': 6287, 'negative': 4661, 'neutral': 11123, 'uncertain': 2162},
+                              'science_&_technology': {'positive': 1153, 'negative': 3640, 'neutral': 3953, 'uncertain': 645},
+                              'Uncertain': {'positive': 701, 'negative': 659, 'neutral': 1002, 'uncertain': 180},
+                              'arts_&_culture': {'positive': 633, 'negative': 167, 'neutral': 503, 'uncertain': 84}}
+
+

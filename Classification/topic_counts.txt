@@ -1,0 +1,66 @@
+General Complaints & Hate Messages
+neutral: 4807
+negative: 6618
+positive: 4086
+uncertain: 1626
+
+Undefined / Unrelated
+positive: 16077
+neutral: 32701
+negative: 11049
+uncertain: 5175
+
+On-Flight Experience
+positive: 25188
+negative: 14006
+neutral: 16881
+uncertain: 4332
+
+Financial (Prices, fees, air-miles)
+neutral: 23452
+positive: 9091
+negative: 14700
+uncertain: 3961
+
+(Online) Booking & Seats
+neutral: 14012
+negative: 10466
+uncertain: 1394
+positive: 2506
+
+Customer Service
+neutral: 24762
+positive: 11427
+negative: 24924
+uncertain: 4995
+
+Appreciation Messages
+positive: 14719
+neutral: 2928
+negative: 1387
+uncertain: 962
+
+Delays & Cancellations
+positive: 3815
+negative: 16300
+uncertain: 2089
+neutral: 15140
+
+Baggage
+neutral: 6805
+positive: 1550
+uncertain: 1048
+negative: 5623
+
+Claims & Refunds
+neutral: 12682
+negative: 7230
+positive: 1370
+uncertain: 1175
+
+Security, gates & Long Lines
+neutral: 1392
+uncertain: 267
+positive: 447
+negative: 1357
+

@@ -1,0 +1,66 @@
+Customer Service
+neutral: 19815
+positive: 7457
+negative: 21318
+uncertain: 3982
+
+On-Flight Experience
+neutral: 12406
+positive: 15877
+negative: 11682
+uncertain: 3351
+
+Delays & Cancellations
+neutral: 12215
+positive: 2621
+negative: 14273
+uncertain: 1741
+
+Baggage
+neutral: 5575
+positive: 1091
+negative: 4924
+uncertain: 864
+
+Claims & Refunds
+neutral: 11442
+positive: 1038
+negative: 6561
+uncertain: 1028
+
+Financial (Prices, fees, air-miles)
+neutral: 18360
+positive: 5888
+negative: 12315
+uncertain: 3141
+
+(Online) Booking & Seats
+neutral: 11290
+positive: 1697
+negative: 9057
+uncertain: 1119
+
+Security, gates & Long Lines
+neutral: 1154
+positive: 320
+negative: 1181
+uncertain: 219
+
+Appreciation Messages
+neutral: 2302
+positive: 10752
+negative: 1159
+uncertain: 784
+
+General Complaints & Hate Messages
+neutral: 3660
+positive: 2642
+negative: 5552
+uncertain: 1287
+
+Undefined / Unrelated
+neutral: 21750
+positive: 9759
+negative: 8999
+uncertain: 3992
+

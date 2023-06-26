@@ -1,141 +1,58 @@
 import matplotlib.pyplot as plt
 import squarify
 import numpy as np
+from Classification_Visualisation import *
 
-virgin_atlantic_data = [
-    {'topic': 'Undefined / Unrelated', 'sentiment': 'neutral', 'count': 21750},
-    {'topic': 'Undefined / Unrelated', 'sentiment': 'positive', 'count': 9759},
-    {'topic': 'Undefined / Unrelated', 'sentiment': 'negative', 'count': 8999},
-    {'topic': 'Undefined / Unrelated', 'sentiment': 'uncertain', 'count': 3992},
-    {'topic': 'On-Flight Experience', 'sentiment': 'neutral', 'count': 12406},
-    {'topic': 'On-Flight Experience', 'sentiment': 'positive', 'count': 15877},
-    {'topic': 'On-Flight Experience', 'sentiment': 'negative', 'count': 11682},
-    {'topic': 'On-Flight Experience', 'sentiment': 'uncertain', 'count': 3351},
-    {'topic': 'Financial (Prices, fees, air-miles)', 'sentiment': 'neutral', 'count': 18360},
-    {'topic': 'Financial (Prices, fees, air-miles)', 'sentiment': 'positive', 'count': 5888},
-    {'topic': 'Financial (Prices, fees, air-miles)', 'sentiment': 'negative', 'count': 12315},
-    {'topic': 'Financial (Prices, fees, air-miles)', 'sentiment': 'uncertain', 'count': 3141},
-    {'topic': 'Customer Service', 'sentiment': 'neutral', 'count': 19815},
-    {'topic': 'Customer Service', 'sentiment': 'positive', 'count': 7457},
-    {'topic': 'Customer Service', 'sentiment': 'negative', 'count': 21318},
-    {'topic': 'Customer Service', 'sentiment': 'uncertain', 'count': 3982},
-    {'topic': 'General Complaints & Hate Messages', 'sentiment': 'neutral', 'count': 3660},
-    {'topic': 'General Complaints & Hate Messages', 'sentiment': 'positive', 'count': 2642},
-    {'topic': 'General Complaints & Hate Messages', 'sentiment': 'negative', 'count': 5552},
-    {'topic': 'General Complaints & Hate Messages', 'sentiment': 'uncertain', 'count': 1287},
-    {'topic': 'Appreciation Messages', 'sentiment': 'neutral', 'count': 2302},
-    {'topic': 'Appreciation Messages', 'sentiment': 'positive', 'count': 10752},
-    {'topic': 'Appreciation Messages', 'sentiment': 'negative', 'count': 1159},
-    {'topic': 'Appreciation Messages', 'sentiment': 'uncertain', 'count': 784},
-    {'topic': '(Online) Booking & Seats', 'sentiment': 'neutral', 'count': 11290},
-    {'topic': '(Online) Booking & Seats', 'sentiment': 'positive', 'count': 1697},
-    {'topic': '(Online) Booking & Seats', 'sentiment': 'negative', 'count': 9057},
-    {'topic': '(Online) Booking & Seats', 'sentiment': 'uncertain', 'count': 1119},
-    {'topic': 'Claims & Refunds', 'sentiment': 'neutral', 'count': 11442},
-    {'topic': 'Claims & Refunds', 'sentiment': 'positive', 'count': 1038},
-    {'topic': 'Claims & Refunds', 'sentiment': 'negative', 'count': 6561},
-    {'topic': 'Claims & Refunds', 'sentiment': 'uncertain', 'count': 1028},
-    {'topic': 'Baggage', 'sentiment': 'neutral', 'count': 5575},
-    {'topic': 'Baggage', 'sentiment': 'positive', 'count': 1091},
-    {'topic': 'Baggage', 'sentiment': 'negative', 'count': 4924},
-    {'topic': 'Baggage', 'sentiment': 'uncertain', 'count': 864},
-    {'topic': 'Delays & Cancellations', 'sentiment': 'neutral', 'count': 12215},
-    {'topic': 'Delays & Cancellations', 'sentiment': 'positive', 'count': 2621},
-    {'topic': 'Delays & Cancellations', 'sentiment': 'negative', 'count': 14273},
-    {'topic': 'Delays & Cancellations', 'sentiment': 'uncertain', 'count': 1741},
-    {'topic': 'Security, gates & Long Lines', 'sentiment': 'neutral', 'count': 1154},
-    {'topic': 'Security, gates & Long Lines', 'sentiment': 'positive', 'count': 320},
-    {'topic': 'Security, gates & Long Lines', 'sentiment': 'negative', 'count': 1181},
-    {'topic': 'Security, gates & Long Lines', 'sentiment': 'uncertain', 'count': 219}
-]
+print(british_airways_topic_counts)
+print(virgin_atlantic_topic_counts)
 
-british_airways_data = [
-    {'topic': 'General Complaints & Hate Messages', 'sentiment': 'neutral', 'count': 1147},
-    {'topic': 'General Complaints & Hate Messages', 'sentiment': 'positive', 'count': 1444},
-    {'topic': 'General Complaints & Hate Messages', 'sentiment': 'negative', 'count': 1066},
-    {'topic': 'General Complaints & Hate Messages', 'sentiment': 'uncertain', 'count': 339},
-    {'topic': 'Undefined / Unrelated', 'sentiment': 'neutral', 'count': 10951},
-    {'topic': 'Undefined / Unrelated', 'sentiment': 'positive', 'count': 6318},
-    {'topic': 'Undefined / Unrelated', 'sentiment': 'negative', 'count': 2050},
-    {'topic': 'Undefined / Unrelated', 'sentiment': 'uncertain', 'count': 1183},
-    {'topic': 'On-Flight Experience', 'sentiment': 'neutral', 'count': 4475},
-    {'topic': 'On-Flight Experience', 'sentiment': 'positive', 'count': 9311},
-    {'topic': 'On-Flight Experience', 'sentiment': 'negative', 'count': 2324},
-    {'topic': 'On-Flight Experience', 'sentiment': 'uncertain', 'count': 981},
-    {'topic': 'Financial (Prices, fees, air-miles)', 'sentiment': 'neutral', 'count': 5092},
-    {'topic': 'Financial (Prices, fees, air-miles)', 'sentiment': 'positive', 'count': 3203},
-    {'topic': 'Financial (Prices, fees, air-miles)', 'sentiment': 'negative', 'count': 2385},
-    {'topic': 'Financial (Prices, fees, air-miles)', 'sentiment': 'uncertain', 'count': 820},
-    {'topic': '(Online) Booking & Seats', 'sentiment': 'neutral', 'count': 2722},
-    {'topic': '(Online) Booking & Seats', 'sentiment': 'positive', 'count': 809},
-    {'topic': '(Online) Booking & Seats', 'sentiment': 'negative', 'count': 1409},
-    {'topic': '(Online) Booking & Seats', 'sentiment': 'uncertain', 'count': 275},
-    {'topic': 'Customer Service', 'sentiment': 'neutral', 'count': 4947},
-    {'topic': 'Customer Service', 'sentiment': 'positive', 'count': 3970},
-    {'topic': 'Customer Service', 'sentiment': 'negative', 'count': 3606},
-    {'topic': 'Customer Service', 'sentiment': 'uncertain', 'count': 1013},
-    {'topic': 'Appreciation Messages', 'sentiment': 'neutral', 'count': 626},
-    {'topic': 'Appreciation Messages', 'sentiment': 'positive', 'count': 3967},
-    {'topic': 'Appreciation Messages', 'sentiment': 'negative', 'count': 228},
-    {'topic': 'Appreciation Messages', 'sentiment': 'uncertain', 'count': 178},
-    {'topic': 'Delays & Cancellations', 'sentiment': 'neutral', 'count': 2925},
-    {'topic': 'Delays & Cancellations', 'sentiment': 'positive', 'count': 1194},
-    {'topic': 'Delays & Cancellations', 'sentiment': 'negative', 'count': 2027},
-    {'topic': 'Delays & Cancellations', 'sentiment': 'uncertain', 'count': 348},
-    {'topic': 'Baggage', 'sentiment': 'neutral', 'count': 1230},
-    {'topic': 'Baggage', 'sentiment': 'positive', 'count': 459},
-    {'topic': 'Baggage', 'sentiment': 'negative', 'count': 699},
-    {'topic': 'Baggage', 'sentiment': 'uncertain', 'count': 184},
-    {'topic': 'Claims & Refunds', 'sentiment': 'neutral', 'count': 1240},
-    {'topic': 'Claims & Refunds', 'sentiment': 'positive', 'count': 332},
-    {'topic': 'Claims & Refunds', 'sentiment': 'negative', 'count': 669},
-    {'topic': 'Claims & Refunds', 'sentiment': 'uncertain', 'count': 147},
-    {'topic': 'Security, gates & Long Lines', 'sentiment': 'neutral', 'count': 238},
-    {'topic': 'Security, gates & Long Lines', 'sentiment': 'positive', 'count': 127},
-    {'topic': 'Security, gates & Long Lines', 'sentiment': 'negative', 'count': 176},
-    {'topic': 'Security, gates & Long Lines', 'sentiment': 'uncertain', 'count': 48}
-]
-
-topics = ['Undefined / Unrelated', 'On-Flight Experience', 'Financial (Prices, fees, air-miles)', 'Customer Service',
-          'General Complaints & Hate Messages', 'Appreciation Messages', '(Online) Booking & Seats', 'Claims & Refunds',
-          'Baggage', 'Delays & Cancellations', 'Security, gates & Long Lines']
-
-topics2 = ['General Complaints & Hate Messages', 'Undefined / Unrelated', 'On-Flight Experience',
-           'Financial (Prices, fees, air-miles)', '(Online) Booking & Seats', 'Customer Service',
-           'Appreciation Messages', 'Delays & Cancellations', 'Baggage', 'Claims & Refunds',
-           'Security, gates & Long Lines']
+topics = [item for item in virgin_atlantic_topic_counts]
 
 sentiments = ['neutral', 'positive', 'negative', 'uncertain']
 
+def multiple_bar_plot(data, labels, title, save_file_name):
+    N = len(labels)
+    ind = np.arange(N)
+    width = 0.16
 
-def multiple_bar_plot(data, labels, title):
-    # Set the position of the bars on the x-axis
-    x_pos = list(range(len(labels)))
-
-    # Set the width of each bar
-    bar_width = 0.1
+    # Get data for all sentiments for all topics
+    neu_count = []
+    pos_count = []
+    neg_count = []
+    unc_count = []
+    for topic, sentiment in data.items():
+        for sentiment, count in sentiment.items():
+            if sentiment == 'neutral':
+                neu_count.append(count)
+            if sentiment == 'positive':
+                pos_count.append(count)
+            if sentiment == 'negative':
+                neg_count.append(count)
+            if sentiment == 'uncertain':
+                unc_count.append(count)
 
     # Create a bar for each sentiment
-    for i, sentiment in enumerate(sentiments):
-        counts = [item['count'] for item in data if item['sentiment'] == sentiment]
-        plt.bar([x + i * bar_width for x in x_pos], counts, width=bar_width, label=sentiment)
+    bar_neu = plt.bar(ind, neu_count, width, color='cornflowerblue')
+    bar_pos = plt.bar(ind+width, pos_count, width, color='mediumspringgreen')
+    bar_neg = plt.bar(ind+width*2, neg_count, width, color='orangered')
+    bar_unc = plt.bar(ind+width*3, unc_count, width, color='dimgrey')
 
     # Set the x-axis labels and tick positions
     plt.xlabel('Topic')
     plt.ylabel('Count')
-    plt.xticks(x_pos, labels, rotation=45, ha='right')
+    plt.xticks(ind + width * 1.5, labels, rotation=45, ha='right')
+    plt.title(title)
 
     # Add a legend
-    plt.legend()
-    plt.title(title)
+    plt.legend((bar_neu, bar_pos, bar_neg, bar_unc), sentiments)
 
     # Display the chart
     plt.tight_layout()
+    plt.savefig(f'plots/{save_file_name}', bbox_inches='tight')
     plt.show()
 
-
-multiple_bar_plot(virgin_atlantic_data , topics , "Virgin Atlantic Sentiment Analysis")
-multiple_bar_plot(british_airways_data , topics2,"British Airways Sentiment Analysis")
+multiple_bar_plot(virgin_atlantic_topic_counts , topics, "Virgin Atlantic Sentiment Analysis", 'Virgin')
+multiple_bar_plot(british_airways_topic_counts , topics,"British Airways Sentiment Analysis", 'British')
 
 def tree_map_chart(data1, data2):
     # Extract data from the first dictionary
@@ -198,4 +115,4 @@ def count_tweets_per_topic(data):
     return tweet_counts
 
 
-tree_map_chart(count_tweets_per_topic(british_airways_data), count_tweets_per_topic(virgin_atlantic_data))
+# tree_map_chart(count_tweets_per_topic(british_airways_data), count_tweets_per_topic(virgin_atlantic_data))

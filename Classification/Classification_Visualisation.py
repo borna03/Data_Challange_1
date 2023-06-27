@@ -1,10 +1,12 @@
 import pymongo
+import sys
+from datetime import datetime, timezone
 
 client = pymongo.MongoClient("mongodb://localhost:27017/")
 # db = client["DBL_data"]
 # collection = db["final_data"]
-db = client["DBL_clean"]
-collection = db["conv_sent_full_test"]
+db = client["DBL_data"]
+collection = db["final_data"]
 
 ids = ["20626359", "18332190"]
 british_airways_tweets = []
@@ -22,9 +24,22 @@ for id_str in ids:
     if id_str == "18332190":
         virgin_atlantic_tweets = list(collection.find(query))
 
+def filter_by_date(data, selected_date):
+    return_list = []
+    for tweets in data:
+        date = tweets['created_at']
+        created_at_datetime = datetime.strptime(date, "%a %b %d %H:%M:%S %z %Y")
+        if created_at_datetime > selected_date:
+            return_list.append(tweets)
+    return return_list
+
 client.close()
+selected_date = datetime(2020, 1, 1, tzinfo=timezone.utc)  # January 1, 2020 with UTC timezone
 print(len(british_airways_tweets), len(virgin_atlantic_tweets))
 
+british_airways_tweets = filter_by_date(british_airways_tweets , selected_date)
+virgin_atlantic_tweets = filter_by_date(virgin_atlantic_tweets , selected_date)
+print(len(british_airways_tweets), len(virgin_atlantic_tweets))
 
 def extract_tweet_data(tweet):
     topic_specific = tweet.get("topic_specific")
@@ -64,6 +79,7 @@ for topic, sentiment in virgin_atlantic_data:
 
 desired_order_sentiment = ['neutral', 'positive', 'negative', 'uncertain']
 
+
 # Function to save topic counts to a text file
 def save_topic_counts(file_path, topic_counts):
     with open(file_path, "w") as file:
@@ -75,9 +91,10 @@ def save_topic_counts(file_path, topic_counts):
                 file.write(f"{sentiment}: {count}\n")
             file.write("\n")
 
+
 # Re-order the dictionaries
-desired_order_list = ['Customer Service','On-Flight Experience', 'Delays & Cancellations', 'Baggage',
-                      'Claims & Refunds', 'Financial (Prices, fees, air-miles)', '(Online) Booking & Seats',  'Security, gates & Long Lines',
+desired_order_list = ['Customer Service', 'On-Flight Experience', 'Delays & Cancellations', 'Baggage',
+                      'Claims & Refunds', 'Financial (Prices, fees, air-miles)', '(Online) Booking & Seats', 'Security, gates & Long Lines',
                       'Appreciation Messages', 'General Complaints & Hate Messages', 'Undefined / Unrelated']
 british_airways_topic_counts = {k: british_airways_topic_counts[k] for k in desired_order_list}
 virgin_atlantic_topic_counts = {k: virgin_atlantic_topic_counts[k] for k in desired_order_list}
@@ -94,6 +111,7 @@ virgin_atlantic_file_path = "topic_counts_virgin_atlantic.txt"
 save_topic_counts(virgin_atlantic_file_path, virgin_atlantic_topic_counts)
 print("Topic counts for Virgin Atlantic saved to", virgin_atlantic_file_path)
 
+
 # Function to calculate the total counts for each sentiment score across all topics
 def calculate_total_counts(topic_counts):
     total_counts = {'uncertain': 0, 'negative': 0, 'positive': 0, 'neutral': 0}
@@ -102,6 +120,7 @@ def calculate_total_counts(topic_counts):
             total_counts[sentiment] += count
     return total_counts
 
+
 # Calculate the total counts for each airline
 british_airways_total_counts = calculate_total_counts(british_airways_topic_counts)
 virgin_atlantic_total_counts = calculate_total_counts(virgin_atlantic_topic_counts)
@@ -109,4 +128,3 @@ virgin_atlantic_total_counts = calculate_total_counts(virgin_atlantic_topic_coun
 print(british_airways_total_counts)
 print(virgin_atlantic_total_counts)
 print('\n')
-

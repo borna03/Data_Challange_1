@@ -10,6 +10,7 @@ topics = [item for item in virgin_atlantic_topic_counts]
 
 sentiments = ['neutral', 'positive', 'negative', 'uncertain']
 
+
 def multiple_bar_plot(data, labels, title, save_file_name):
     N = len(labels)
     ind = np.arange(N)
@@ -20,6 +21,8 @@ def multiple_bar_plot(data, labels, title, save_file_name):
     pos_count = []
     neg_count = []
     unc_count = []
+
+
     for topic, sentiment in data.items():
         for sentiment, count in sentiment.items():
             if sentiment == 'neutral':
@@ -33,9 +36,9 @@ def multiple_bar_plot(data, labels, title, save_file_name):
 
     # Create a bar for each sentiment
     bar_neu = plt.bar(ind, neu_count, width, color='cornflowerblue')
-    bar_pos = plt.bar(ind+width, pos_count, width, color='mediumspringgreen')
-    bar_neg = plt.bar(ind+width*2, neg_count, width, color='orangered')
-    bar_unc = plt.bar(ind+width*3, unc_count, width, color='dimgrey')
+    bar_pos = plt.bar(ind + width, pos_count, width, color='mediumspringgreen')
+    bar_neg = plt.bar(ind + width * 2, neg_count, width, color='orangered')
+    bar_unc = plt.bar(ind + width * 3, unc_count, width, color='dimgrey')
 
     # Set the x-axis labels and tick positions
     plt.xlabel('Topic')
@@ -48,11 +51,12 @@ def multiple_bar_plot(data, labels, title, save_file_name):
 
     # Display the chart
     plt.tight_layout()
-    plt.savefig(f'plots/{save_file_name}', bbox_inches='tight')
     plt.show()
 
-multiple_bar_plot(virgin_atlantic_topic_counts , topics, "Virgin Atlantic Sentiment Analysis", 'Virgin')
-multiple_bar_plot(british_airways_topic_counts , topics,"British Airways Sentiment Analysis", 'British')
+
+multiple_bar_plot(virgin_atlantic_topic_counts, topics, "Virgin Atlantic Sentiment Analysis", 'Virgin')
+multiple_bar_plot(british_airways_topic_counts, topics, "British Airways Sentiment Analysis", 'British')
+
 
 def tree_map_chart(data1, data2):
     # Extract data from the first dictionary
@@ -113,6 +117,5 @@ def count_tweets_per_topic(data):
             tweet_counts[topic] = count
 
     return tweet_counts
-
 
 # tree_map_chart(count_tweets_per_topic(british_airways_data), count_tweets_per_topic(virgin_atlantic_data))

@@ -252,3 +252,67 @@ def build_conversation_chain(tweet, convo_chain):
         build_conversation_chain(reply, convo_chain)
     return convo_chain
 
+# Functions that adds the level of a tweet in a conversation
+def add_levels():
+    # Create/Clean column
+    set_new_column('level', -1)
+
+    # Gather all conversations grouped by conversation_id
+    pipeline = [
+        {"$match": {"conversation_id": {"$nin": [0, 109384, 289444]}}},
+        {"$group": {"_id": "$conversation_id", "tweets": {"$push": "$$ROOT"}}}
+    ]
+
+    print('Retrieving all conversations')
+    conversations = collection.aggregate(pipeline)
+
+    print('Finding levels')
+    # Loop over all conversations and find level of tweets
+    count = 0
+    handled_tweets = {}
+    for convo in conversations:
+        handled_convo_tweets = {}
+        tweets = {tweet['id_str']: tweet['in_reply_to_status_id_str'] for tweet in convo['tweets']}
+        for tweet in convo['tweets']:
+            if not tweet['replies']:
+                level = levels_count(tweets, tweet['id_str'], 0)
+                active_tweet = tweet['id_str']
+                while level >= 0:
+                    if active_tweet in handled_tweets:
+                        break
+                    handled_tweets[active_tweet] = level
+                    level -= 1
+                    active_tweet = tweets.get(active_tweet)
+        handled_tweets.update(handled_convo_tweets)
+        count += 1
+        if count % 10000 == 0:
+            print(f'{count} conversations handled')
+
+    # Create a dictionary containing the level as key and all tweet_id's that have that level as values
+    levels = {}
+    for key, value in handled_tweets.items():
+        levels.setdefault(value, []).append(key)
+
+    # Create the bulk update
+    bulk_updates = []
+    for level in levels:
+        batch = []
+        pushed = False
+        for id_str in levels[level]:
+            pushed = False
+            if len(batch) >= 1000:
+                filter = {"id_str": {'$in': batch}}
+                update_operation = {"$set": {"level": level}}
+                update = UpdateMany(filter, update_operation)
+                bulk_updates.append(update)
+                batch = []
+                pushed = True
+            batch.append(id_str)
+        if not pushed:
+            filter = {"id_str": {'$in': batch}}
+            update_operation = {"$set": {"level": level}}
+            update = UpdateMany(filter, update_operation)
+            bulk_updates.append(update)
+
+    print('updating')
+    collection.bulk_write(bulk_updates)
